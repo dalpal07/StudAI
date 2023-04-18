@@ -12,6 +12,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.11.16",
+    "csv-parse": "^5.3.8",
     "formidable": "^2.1.1",
     "multiparty": "^4.2.3",
     "next": "13.3.0",
