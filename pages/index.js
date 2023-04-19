@@ -1,10 +1,12 @@
 import {Button, Container, Input} from "@mui/material";
 import {useState} from "react";
 import TemplateTable from "@/public/components/TemplateTable";
+import Warnings from "@/public/components/Warnings";
 
 export default function Home() {
     const [file, setFile] = useState(null);
     const [rows, setRows] = useState([]);
+    const [warnings, setWarnings] = useState([]);
 
     function readFile(file) {
         return new Promise((resolve, reject) => {
@@ -32,9 +34,9 @@ export default function Home() {
             body: req
         })
             .then(response => response.json())
-            .then(data => data.fileName)
-            .then(fileName => {
-                window.open(`/uploads/${fileName}`)
+            .then(data => {
+                setWarnings(data.warnings)
+                window.open(`/uploads/${data.fileName}`)
             });
     };
 
@@ -43,6 +45,7 @@ export default function Home() {
             <TemplateTable rows={rows} setRows={setRows}/>
             <Input type={"file"} onChange={(event) => setFile(event.target.files[0])}/>
             <Button onClick={sendToServer}>Send</Button>
+            <Warnings warnings={warnings}/>
         </Container>
     )
 }
