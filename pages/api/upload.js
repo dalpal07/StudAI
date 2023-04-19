@@ -9,9 +9,9 @@ export default async function handler(req, res) {
         const fileName = body.name
         const fileExt = body.ext;
         const newFileName = `${fileName}_${Date.now()}.${fileExt}`;
-        const cleanContent = await clean(fileContent, template);
-        await fs.promises.writeFile(`./public/uploads/${newFileName}`, cleanContent);
-        res.status(200).json({fileName: newFileName});
+        const result = await clean(fileContent, template);
+        await fs.promises.writeFile(`./public/uploads/${newFileName}`, result.content);
+        res.status(200).json({fileName: newFileName, warnings: result.warnings});
     } else {
         res.status(405).send('Method Not Allowed');
     }

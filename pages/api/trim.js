@@ -1,4 +1,4 @@
-export default function trim(headers, entries) {
+export default function trim(headers, entries, warnings) {
     return new Promise((resolve, reject) => {
         // trim and modify content
         try {
@@ -14,7 +14,7 @@ export default function trim(headers, entries) {
                 }
                 newEntries.push(newEntry);
             }
-            resolve([newHeaders, newEntries]);
+            resolve({content: [newHeaders, newEntries], warnings: warnings});
         } catch (error) {
             reject(error);
         }

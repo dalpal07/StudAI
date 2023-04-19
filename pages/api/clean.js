@@ -14,14 +14,14 @@ function parseCSV(csvString) {
     });
 }
 
-async function joinHeadersAndEntries(headers, entries) {
+async function joinHeadersAndEntries(headers, entries, warnings) {
     return new Promise((resolve, reject) => {
         try {
             let content = headers.join(",") + "\n";
             for (let i = 0; i < entries.length; i++) {
                 content += entries[i].join(",") + "\n";
             }
-            resolve(content);
+            resolve({content: content, warnings: warnings});
         } catch (err) {
             reject(err);
         }
@@ -35,12 +35,14 @@ export default async function clean(content, template) {
         // clean and modify content
             .then(data => {
                 let [headers,...entries] = data;
-                return trim(headers, entries);
+                let warnings = [];
+                return trim(headers, entries, warnings);
             })
         // reassemble content
             .then(data => {
-                let [headers,...entries] = data;
-                resolve(joinHeadersAndEntries(headers, entries[0]));
+                let [headers,...entries] = data.content;
+                let warnings = data.warnings
+                resolve(joinHeadersAndEntries(headers, entries[0], warnings));
             })
     });
 }
