@@ -1,8 +1,10 @@
 import {Button, Container, Input} from "@mui/material";
 import {useState} from "react";
+import TemplateTable from "@/public/components/TemplateTable";
 
 export default function Home() {
     const [file, setFile] = useState(null);
+    const [rows, setRows] = useState([]);
 
     function readFile(file) {
         return new Promise((resolve, reject) => {
@@ -21,7 +23,8 @@ export default function Home() {
         const obj = {
             name: file.name.split(".").shift(),
             ext: file.name.split(".").pop(),
-            content: content
+            content: content,
+            template: rows
         }
         const req = JSON.stringify(obj);
         const response = await fetch("/api/upload", {
@@ -37,6 +40,7 @@ export default function Home() {
 
     return (
         <Container>
+            <TemplateTable rows={rows} setRows={setRows}/>
             <Input type={"file"} onChange={(event) => setFile(event.target.files[0])}/>
             <Button onClick={sendToServer}>Send</Button>
         </Container>
