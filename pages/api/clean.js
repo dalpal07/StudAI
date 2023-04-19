@@ -28,7 +28,7 @@ async function joinHeadersAndEntries(headers, entries) {
     });
 }
 
-export default async function clean(content) {
+export default async function clean(content, template) {
     return new Promise((resolve, reject) => {
         // parse content
         parseCSV(content)
