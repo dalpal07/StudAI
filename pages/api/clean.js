@@ -1,5 +1,6 @@
 import { parse } from 'csv-parse';
 import trim from "@/pages/api/trim";
+import required from "@/pages/api/required";
 
 function parseCSV(csvString) {
     return new Promise((resolve, reject) => {
@@ -38,10 +39,15 @@ export default async function clean(content, template) {
                 let warnings = [];
                 return trim(headers, entries, warnings);
             })
+            .then(data => {
+                let [headers,...entries] = data.content;
+                let warnings = data.warnings;
+                return required(headers, entries[0], template, warnings);
+            })
         // reassemble content
             .then(data => {
                 let [headers,...entries] = data.content;
-                let warnings = data.warnings
+                let warnings = data.warnings;
                 resolve(joinHeadersAndEntries(headers, entries[0], warnings));
             })
     });
