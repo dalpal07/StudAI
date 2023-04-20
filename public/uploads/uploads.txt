@@ -1,1 +1,0 @@
-this file exists for uploading the file to the server. The file is uploaded to the server and the file name is stored in the database. The file is then downloaded from the server and displayed in the browser. The file is then deleted from the server.

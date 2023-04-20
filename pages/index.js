@@ -2,6 +2,13 @@ import {Button, Container, Input} from "@mui/material";
 import {useState} from "react";
 import TemplateTable from "@/public/components/TemplateTable";
 import Warnings from "@/public/components/Warnings";
+import { saveAs } from 'file-saver';
+
+function downloadFile(content, fileName) {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    saveAs(blob, fileName);
+}
+
 
 export default function Home() {
     const [file, setFile] = useState(null);
@@ -36,7 +43,7 @@ export default function Home() {
             .then(response => response.json())
             .then(data => {
                 setWarnings(data.warnings)
-                window.open(`/uploads/${data.fileName}`)
+                downloadFile(data.content, data.fileName)
             });
     };
 
