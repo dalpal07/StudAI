@@ -1,14 +1,18 @@
-import {Box, Typography} from "@mui/material";
+import {Box, styled, Typography} from "@mui/material";
+
+const WarningBox = styled(Box) ({
+   marginBottom: '5rem'
+});
 
 function Warnings(props) {
     return (
-        <Box>
+        <WarningBox>
             {props.warnings.map((warning, index) => (
                 <Typography key={index} color="error">
                     {warning.msg}
                 </Typography>
             ))}
-        </Box>
+        </WarningBox>
     );
 }
 
