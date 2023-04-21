@@ -1,6 +1,10 @@
-import {Box, Button, Input} from "@mui/material";
+import {Box, Button, Input, styled} from "@mui/material";
 import {useState} from "react";
 import { saveAs } from 'file-saver';
+
+const UploadBox = styled(Box) ({
+    marginBottom: '10rem'
+})
 
 function downloadFile(content, fileName) {
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
@@ -43,9 +47,9 @@ export default function FileUpload(props) {
     };
 
     return (
-        <Box>
+        <UploadBox>
             <Input type={"file"} onChange={(event) => setFile(event.target.files[0])}/>
             <Button onClick={sendToServer}>Send</Button>
-        </Box>
+        </UploadBox>
     )
 }
