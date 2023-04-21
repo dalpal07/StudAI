@@ -3,7 +3,7 @@ import {useState} from "react";
 import { saveAs } from 'file-saver';
 
 const UploadBox = styled(Box) ({
-    marginBottom: '10rem'
+    marginBottom: '1rem'
 })
 
 function downloadFile(content, fileName) {
