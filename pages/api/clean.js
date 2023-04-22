@@ -16,11 +16,21 @@ function parseCSV(csvString) {
     });
 }
 
+function addQuotes(entry) {
+    for (let i = 0; i < entry.length; i++) {
+        if (entry[i].includes(",")) {
+            entry[i] = "\"" + entry[i] + "\"";
+        }
+    }
+    return entry;
+}
+
 async function joinHeadersAndEntries(headers, entries, warnings) {
     return new Promise((resolve, reject) => {
         try {
             let content = headers.join(",") + "\n";
             for (let i = 0; i < entries.length; i++) {
+                entries[i] = addQuotes(entries[i]);
                 content += entries[i].join(",") + "\n";
             }
             resolve({content: content, warnings: warnings});
