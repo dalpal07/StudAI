@@ -1,7 +1,11 @@
-function swapColumns(col1, col2, headers, entries) {
-    [headers[col1], headers[col2]] = [headers[col2], headers[col1]]
+function moveColumn(newIndex, oldIndex, headers, entries) {
+    let header = headers[oldIndex];
+    headers.splice(oldIndex, 1);
+    headers.splice(newIndex, 0, header);
     entries.forEach(row => {
-        [row[col1], row[col2]] = [row[col2], row[col1]];
+        let entry = row[oldIndex];
+        row.splice(oldIndex, 1);
+        row.splice(newIndex, 0, entry);
     })
     return [headers, entries]
 }
@@ -9,18 +13,11 @@ function swapColumns(col1, col2, headers, entries) {
 export default function match_header_order(headers, entries, template, warnings) {
     return new Promise((resolve, reject) => {
         try {
-            if (headers.length === template.length) {
-                for (let i = 0; i < template.length; ++i) {
-                    if (template[i].header !== headers[i]) {
-                        for (let j = 0; j < headers.length; ++j) {
-                            if (template[i].header === headers[j]) {
-                                [headers, entries] = swapColumns(i, j, headers, entries)
-                            }
-                        }
-                    }
+            for (let i = 0; i < template.length; ++i) {
+                for (let j = i+1; j < headers.length; ++j) {
+                    if (template[i].header === headers[j]) {
+                        [headers, entries] = moveColumn(i, j, headers, entries)}
                 }
-            } else {
-                warnings.push({msg: "Template size (" + template.length + ") and Headers size (" + headers.length + ") are incongruent"})
             }
             resolve({content: [headers, entries], warnings: warnings});
         } catch (error) {
