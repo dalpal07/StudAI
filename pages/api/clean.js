@@ -43,12 +43,20 @@ export default async function clean(content, template) {
             .then(data => {
                 let [headers,entries] = data.content;
                 let warnings = data.warnings;
-                return required(headers, entries, template, warnings);
+                if (template.length > 0) {
+                    return required(headers, entries, template, warnings);
+                } else {
+                    return {content: [headers,entries], warnings: warnings};
+                }
             })
             .then(data => {
                 let [headers,entries] = data.content;
                 let warnings = data.warnings;
-                return match_header(headers, entries, template, warnings);
+                if (template.length > 0) {
+                    return match_header(headers, entries, template, warnings);
+                } else {
+                    return {content: [headers,entries], warnings: warnings};
+                }
             })
         // reassemble content
             .then(data => {
