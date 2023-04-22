@@ -32,11 +32,15 @@ function levenshteinDistance(s, t) {
 export default function match_header_value(headers, entries, template, warnings) {
     return new Promise((resolve, reject) => {
         try {
-            for (let i = 0; i < headers.length; ++i) {
-                let closestMatch = findClosestMatch(headers[i], template.map(header => header.header));
-                if (closestMatch !== headers[i]) {
-                    warnings.push({msg: "Header '" + headers[i] + "' was changed to '" + closestMatch + "'"});
-                    headers[i] = closestMatch;
+            for (let i = 0; i < template.length; ++i) {
+                if (i >= headers.length) {
+                    warnings.push({msg: "Extra header provided was ignored: '" + template[i].header + "'"});
+                    continue;
+                }
+                let closestMatch = findClosestMatch(template[i].header, headers);
+                if (closestMatch !== template[i].header) {
+                    warnings.push({msg: "Header '" + closestMatch + "' was changed to '" + template[i].header + "'"});
+                    headers[headers.indexOf(closestMatch)] = template[i].header;
                 }
             }
             resolve({content: [headers, entries], warnings: warnings});
