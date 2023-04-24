@@ -1,9 +1,9 @@
-import {Box, Button, Input, styled} from "@mui/material";
+import {Box, Button, Input, styled, Typography} from "@mui/material";
 import {useState} from "react";
 import { saveAs } from 'file-saver';
 
-const UploadBox = styled(Box) ({
-    marginBottom: '1rem'
+const FileInput = styled(Input) ({
+    display: 'none'
 })
 
 function downloadFile(content, fileName) {
@@ -13,6 +13,27 @@ function downloadFile(content, fileName) {
 
 export default function FileUpload(props) {
     const [file, setFile] = useState(null);
+    const [isDraggingOver, setIsDraggingOver] = useState(false);
+
+    const UploadBox = styled(Box) ({
+        marginBottom: '1rem',
+        alignItems: 'center',
+        padding: '.5rem',
+        width: 'fit-content',
+        backgroundColor: isDraggingOver ? '#F5F5F5' : 'transparent'
+    })
+
+    const FileButton = styled(Button) ({
+        display: 'inline-block',
+        backgroundColor: isDraggingOver ? 'gray' : '#1976d2',
+    })
+
+    const FileTypography = styled(Typography) ({
+        display: 'inline-block',
+        marginLeft: '1rem',
+        fontSize: '1.1rem',
+        color: isDraggingOver ? 'gray' : 'black'
+    })
 
     function readFile(file) {
         return new Promise((resolve, reject) => {
@@ -46,10 +67,36 @@ export default function FileUpload(props) {
             });
     };
 
+    const handleDrop = (event) => {
+        event.preventDefault();
+        const file = event.dataTransfer.files[0];
+        setFile(file);
+        setIsDraggingOver(false);
+    };
+
     return (
-        <UploadBox>
-            <Input type={"file"} onChange={(event) => setFile(event.target.files[0])}/>
-            <Button onClick={sendToServer}>Send</Button>
-        </UploadBox>
+        <Box>
+            <UploadBox
+                onDrop={handleDrop}
+                onDragOver={(event) => {
+                    event.preventDefault()
+                    setIsDraggingOver(true)
+                }}
+                onDragLeave={() => setIsDraggingOver(false)}
+            >
+                <FileButton variant={"contained"}>
+                    <label htmlFor="fileInput">
+                        Choose a file
+                        <FileInput
+                            id="fileInput"
+                            type={"file"}
+                            onChange={(event) => setFile(event.target.files[0])}
+                        />
+                    </label>
+                </FileButton>
+                <FileTypography>{file? file.name : "No file selected"}</FileTypography>
+            </UploadBox>
+            <Button onClick={sendToServer} disabled={file === null}>Transform</Button>
+        </Box>
     )
 }
