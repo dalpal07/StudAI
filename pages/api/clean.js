@@ -2,6 +2,7 @@ import { parse } from 'csv-parse';
 import trim from "@/pages/api/trim";
 import required from "@/pages/api/required";
 import match_header from "@/pages/api/match_header";
+import type_conversion from "@/pages/api/type_conversion";
 
 function parseCSV(csvString) {
     return new Promise((resolve, reject) => {
@@ -16,21 +17,11 @@ function parseCSV(csvString) {
     });
 }
 
-function addQuotes(entry) {
-    for (let i = 0; i < entry.length; i++) {
-        if (entry[i].includes(",")) {
-            entry[i] = "\"" + entry[i] + "\"";
-        }
-    }
-    return entry;
-}
-
 async function joinHeadersAndEntries(headers, entries, warnings) {
     return new Promise((resolve, reject) => {
         try {
             let content = headers.join(",") + "\n";
             for (let i = 0; i < entries.length; i++) {
-                entries[i] = addQuotes(entries[i]);
                 content += entries[i].join(",") + "\n";
             }
             resolve({content: content, warnings: warnings});
@@ -58,6 +49,11 @@ export default async function clean(content, template) {
                 } else {
                     return {content: [headers,entries], warnings: warnings};
                 }
+            })
+            .then(data => {
+                let [headers,entries] = data.content;
+                let warnings = data.warnings;
+                return type_conversion(headers, entries, template, warnings);
             })
             .then(data => {
                 let [headers,entries] = data.content;
