@@ -16,7 +16,7 @@ const TemplateTableContainer = styled(TableContainer) ({
 });
 
 export default function TemplateTable(props) {
-    const [newRow, setNewRow] = useState({ header: '', type: 'string', required: false, id: 0 });
+    const [newRow, setNewRow] = useState({ header: '', type: 'string', required: false, acceptableInput: '', specifyInput: false, id: 0 });
 
     const handleAddRow = () => {
         props.setRows([...props.rows, newRow]);
@@ -55,6 +55,8 @@ export default function TemplateTable(props) {
                             <TableCellHeader>Header</TableCellHeader>
                             <TableCellHeader>Type</TableCellHeader>
                             <TableCellHeader>Required</TableCellHeader>
+                            <TableCellHeader>Specify Input</TableCellHeader>
+                            <TableCellHeader>Acceptable Input</TableCellHeader>
                             <TableCell>
                                 <Button variant="contained" color="primary" onClick={handleAddRow}>Add Row</Button>
                             </TableCell>
@@ -75,6 +77,15 @@ export default function TemplateTable(props) {
                                 <TableCell>
                                     <Checkbox name="required" checked={row.required} onChange={handleInputChange(row.id)}/>
                                 </TableCell>
+                                <TableCell>
+                                    <Checkbox name="specifyInput" checked={row.specifyInput} onChange={handleInputChange(row.id)}/>
+                                </TableCell>
+                                {(row.specifyInput &&
+                                        <TableCell>
+                                            <TextField name="acceptableInput" value={row.acceptableInput} onChange={handleInputChange(row.id)}/>
+                                        </TableCell>)
+                                || <TableCell></TableCell>
+                                }
                                 <TableCell>
                                     <Button variant="contained" color="secondary" onClick={handleDeleteRow(row.id)}>
                                         Delete
