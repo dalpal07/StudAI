@@ -17,6 +17,7 @@
     "file-saver": "^2.0.5",
     "formidable": "^2.1.1",
     "multiparty": "^4.2.3",
+    "munkres-js": "^1.2.2",
     "next": "13.3.0",
     "react": "18.2.0",
     "react-beautiful-dnd": "^13.1.1",
