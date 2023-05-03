@@ -4,6 +4,7 @@ import {
     TableContainer, TableHead, TextField, Checkbox, Select,
     MenuItem, Button, styled
 } from "@mui/material";
+import * as Icons from '@mui/icons-material';
 
 const TableCellHeader = styled(TableCell) ({
     fontWeight: 'bold',
@@ -14,6 +15,14 @@ const TemplateTableContainer = styled(TableContainer) ({
     marginTop: '2rem',
     marginBottom: '7em',
 });
+
+const MoveUpButton = styled(Button) ({
+    padding: '0rem'
+})
+
+const MoveDownButton = styled(Button) ({
+    margin: '0rem'
+})
 
 export default function TemplateTable(props) {
     const [newRow, setNewRow] = useState({ header: '', type: 'string', required: false, acceptableInput: '', specifyInput: false, id: 0 });
@@ -45,6 +54,18 @@ export default function TemplateTable(props) {
         const updatedRows = props.rows.filter((row) => row.id !== rowId);
         props.setRows(updatedRows);
     };
+
+
+    const handleReorderRow = (rowId, oldIndex, newIndex) => (event) => {
+        // If the row is moving up and is not already the top row, or is moving down and is not already the bottom row
+        if (newIndex !== -1 && newIndex < props.rows.length) {
+            let updatedRows = [...props.rows];
+            const tempRow = updatedRows[oldIndex];
+            updatedRows[oldIndex] = updatedRows[newIndex];
+            updatedRows[newIndex] = tempRow;
+            props.setRows(updatedRows);
+        }
+    }
 
     return (
         <div>
@@ -90,6 +111,8 @@ export default function TemplateTable(props) {
                                     <Button variant="contained" color="secondary" onClick={handleDeleteRow(row.id)}>
                                         Delete
                                     </Button>
+                                    <MoveUpButton onClick={handleReorderRow(row.id, index, index - 1)}><Icons.ArrowUpward /></MoveUpButton>
+                                    <MoveDownButton onClick={handleReorderRow(row.id, index, index + 1)}><Icons.ArrowDownward /></MoveDownButton>
                                 </TableCell>
                             </TableRow>
                         ))}

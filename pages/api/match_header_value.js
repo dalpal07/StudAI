@@ -1,46 +1,61 @@
-function findClosestMatch(searchString, list) {
-    let minDistance = Number.MAX_SAFE_INTEGER;
-    let closestMatch = "";
-    for (let i = 0; i < list.length; i++) {
-        let distance = levenshteinDistance(searchString.toUpperCase(), list[i].toUpperCase());
-        if (distance < minDistance) {
-            minDistance = distance;
-            closestMatch = list[i];
-        }
-    }
-    return closestMatch;
-}
+import hungarian from 'munkres-js';
 
 function levenshteinDistance(s, t) {
-    let d = [];
-    let n = s.length;
-    let m = t.length;
-    if (n === 0) return m;
-    if (m === 0) return n;
-    for (let i = n; i >= 0; i--) d[i] = [];
-    for (let i = n; i >= 0; i--) d[i][0] = i;
-    for (let j = m; j >= 0; j--) d[0][j] = j;
-    for (let i = 1; i <= n; i++) {
-        for (let j = 1; j <= m; j++) {
-            let cost = s.charAt(i - 1) === t.charAt(j - 1) ? 0 : 1;
-            d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+    const m = s.length;
+    const n = t.length;
+    const d = new Array(m + 1).fill(null).map(() => new Array(n + 1).fill(null));
+
+    for (let i = 0; i <= m; i++) {
+        d[i][0] = i;
+    }
+
+    for (let j = 0; j <= n; j++) {
+        d[0][j] = j;
+    }
+
+    for (let j = 1; j <= n; j++) {
+        for (let i = 1; i <= m; i++) {
+            if (s[i - 1] === t[j - 1]) {
+                d[i][j] = d[i - 1][j - 1];
+            } else {
+                d[i][j] = Math.min(
+                    d[i - 1][j] + 1, // deletion
+                    d[i][j - 1] + 1, // insertion
+                    d[i - 1][j - 1] + 1 // substitution
+                );
+            }
         }
     }
-    return d[n][m];
+
+    return d[m][n];
 }
+
+function calculateDistances(list1, list2) {
+    const distances = [];
+
+    for (let i = 0; i < list1.length; i++) {
+        distances.push([]);
+        for (let j = 0; j < list2.length; j++) {
+            distances[i][j] = levenshteinDistance(list1[i], list2[j]);
+        }
+    }
+
+    return distances;
+}
+
 
 export default function match_header_value(headers, entries, template, warnings) {
     return new Promise((resolve, reject) => {
         try {
-            for (let i = 0; i < template.length; ++i) {
-                if (i >= headers.length) {
-                    warnings.push({msg: "Extra header provided was ignored: '" + template[i].header + "'"});
-                    continue;
-                }
-                let closestMatch = findClosestMatch(template[i].header, headers);
-                if (closestMatch !== template[i].header) {
-                    warnings.push({msg: "Header '" + closestMatch + "' was changed to '" + template[i].header + "'"});
-                    headers[headers.indexOf(closestMatch)] = template[i].header;
+            const templateHeaders = template.map((item) => item.header);
+            const distances = calculateDistances(headers, templateHeaders);
+            const result = hungarian(distances);
+            for (let i = 0; i < result.length; i++) {
+                let header = headers[result[i][0]];
+                let templateHeader = template[result[i][1]].header;
+                if (header !== templateHeader) {
+                    warnings.push(`Header "${header}" changed to template header "${templateHeader}".`);
+                    headers[result[i][0]] = templateHeader;
                 }
             }
             resolve({content: [headers, entries], warnings: warnings});
