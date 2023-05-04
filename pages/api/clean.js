@@ -3,6 +3,7 @@ import trim from "@/pages/api/trim";
 import required from "@/pages/api/required";
 import match_header from "@/pages/api/match_header";
 import type_conversion from "@/pages/api/type_conversion";
+import match_acceptable_inputs from "@/pages/api/match_acceptable_inputs";
 
 function parseCSV(csvString) {
     return new Promise((resolve, reject) => {
@@ -63,6 +64,11 @@ export default async function clean(content, template) {
                 } else {
                     return {content: [headers,entries], warnings: warnings};
                 }
+            })
+            .then(data => {
+                let [headers,entries] = data.content;
+                let warnings = data.warnings;
+                return match_acceptable_inputs(headers, entries, template, warnings);
             })
         // reassemble content
             .then(data => {
