@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
     Table, TableBody, TableRow, TableCell,
     TableContainer, TableHead, TextField, Checkbox, Select,
-    MenuItem, Button, styled
+    MenuItem, Button, styled, TextareaAutosize
 } from "@mui/material";
 import * as Icons from '@mui/icons-material';
 
@@ -24,12 +24,17 @@ const MoveDownButton = styled(Button) ({
     margin: '0rem'
 })
 
+const StyledTextArea = styled(TextareaAutosize) ({
+    padding: '1em'
+})
+
 export default function TemplateTable(props) {
-    const [newRow, setNewRow] = useState({ header: '', type: 'string', required: false, id: 0 });
+    const [newRow, setNewRow] = useState({ header: '', type: 'string', required: false, acceptableInput: '', specifyInput: false, id: 0 });
 
     const handleAddRow = () => {
         props.setRows([...props.rows, newRow]);
-        setNewRow({ header: '', type: 'string', required: false, id: (newRow.id + 1) });
+        setNewRow({ header: '', type: 'string', required: false, id: (newRow.id + 1),
+            specifyInput: false, acceptableInput: ''});
     };
 
     const handleInputChange = (rowID) => (event) => {
@@ -76,6 +81,8 @@ export default function TemplateTable(props) {
                             <TableCellHeader>Header</TableCellHeader>
                             <TableCellHeader>Type</TableCellHeader>
                             <TableCellHeader>Required</TableCellHeader>
+                            <TableCellHeader>Specify Input</TableCellHeader>
+                            <TableCellHeader>Acceptable Input</TableCellHeader>
                             <TableCell>
                                 <Button variant="contained" color="primary" onClick={handleAddRow}>Add Row</Button>
                             </TableCell>
@@ -96,6 +103,17 @@ export default function TemplateTable(props) {
                                 <TableCell>
                                     <Checkbox name="required" checked={row.required} onChange={handleInputChange(row.id)}/>
                                 </TableCell>
+                                <TableCell>
+                                    <Checkbox name="specifyInput" checked={row.specifyInput} onChange={handleInputChange(row.id)}/>
+                                </TableCell>
+                                {(row.specifyInput &&
+                                        <TableCell>
+                                            <StyledTextArea name="acceptableInput" value={row.acceptableInput} onChange={handleInputChange(row.id)}
+                                                            resize="vertical" overflow="auto"
+                                                            placeholder={"Enter a comma separated list. Use double quotes around values that contain commas."}/>
+                                        </TableCell>)
+                                || <TableCell></TableCell>
+                                }
                                 <TableCell>
                                     <Button variant="contained" color="secondary" onClick={handleDeleteRow(row.id)}>
                                         Delete
