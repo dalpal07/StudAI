@@ -88,7 +88,7 @@ export default function match_acceptable_inputs(headers, entries, template, warn
                     entries.forEach((str, index) => {
                         if (!inputs.includes(entries[index][i])) {
                             let closest = calculateMinimumDistance(entries[index][i], inputs);
-                            warnings.push({msg: 'Value "' + entries[index][i] + '" changed to "' + closest + '"'});
+                            // warnings.push({msg: 'Value "' + entries[index][i] + '" changed to "' + closest + '"'});
                             entries[index][i] = closest;
                         }
                     })
