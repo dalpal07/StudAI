@@ -53,7 +53,7 @@ export default function FileUpload(props) {
             name: file.name.split(".").shift(),
             ext: file.name.split(".").pop(),
             content: content,
-            template: props.rows
+            instruction: props.instruction
         }
         const req = JSON.stringify(obj);
         const response = await fetch("/api/upload", {
@@ -62,7 +62,6 @@ export default function FileUpload(props) {
         })
             .then(response => response.json())
             .then(data => {
-                props.setWarnings(data.warnings)
                 downloadFile(data.content, data.fileName)
             });
     };
