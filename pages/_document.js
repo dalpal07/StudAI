@@ -1,12 +1,11 @@
 import { Html, Head, Main, NextScript } from 'next/document'
-import {Title} from "@mui/icons-material";
+import AppHead from "@/public/components/AppHead";
 
 export default function Document() {
   return (
     <Html lang="en">
         <Head>
-            <link rel="icon" href="/images/favicon.svg" />
-            <Title>StudAI</Title>
+            <AppHead/>
         </Head>
         <body>
             <Main />
