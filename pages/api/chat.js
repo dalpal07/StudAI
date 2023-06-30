@@ -1,10 +1,10 @@
 export default async function handler(req, res) {
-    let prompt = "You are an AI chatbot named Stud. Your goal is to chat with users about their data requests until you sufficiently understand the details of what they're asking. Be sure to get the exact table name(s) and appropriate header, column, or row names/indexes as well. When you sufficiently understand, simply tell the user that you will take care of the request. DO NOT explain how you will carry out the request.\n\nRespond to this conversation:\n"
     if (req.method === 'POST') {
         const body = JSON.parse(req.body);
-        console.log("Prompt: " + prompt)
-        console.log("Body: " + body)
-        body.forEach((line) => {
+        const conversation = body.conversation;
+        let prompt = body.prompt;
+        prompt += "\n\nRespond to this conversation:\n"
+        conversation.forEach((line) => {
             if (line.type === "user") {
                 prompt += "\nUser: " + line.message
             } else {
@@ -12,7 +12,6 @@ export default async function handler(req, res) {
             }
         })
         prompt += "\nStud: [insert]"
-        console.log("Prompt: " + prompt)
 
         const { Configuration, OpenAIApi } = require("openai");
 

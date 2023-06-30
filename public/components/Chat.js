@@ -56,8 +56,13 @@ const SendButton = styled(Button)({
 const Chat = () => {
     const [conversation, setConversation] = useState([]);
     const [input, setInput] = useState("");
+    const [prompt, setPrompt] = useState("You are an AI chatbot named Stud. Your goal is to chat with users about their data requests until you sufficiently understand the details of what they're asking. Be sure to get the exact table name(s) and appropriate header, column, or row names/indexes as well. When you sufficiently understand, simply tell the user that you will take care of the request. DO NOT explain how you will carry out the request.")
     const sendToServer = async () => {
-        let req = JSON.stringify(conversation);
+        let obj = {
+            conversation: conversation,
+            prompt: prompt
+        }
+        let req = JSON.stringify(obj);
         const response = await fetch("/api/chat", {
             method: "POST",
             body: req
@@ -85,6 +90,10 @@ const Chat = () => {
             temp = temp.substring(0, temp.length - 1)
         }
         setInput(temp)
+    }
+
+    const handlePromptChange = (event) => {
+        setPrompt(event.target.value)
     }
 
     const scrollableBoxRef = useRef(null);
@@ -130,6 +139,11 @@ const Chat = () => {
                            onChange={handleInputChange}
                            onKeyPress={handleKeyPress}/>
                 <SendButton onClick={handleSendButtonClick}>Send</SendButton>
+            </InputBox>
+            <InputBox>
+                <ChatInput placeholder="Fill in AI prompt here..." multiline rows={4}
+                           value={prompt}
+                           onChange={handlePromptChange}/>
             </InputBox>
         </div>
     )
