@@ -22,22 +22,23 @@ export default async function handler(req, res) {
         });
         const openai = new OpenAIApi(configuration);
 
-        await openai.createCompletion({
-            model: "text-davinci-003",
-            prompt: prompt,
-            suffix: "",
-            temperature: 1,
-            max_tokens: 256,
-            top_p: 1,
-            frequency_penalty: 0,
-            presence_penalty: 0,
-        }).then((response) => {
-            console.log("Response: " + response.data.choices[0].text);
-            res.status(200).json({response: response.data.choices[0].text});
-        }).catch((err) => {
-            console.log("Error: " + err);
-            res.status(500).send('Internal Server Error');
-        });
+        // await openai.createCompletion({
+        //     model: "text-davinci-003",
+        //     prompt: prompt,
+        //     suffix: "",
+        //     temperature: 1,
+        //     max_tokens: 256,
+        //     top_p: 1,
+        //     frequency_penalty: 0,
+        //     presence_penalty: 0,
+        // }).then((response) => {
+        //     console.log("Response: " + response.data.choices[0].text);
+        //     res.status(200).json({response: response.data.choices[0].text});
+        // }).catch((err) => {
+        //     console.log("Error: " + err);
+        //     res.status(500).send('Internal Server Error');
+        // });
+        res.status(200).json({response: "Hello"});
     } else {
         res.status(405).send('Method Not Allowed');
     }
