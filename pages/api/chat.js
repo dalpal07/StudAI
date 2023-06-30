@@ -3,6 +3,8 @@ let prompt = "You are an AI chatbot named Stud. Your goal is to chat with users 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         const body = JSON.parse(req.body);
+        console.log("Prompt: " + prompt)
+        console.log("Body: " + body)
         body.forEach((line) => {
             if (line.type === "user") {
                 prompt += "\nUser: " + line.message
@@ -11,6 +13,7 @@ export default async function handler(req, res) {
             }
         })
         prompt += "\nStud: [insert]"
+        console.log("Prompt: " + prompt)
 
         const { Configuration, OpenAIApi } = require("openai");
 
@@ -29,9 +32,10 @@ export default async function handler(req, res) {
             frequency_penalty: 0,
             presence_penalty: 0,
         }).then((response) => {
+            console.log("Response: " + response.data.choices[0].text);
             res.status(200).json({response: response.data.choices[0].text});
         }).catch((err) => {
-            console.log(err);
+            console.log("Error: " + err);
             res.status(500).send('Internal Server Error');
         });
     } else {
