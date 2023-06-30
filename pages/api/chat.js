@@ -19,7 +19,7 @@ export default async function handler(req, res) {
         });
         const openai = new OpenAIApi(configuration);
 
-        const response = await openai.createCompletion({
+        await openai.createCompletion({
             model: "text-davinci-003",
             prompt: prompt,
             suffix: "",
@@ -28,8 +28,12 @@ export default async function handler(req, res) {
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
+        }).then((response) => {
+            res.status(200).json({response: response.data.choices[0].text});
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).send('Internal Server Error');
         });
-        res.status(200).json({response: response.data.choices[0].text});
     } else {
         res.status(405).send('Method Not Allowed');
     }
