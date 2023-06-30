@@ -62,8 +62,10 @@ const Chat = () => {
             method: "POST",
             body: req
         })
-        const res = await response.json()
-        setConversation([...conversation, {type: "assistant", message: res.response}])
+            .then(res => res.json())
+            .then(data => {
+                setConversation([...conversation, {type: "assistant", message: data.response}])
+            })
     }
     const handleSendButtonClick = () => {
         if (input === "") {
