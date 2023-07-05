@@ -19,7 +19,7 @@ export default async function handler(req, res) {
             apiKey: process.env.OPENAI_API_KEY,
         });
         const openai = new OpenAIApi(configuration);
-
+        console.log("Prompt: " + prompt)
         try {
             const response = await openai.createCompletion({
                 model: "text-davinci-003",
@@ -31,6 +31,7 @@ export default async function handler(req, res) {
                 frequency_penalty: 0,
                 presence_penalty: 0,
             })
+            console.log("Response: " + response.data.choices[0].text)
             res.status(200).json({response: response.data.choices[0].text});
         } catch (e) {
             console.log("Error: " + e)
