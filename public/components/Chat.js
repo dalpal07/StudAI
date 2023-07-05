@@ -69,7 +69,8 @@ const Chat = () => {
             try {
                 const response = await fetch("/api/chat", {
                     method: "POST",
-                    body: req
+                    body: req,
+                    timeout: 30000
                 })
                 if (response.status === 200) {
                     const data = await response.json()
