@@ -58,44 +58,20 @@ const Chat = () => {
     const [input, setInput] = useState("");
     const [prompt, setPrompt] = useState("You are an AI chatbot named Stud. Your goal is to chat with users about their data requests until you sufficiently understand the details of what they're asking. Be sure to get the exact table name(s) and appropriate header, column, or row names/indexes as well. When you sufficiently understand, simply tell the user that you will take care of the request. DO NOT explain how you will carry out the request.")
     const sendToServer = async () => {
-        let obj = {
-            conversation: conversation,
-            prompt: prompt
-        }
-        let req = JSON.stringify(obj);
-        let MAX_RETRIES = 3;
-        let retries = 0;
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        const timeout = setTimeout(() => {
-            controller.abort();
-            console.log("Request timed out");
-        }, 30000); // Set the timeout value in milliseconds
-        while (retries < MAX_RETRIES) {
-            try {
-                const response = await fetch("/api/chat", {
-                    method: "POST",
-                    body: req,
-                    signal
-                })
-                clearTimeout(timeout); // Clear the timeout if the request completes within the specified time
-                if (response.status === 200) {
-                    const data = await response.json()
-                    setConversation([...conversation, {type: "assistant", message: data.response}])
-                    break;
-                } else if (response.status === 504) {
-                    retries++;
-                    console.log("Timeout, retrying...")
-                }
-                else {
-                    console.log("Error: " + response.status)
-                    break;
-                }
-            } catch (e) {
-                console.log("Error: " + e)
-                break;
+        let req = prompt + "\n\nRespond to this conversation:\n" + conversation.map((line) => {
+            if (line.type === "user") {
+                return "\nUser: " + line.message
+            } else {
+                return "\nStud: " + line.message
             }
+        }) + "\nStud: [insert]"
+        const response = await fetch("/api/chat", {
+            method: "POST",
+            body: req
+        })
+        if (response.status === 200) {
+            const data = await response.json()
+            setConversation([...conversation, {type: "assistant", message: data.response}])
         }
     }
     const handleSendButtonClick = () => {
