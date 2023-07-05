@@ -63,14 +63,31 @@ const Chat = () => {
             prompt: prompt
         }
         let req = JSON.stringify(obj);
-        const response = await fetch("/api/chat", {
-            method: "POST",
-            body: req
-        })
-            .then(res => res.json())
-            .then(data => {
-                setConversation([...conversation, {type: "assistant", message: data.response}])
-            })
+        let MAX_RETRIES = 3;
+        let retries = 0;
+        while (retries < MAX_RETRIES) {
+            try {
+                const response = await fetch("/api/chat", {
+                    method: "POST",
+                    body: req
+                })
+                if (response.status === 200) {
+                    const data = await response.json()
+                    setConversation([...conversation, {type: "assistant", message: data.response}])
+                    break;
+                } else if (response.status === 504) {
+                    retries++;
+                    console.log("Timeout, retrying...")
+                }
+                else {
+                    console.log("Error: " + response.status)
+                    break;
+                }
+            } catch (e) {
+                console.log("Error: " + e)
+                break;
+            }
+        }
     }
     const handleSendButtonClick = () => {
         if (input === "") {
