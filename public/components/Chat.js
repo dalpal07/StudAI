@@ -65,13 +65,21 @@ const Chat = () => {
         let req = JSON.stringify(obj);
         let MAX_RETRIES = 3;
         let retries = 0;
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        const timeout = setTimeout(() => {
+            controller.abort();
+            console.log("Request timed out");
+        }, 30000); // Set the timeout value in milliseconds
         while (retries < MAX_RETRIES) {
             try {
                 const response = await fetch("/api/chat", {
                     method: "POST",
                     body: req,
-                    timeout: 30000
+                    signal
                 })
+                clearTimeout(timeout); // Clear the timeout if the request completes within the specified time
                 if (response.status === 200) {
                     const data = await response.json()
                     setConversation([...conversation, {type: "assistant", message: data.response}])
