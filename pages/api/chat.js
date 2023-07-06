@@ -9,7 +9,6 @@ export default async function handler(req, res) {
         });
         const openai = new OpenAIApi(configuration);
         try {
-            console.log("Before request")
             const response = await openai.createCompletion({
                 model: "text-davinci-003",
                 prompt: prompt,
@@ -19,7 +18,6 @@ export default async function handler(req, res) {
                 frequency_penalty: 0,
                 presence_penalty: 0,
             })
-            console.log("After request")
             res.status(200).json({response: response.data.choices[0].text});
         } catch (e) {
             console.log("Error: " + e)
