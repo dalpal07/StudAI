@@ -1,32 +1,31 @@
-export default async function chat(request, response) {
-    if (request.method === 'POST') {
-        const prompt = request.body;
+export default async function handler(req, res) {
+    if (req.method === 'POST') {
+        const prompt = req.body
 
-        const { Configuration, OpenAIApi } = require('openai');
+        const { Configuration, OpenAIApi } = require("openai");
+
         const configuration = new Configuration({
             apiKey: process.env.OPENAI_API_KEY,
         });
         const openai = new OpenAIApi(configuration);
-
         try {
-            console.log('Before request');
-            const completion = await openai.complete({
-                engine: 'davinci',
+            console.log("Before request")
+            const response = await openai.createCompletion({
+                model: "text-davinci-003",
                 prompt: prompt,
                 temperature: 1,
-                maxTokens: 1024,
-                topP: 1,
-                frequencyPenalty: 0,
-                presencePenalty: 0,
-            });
-            const { choices } = completion.data;
-            console.log('After request');
-            return response.status(200).json({ response: choices[0].text });
+                max_tokens: 1024,
+                top_p: 1,
+                frequency_penalty: 0,
+                presence_penalty: 0,
+            })
+            console.log("After request")
+            res.status(200).json({response: response.data.choices[0].text});
         } catch (e) {
-            console.log('Error: ' + e);
-            return response.status(500).send('Internal Server Error');
+            console.log("Error: " + e)
+            res.status(500).send('Internal Server Error');
         }
     } else {
-        return response.status(405).send('Method Not Allowed');
+        res.status(405).send('Method Not Allowed');
     }
 }
