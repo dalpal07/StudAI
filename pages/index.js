@@ -1,16 +1,17 @@
 import {Container} from "@mui/material";
 import {useState} from "react";
-import Instruction from "@/public/components/Instruction";
+import Script from "@/public/components/Script";
 import FileUpload from "@/public/components/FileUpload";
 import Chat from "@/public/components/Chat";
 
 export default function Home() {
-    const [instruction, setInstruction] = useState("");
+    const [file, setFile] = useState(null);
+    const [conversation, setConversation] = useState([]);sd
     return (
         <Container>
-            {/*<Instruction instruction={instruction} setInstruction={setInstruction}/>*/}
-            {/*<FileUpload instruction={instruction}/>*/}
-            <Chat/>
+            <FileUpload file={file} setFile={setFile}/>
+            <Chat file={file}/>
+            <Script file={file} conversation={conversation}/>
         </Container>
     )
 }

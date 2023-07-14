@@ -12,7 +12,6 @@ function downloadFile(content, fileName) {
 }
 
 export default function FileUpload(props) {
-    const [file, setFile] = useState(null);
     const [isDraggingOver, setIsDraggingOver] = useState(false);
 
     const UploadBox = styled(Box) ({
@@ -47,34 +46,16 @@ export default function FileUpload(props) {
         });
     }
 
-    const sendToServer = async () => {
-        const content = await readFile(file);
-        const obj = {
-            name: file.name.split(".").shift(),
-            ext: file.name.split(".").pop(),
-            content: content,
-            instruction: props.instruction
-        }
-        const req = JSON.stringify(obj);
-        const response = await fetch("/api/upload", {
-            method: "POST",
-            body: req
-        })
-            .then(response => response.json())
-            .then(data => {
-                downloadFile(data.content, data.fileName)
-            });
-    };
-
     const handleDrop = (event) => {
         event.preventDefault();
         const file = event.dataTransfer.files[0];
-        setFile(file);
+        props.setFile(file);
         setIsDraggingOver(false);
     };
 
     return (
-        <Box>
+        <div>
+            <h1>File</h1>
             <UploadBox
                 onDrop={handleDrop}
                 onDragOver={(event) => {
@@ -89,13 +70,12 @@ export default function FileUpload(props) {
                         <FileInput
                             id="fileInput"
                             type={"file"}
-                            onChange={(event) => setFile(event.target.files[0])}
+                            onChange={(event) => props.setFile(event.target.files[0])}
                         />
                     </label>
                 </FileButton>
-                <FileTypography>{file? file.name : "No file selected"}</FileTypography>
+                <FileTypography>{props.file? props.file.name : "No file selected"}</FileTypography>
             </UploadBox>
-            <Button onClick={sendToServer} disabled={file === null}>Transform</Button>
-        </Box>
+        </div>
     )
 }
