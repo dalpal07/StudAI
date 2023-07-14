@@ -3,7 +3,9 @@ import {Configuration, OpenAIApi} from "openai";
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         const prompt = req.body
+        console.log("Prompt: " + prompt)
         if (prompt === "") {
+            console.log("Prompt is empty")
             res.status(200).json({response: ""});
         }
         else {
