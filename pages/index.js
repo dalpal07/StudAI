@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <Container>
             <FileUpload file={file} setFile={setFile}/>
-            <Chat file={file}/>
+            <Chat file={file} conversation={conversation} setConversation={setConversation}/>
             <Script file={file} conversation={conversation}/>
         </Container>
     )
