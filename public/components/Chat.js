@@ -1,5 +1,6 @@
 import {Box, Button, Input, styled, Typography} from "@mui/material";
 import {useEffect, useRef, useState} from "react";
+import {SystemSecurityUpdate} from "@mui/icons-material";
 
 const ChatBox = styled(Box)({
     border: "1px solid black",
@@ -146,8 +147,19 @@ export default function Chat(props) {
         }
     };
 
+    const coldCall = async () => {
+        const response = await fetch("/api/chat", {
+            method: "POST",
+            body: ""
+        })
+        if (response.status === 200) {
+            console.log("Cold call successful")
+        }
+    }
+
     // Call scrollToBottom when component mounts or whenever content changes
     useEffect(() => {
+        coldCall();
         scrollToBottom();
         if (conversation.length > 0 && conversation[conversation.length - 1].type === "user") {
             console.log("Sending to server")
