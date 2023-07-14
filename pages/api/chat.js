@@ -2,6 +2,8 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         const prompt = req.body
 
+        console.log("Prompt: " + prompt)
+
         const { Configuration, OpenAIApi } = require("openai");
 
         const configuration = new Configuration({
@@ -13,7 +15,7 @@ export default async function handler(req, res) {
                 model: "text-davinci-003",
                 prompt: prompt,
                 temperature: 1,
-                max_tokens: 1024,
+                max_tokens: 128,
                 top_p: 1,
                 frequency_penalty: 0,
                 presence_penalty: 0,
