@@ -6,7 +6,7 @@ import Chat from "@/public/components/Chat";
 
 export default function Home() {
     const [file, setFile] = useState(null);
-    const [conversation, setConversation] = useState([]);sd
+    const [conversation, setConversation] = useState([]);
     return (
         <Container>
             <FileUpload file={file} setFile={setFile}/>
