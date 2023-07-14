@@ -47,6 +47,18 @@ export default function Script(props) {
         }
     }
 
+    function readFile(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const content = reader.result;
+                resolve(content);
+            };
+            reader.onerror = reject;
+            reader.readAsText(file);
+        });
+    }
+
     async function getFileHeaders() {
         let headers = []
         let file = props.file
@@ -76,7 +88,7 @@ export default function Script(props) {
                 req = req + headers[i] + ", "
             }
         }
-        req = req + "\n\nHere is the conversation:\n" + conversation.map((line) => {
+        req = req + "\n\nHere is the conversation:\n" + props.conversation.map((line) => {
             if (line.type === "user") {
                 return "\nUser: " + line.message
             } else {

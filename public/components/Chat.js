@@ -1,6 +1,5 @@
 import {Box, Button, Input, styled, Typography} from "@mui/material";
 import {useEffect, useRef, useState} from "react";
-import {SystemSecurityUpdate} from "@mui/icons-material";
 
 const ChatBox = styled(Box)({
     border: "1px solid black",
@@ -55,7 +54,6 @@ const SendButton = styled(Button)({
 });
 
 export default function Chat(props) {
-    const [conversation, setConversation] = useState([]);
     const [input, setInput] = useState("");
     const [prompt, setPrompt] = useState("You are an AI chatbot named Stud. Your goal is to chat with users about their data requests until you sufficiently understand the details of what they're asking. When you sufficiently understand, let the user know that you will take care of their request.")
 
@@ -99,7 +97,7 @@ export default function Chat(props) {
                 req = req + headers[i] + ", "
             }
         }
-        req = req + "\n\nRespond to this conversation:\n" + conversation.map((line) => {
+        req = req + "\n\nRespond to this conversation:\n" + props.conversation.map((line) => {
             if (line.type === "user") {
                 return "\nUser: " + line.message
             } else {
@@ -112,14 +110,14 @@ export default function Chat(props) {
         })
         if (response.status === 200) {
             const data = await response.json()
-            setConversation([...conversation, {type: "assistant", message: data.response}])
+            props.setConversation([...props.conversation, {type: "assistant", message: data.response}])
         }
     }
     const handleSendButtonClick = () => {
         if (input === "") {
             return
         }
-        setConversation([...conversation, {type: "user", message: input}])
+        props.setConversation([...props.conversation, {type: "user", message: input}])
         setInput("")
     }
     const handleKeyPress = (event) => {
@@ -161,17 +159,17 @@ export default function Chat(props) {
     useEffect(() => {
         coldCall();
         scrollToBottom();
-        if (conversation.length > 0 && conversation[conversation.length - 1].type === "user") {
+        if (props.conversation.length > 0 && props.conversation[props.conversation.length - 1].type === "user") {
             console.log("Sending to server")
             sendToServer()
         }
-    }, [conversation]);
+    }, [props.conversation]);
 
     return (
         <div>
             <h1>Chat</h1>
             <ChatBox ref={scrollableBoxRef}>
-                {conversation.map((line) => {
+                {props.conversation.map((line) => {
                     return (
                         <>
                             {line.type === "user" ?
