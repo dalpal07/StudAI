@@ -47,54 +47,8 @@ export default function Script(props) {
         }
     }
 
-    function readFile(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const content = reader.result;
-                resolve(content);
-            };
-            reader.onerror = reject;
-            reader.readAsText(file);
-        });
-    }
-
-    async function getFileHeaders() {
-        let headers = []
-        let file = props.file
-        await readFile(file).then((content) => {
-            let lines = content.split("\n")
-            if (lines.length > 0) {
-                let headerLine = lines[0]
-                headers = headerLine.split(",")
-                for (let i = 0; i < headers.length; i++) {
-                    headers[i] = headers[i].trim()
-                }
-            }
-        })
-        return headers
-    }
-
     const sendToServer = async () => {
-        let req = prompt
-        if (props.file !== null) {
-            req = req + "\n\nHere is some information about the data:\n\nName: " + props.file.name + "\nHeaders: "
-            let headers = await getFileHeaders()
-            for (let i = 0; i < headers.length; i++) {
-                if (i === headers.length - 1) {
-                    req = req + headers[i]
-                    break
-                }
-                req = req + headers[i] + ", "
-            }
-        }
-        req = req + "\n\nHere is the conversation:\n" + props.conversation.map((line) => {
-            if (line.type === "user") {
-                return "\nUser: " + line.message
-            } else {
-                return "\nAssistant: " + line.message
-            }
-        }) + "\n\nReply with a script: [insert]"
+        const req = await props.extendPrompt(prompt)
         const response = await fetch("/api/chat", {
             method: "POST",
             body: req

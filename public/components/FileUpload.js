@@ -1,15 +1,10 @@
 import {Box, Button, Input, styled, Typography} from "@mui/material";
 import {useState} from "react";
-import { saveAs } from 'file-saver';
+import { read, utils } from 'xlsx';
 
 const FileInput = styled(Input) ({
     display: 'none'
 })
-
-function downloadFile(content, fileName) {
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    saveAs(blob, fileName);
-}
 
 export default function FileUpload(props) {
     const [isDraggingOver, setIsDraggingOver] = useState(false);
@@ -33,8 +28,10 @@ export default function FileUpload(props) {
         fontSize: '1.1rem',
         color: isDraggingOver ? 'gray' : 'black'
     })
-
-    function readFile(file) {
+    const getFileExtension = (filename) => {
+        return filename.slice(((filename.lastIndexOf('.') - 1) >>> 0) + 2).toLowerCase();
+    };
+    function readCsvFile(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => {
@@ -45,13 +42,49 @@ export default function FileUpload(props) {
             reader.readAsText(file);
         });
     }
-
+    function readXlsxFile(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const data = new Uint8Array(e.target.result);
+                const workbook = read(data, { type: 'array' });
+                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                const csv = utils.sheet_to_csv(worksheet);
+                console.log(csv)
+                resolve(csv);
+            };
+            reader.onerror = reject;
+            reader.readAsArrayBuffer(file);
+        });
+    }
+    const handleFileChange = (file) => {
+        props.setFileName(file.name)
+        const fileExtension = getFileExtension(file.name);
+        if (fileExtension === "csv") {
+            readCsvFile(file).then((content) => {
+                props.setCsvData(content)
+            });
+        }
+        else if (fileExtension === "xlsx") {
+            console.log("xlsx")
+            readXlsxFile(file).then((content) => {
+                props.setCsvData(content)
+            });
+        }
+        else {
+            alert("Invalid file type. Please upload a .csv or .xlsx file.")
+        }
+    }
     const handleDrop = (event) => {
         event.preventDefault();
         const file = event.dataTransfer.files[0];
-        props.setFile(file);
+        handleFileChange(file)
         setIsDraggingOver(false);
     };
+    const handleUpload = (event) => {
+        const file = event.target.files[0];
+        handleFileChange(file)
+    }
 
     return (
         <div>
@@ -70,11 +103,11 @@ export default function FileUpload(props) {
                         <FileInput
                             id="fileInput"
                             type={"file"}
-                            onChange={(event) => props.setFile(event.target.files[0])}
+                            onChange={handleUpload}
                         />
                     </label>
                 </FileButton>
-                <FileTypography>{props.file? props.file.name : "No file selected"}</FileTypography>
+                <FileTypography>{props.fileName !== "" ? props.fileName : "No file selected"}</FileTypography>
             </UploadBox>
         </div>
     )
