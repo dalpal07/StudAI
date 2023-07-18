@@ -10,22 +10,61 @@ export default function FileUpload(props) {
     const [isDraggingOver, setIsDraggingOver] = useState(false);
 
     const UploadBox = styled(Box) ({
-        marginBottom: '1rem',
-        alignItems: 'center',
-        padding: '.5rem',
-        width: 'fit-content',
+        marginTop: "1.5rem",
+        display: "flex",
+        height: "18.875rem",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "1.5rem",
+        alignSelf: "stretch",
+        borderRadius: "1.25rem",
+        border: "2px dashed var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+        background: "#E3E3E3",
+        boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.10) inset",
         backgroundColor: isDraggingOver ? '#F5F5F5' : 'transparent'
     })
 
+    const TextBox = styled(Box)({
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "0.5rem",
+    });
+
+    const DragDropTypography = styled(Typography)({
+        color: "var(--main-black, #3F3636)",
+        fontFamily: "Inter",
+        fontSize: "1.125rem",
+        fontStyle: "normal",
+        fontWeight: "700",
+        lineHeight: "normal",
+    });
+
+    const DragDropSubTypography = styled(Typography)({
+        color: "var(--main-black, #3F3636)",
+        fontFamily: "Inter",
+        fontSize: "0.875rem",
+        fontStyle: "normal",
+        fontWeight: "700",
+        lineHeight: "normal",
+        opacity: 0.5,
+    });
+
     const FileButton = styled(Button) ({
-        display: 'inline-block',
-        backgroundColor: isDraggingOver ? 'gray' : '#1976d2',
+        color: "white",
+        display: "flex",
+        padding: "0.5rem 1.5rem",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: "1.25rem",
+        backgroundColor: isDraggingOver ? 'gray' : 'var(--main-green, #53B753)',
     })
 
     const FileTypography = styled(Typography) ({
         display: 'inline-block',
-        marginLeft: '1rem',
-        fontSize: '1.1rem',
+        fontSize: '1rem',
         color: isDraggingOver ? 'gray' : 'black'
     })
     const getFileExtension = (filename) => {
@@ -87,28 +126,30 @@ export default function FileUpload(props) {
     }
 
     return (
-        <div>
-            <h1>File</h1>
-            <UploadBox
-                onDrop={handleDrop}
-                onDragOver={(event) => {
-                    event.preventDefault()
-                    setIsDraggingOver(true)
-                }}
-                onDragLeave={() => setIsDraggingOver(false)}
-            >
-                <FileButton variant={"contained"}>
-                    <label htmlFor="fileInput">
-                        Choose a file
-                        <FileInput
-                            id="fileInput"
-                            type={"file"}
-                            onChange={handleUpload}
-                        />
-                    </label>
-                </FileButton>
-                <FileTypography>{props.fileName !== "" ? props.fileName : "No file selected"}</FileTypography>
-            </UploadBox>
-        </div>
+        <UploadBox
+            onDrop={handleDrop}
+            onDragOver={(event) => {
+                event.preventDefault()
+                setIsDraggingOver(true)
+            }}
+            onDragLeave={() => setIsDraggingOver(false)}
+        >
+            <TextBox>
+                <DragDropTypography>Drag and drop messy data here</DragDropTypography>
+                <DragDropSubTypography>Make sure your files are messy</DragDropSubTypography>
+            </TextBox>
+            <FileButton>
+                <label htmlFor="fileInput"
+                       style={{ width: "100%", height: "100%" }}>
+                    Upload Messy Data
+                    <FileInput
+                        id="fileInput"
+                        type={"file"}
+                        onChange={handleUpload}
+                    />
+                </label>
+            </FileButton>
+            <FileTypography>{props.fileName !== "" ? props.fileName : "No file selected"}</FileTypography>
+        </UploadBox>
     )
 }
