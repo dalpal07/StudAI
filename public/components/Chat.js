@@ -18,6 +18,11 @@ const ChatBox = styled(Box)({
     background: "#F2F2F2",
 });
 
+const UpperBox = styled(Box)({
+    overflowY: "scroll",
+    width: "100%"
+});
+
 const ChatLine = styled(Box)({
     display: "flex",
 });
@@ -28,16 +33,32 @@ const AssistantChatLine = styled(ChatLine)({
 
 const UserChatLine = styled(ChatLine)({
     justifyContent: "flex-end",
-    alignItems: "flex-end",
+    alignItems: "flex-end"
 });
 
 const ChatMessage = styled(Box)({
-    border: "1px solid black",
-    marginBottom: "15px",
-    width: "fit-content",
+    textAlign: "left",
+    fontFamily: "Inter",
+    fontSize: "0.875rem",
+    fontStyle: "normal",
+    fontWeight: "500",
+    lineHeight: "normal",
+    padding: "0.75rem 1.125rem",
+    gap: "0.625rem",
+    borderRadius: "1.25rem",
+    marginBottom: "0.75rem",
     maxWidth: "60%",
-    borderRadius: "20px",
-    padding: "10px",
+});
+
+const UserChatMessage = styled(ChatMessage)({
+    alignItems: "flex-end",
+    background: "#53B753",
+    color: "#F2F2F2",
+});
+
+const AssistantChatMessage = styled(ChatMessage)({
+    background: "#E3E3E3",
+    color: "var(--main-black, #3F3636)",
 });
 
 const InputBox = styled(Box)({
@@ -150,22 +171,24 @@ export default function Chat(props) {
 
     return (
         <Box>
-            <ChatBox ref={scrollableBoxRef}>
-                {props.conversation.map((line) => {
-                    return (
-                        <>
-                            {line.type === "user" ?
-                                <UserChatLine>
-                                    <ChatMessage>{line.message}</ChatMessage>
-                                </UserChatLine>
-                                :
-                                <AssistantChatLine>
-                                    <ChatMessage>{line.message}</ChatMessage>
-                                </AssistantChatLine>
-                            }
-                        </>
-                    )
-                })}
+            <ChatBox>
+                <UpperBox ref={scrollableBoxRef}>
+                    {props.conversation.map((line) => {
+                        return (
+                            <>
+                                {line.type === "user" ?
+                                    <UserChatLine>
+                                        <UserChatMessage>{line.message}</UserChatMessage>
+                                    </UserChatLine>
+                                    :
+                                    <AssistantChatLine>
+                                        <AssistantChatMessage>{line.message}</AssistantChatMessage>
+                                    </AssistantChatLine>
+                                }
+                            </>
+                        )
+                    })}
+                </UpperBox>
                 <BottomBox>
                     <ChatInputOuterBox>
                         <ChatInput placeholder="What can Stud do for you today?"
