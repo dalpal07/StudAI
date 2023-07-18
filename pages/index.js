@@ -1,8 +1,35 @@
-import {Container} from "@mui/material";
+import {Box, Container, styled, Typography} from "@mui/material";
 import {useState} from "react";
 import Script from "@/public/components/Script";
 import FileUpload from "@/public/components/FileUpload";
 import Chat from "@/public/components/Chat";
+import NavBar from "@/public/components/NavBar";
+
+const OuterBox = styled(Box) ({
+    display: "flex",
+    flexDirection: "column",
+    borderRadius: "0.3125rem",
+    background: "#EEE",
+});
+
+const InnerBox = styled(Box) ({
+    margin: "1.5rem",
+});
+
+const TitleBox = styled(Box) ({
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "0.5rem",
+});
+
+const TitleTypography = styled(Typography) ({
+    color: "var(--main-black, #3F3636)",
+    fontFamily: "Inter",
+    fontSize: "1.5rem",
+    fontStyle: "normal",
+    fontWeight: "700",
+    lineHeight: "normal",
+});
 
 export default function Home() {
     const [conversation, setConversation] = useState([]);
@@ -45,10 +72,16 @@ export default function Home() {
     }
 
     return (
-        <Container>
-            <FileUpload setCsvData={setCsvData} setFileName={setFileName} fileName={fileName}/>
-            <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}/>
-            <Script extendPrompt={extendPrompt}/>
-        </Container>
+        <OuterBox>
+            <NavBar/>
+            <InnerBox>
+                <TitleBox>
+                    <TitleTypography>Give Stud a Try</TitleTypography>
+                </TitleBox>
+                <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}/>
+                <FileUpload setCsvData={setCsvData} setFileName={setFileName} fileName={fileName}/>
+                <Script extendPrompt={extendPrompt}/>
+            </InnerBox>
+        </OuterBox>
     )
 }
