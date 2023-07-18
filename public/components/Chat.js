@@ -1,11 +1,26 @@
 import {Box, Button, Input, styled, Typography} from "@mui/material";
 import {useEffect, useRef, useState} from "react";
+import Image from "next/image";
 
 const ChatBox = styled(Box)({
-    border: "1px solid black",
-    height: "500px",
+    display: "flex",
+    height: "373px",
+    padding: "1.125rem",
+    paddingLeft: "1.75rem",
+    paddingRight: "1.75rem",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    gap: "0.5rem",
+    flex: "1 0 0",
+    borderRadius: "1.25rem",
+    border: "1px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+    background: "#F2F2F2",
+});
+
+const UpperBox = styled(Box)({
     overflowY: "scroll",
-    padding: "20px",
+    width: "100%"
 });
 
 const ChatLine = styled(Box)({
@@ -18,16 +33,32 @@ const AssistantChatLine = styled(ChatLine)({
 
 const UserChatLine = styled(ChatLine)({
     justifyContent: "flex-end",
-    alignItems: "flex-end",
+    alignItems: "flex-end"
 });
 
 const ChatMessage = styled(Box)({
-    border: "1px solid black",
-    marginBottom: "15px",
-    width: "fit-content",
+    textAlign: "left",
+    fontFamily: "Inter",
+    fontSize: "0.875rem",
+    fontStyle: "normal",
+    fontWeight: "500",
+    lineHeight: "normal",
+    padding: "0.75rem 1.125rem",
+    gap: "0.625rem",
+    borderRadius: "1.25rem",
+    marginBottom: "0.75rem",
     maxWidth: "60%",
-    borderRadius: "20px",
-    padding: "10px",
+});
+
+const UserChatMessage = styled(ChatMessage)({
+    alignItems: "flex-end",
+    background: "#53B753",
+    color: "#F2F2F2",
+});
+
+const AssistantChatMessage = styled(ChatMessage)({
+    background: "#E3E3E3",
+    color: "var(--main-black, #3F3636)",
 });
 
 const InputBox = styled(Box)({
@@ -37,20 +68,39 @@ const InputBox = styled(Box)({
     display: "flex",
 });
 
-const ChatInput = styled(Input)({
+const BottomBox = styled(Box)({
+    display: "flex",
     width: "100%",
-    paddingLeft: "10px",
-    paddingRight: "10px",
-    borderBottom: "none",
-    overflowX: "wrap",
-    overflowWrap: "break-word",
-    overflowY: "scroll",
-    height: "100%",
-    display: "inline-block",
+    height: "fit-content",
+    alignItems: "center",
+    justifyContent: "center",
 });
 
+const ChatInputOuterBox = styled(Box)({
+    display: "flex",
+    padding: "0.75rem",
+    alignItems: "center",
+    gap: "0.5rem",
+    borderRadius: "1.25rem",
+    background: "#E3E3E3",
+    height: "1em",
+    width: "100%",
+});
+
+const ChatInput = styled(Input)(({ hasValue }) => ({
+    width: "100%",
+    color: "var(--main-black, #3F3636)",
+    fontFamily: "Inter",
+    fontSize: "0.875rem",
+    fontStyle: hasValue ? "normal" : "italic",
+    fontWeight: "500",
+    lineHeight: "normal",
+}));
+
 const SendButton = styled(Button)({
-    display: "inline-block",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
 });
 
 export default function Chat(props) {
@@ -120,38 +170,44 @@ export default function Chat(props) {
     }, [props.conversation]);
 
     return (
-        <div>
-            <h1>Chat</h1>
-            <ChatBox ref={scrollableBoxRef}>
-                {props.conversation.map((line) => {
-                    return (
-                        <>
-                            {line.type === "user" ?
-                                <UserChatLine>
-                                    <ChatMessage>{line.message}</ChatMessage>
-                                </UserChatLine>
-                                :
-                                <AssistantChatLine>
-                                    <ChatMessage>{line.message}</ChatMessage>
-                                </AssistantChatLine>
-                            }
-                        </>
-                    )
-                })}
+        <Box>
+            <ChatBox>
+                <UpperBox ref={scrollableBoxRef}>
+                    {props.conversation.map((line) => {
+                        return (
+                            <>
+                                {line.type === "user" ?
+                                    <UserChatLine>
+                                        <UserChatMessage>{line.message}</UserChatMessage>
+                                    </UserChatLine>
+                                    :
+                                    <AssistantChatLine>
+                                        <AssistantChatMessage>{line.message}</AssistantChatMessage>
+                                    </AssistantChatLine>
+                                }
+                            </>
+                        )
+                    })}
+                </UpperBox>
+                <BottomBox>
+                    <ChatInputOuterBox>
+                        <ChatInput placeholder="What can Stud do for you today?"
+                                   hasValue={input !== ""}
+                                   disableUnderline={true}
+                                   value={input}
+                                   onChange={handleInputChange}
+                                   onKeyPress={handleKeyPress}/>
+                    </ChatInputOuterBox>
+                    <SendButton onClick={handleSendButtonClick}><Image src={"./images/send.svg"} alt={"Send"} width={40} height={40}/></SendButton>
+                </BottomBox>
             </ChatBox>
-            <InputBox>
-                <ChatInput placeholder="Make your request here..." multiline rows={4}
-                           value={input}
-                           onChange={handleInputChange}
-                           onKeyPress={handleKeyPress}/>
-                <SendButton onClick={handleSendButtonClick}>Send</SendButton>
-            </InputBox>
             <InputBox>
                 <Typography><b>Prompt:</b></Typography>
                 <ChatInput placeholder="Fill in AI prompt here..." multiline rows={4}
+                           hasValue={prompt !== ""}
                            value={prompt}
                            onChange={handlePromptChange}/>
             </InputBox>
-        </div>
+        </Box>
     )
 }
