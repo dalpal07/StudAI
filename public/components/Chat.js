@@ -66,9 +66,15 @@ const ChatInputOuterBox = styled(Box)({
     width: "100%",
 });
 
-const ChatInput = styled(Box)({
-
-});
+const ChatInput = styled(Input)(({ hasValue }) => ({
+    width: "100%",
+    color: "var(--main-black, #3F3636)",
+    fontFamily: "Inter",
+    fontSize: "0.875rem",
+    fontStyle: hasValue ? "normal" : "italic",
+    fontWeight: "500",
+    lineHeight: "normal",
+}));
 
 const SendButton = styled(Button)({
     display: "flex",
@@ -163,6 +169,8 @@ export default function Chat(props) {
                 <BottomBox>
                     <ChatInputOuterBox>
                         <ChatInput placeholder="What can Stud do for you today?"
+                                   hasValue={input !== ""}
+                                   disableUnderline={true}
                                    value={input}
                                    onChange={handleInputChange}
                                    onKeyPress={handleKeyPress}/>
@@ -173,6 +181,7 @@ export default function Chat(props) {
             <InputBox>
                 <Typography><b>Prompt:</b></Typography>
                 <ChatInput placeholder="Fill in AI prompt here..." multiline rows={4}
+                           hasValue={prompt !== ""}
                            value={prompt}
                            onChange={handlePromptChange}/>
             </InputBox>
