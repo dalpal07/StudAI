@@ -98,8 +98,8 @@ export default function NavBar(props) {
         setClicked(!clicked);
     }
     const Profile = () => {
-        if (props.isLoading) return <Box>Loading...</Box>
-        if (props.error) return <Box>{props.error.message}</Box>
+        if (props.isLoading) return <UserNameText>Loading...</UserNameText>
+        if (props.error) return <UserNameText>{props.error.message}</UserNameText>
         if (props.user) return (
             <ProfileBox>
                 <UserNameText>{props.user.name}</UserNameText>
