@@ -88,7 +88,7 @@ export default function Product() {
             </TitleBox>
             <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}/>
             <FileUpload setCsvData={setCsvData} setFileName={setFileName} fileName={fileName}/>
-            <Script extendPrompt={extendPrompt} script={script} setScript={setScript}/>
+            <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation}/>
             <Run getFileHeaders={getFileHeaders} getFileEntries={getFileEntries} script={script}/>
         </InnerBox>
     )

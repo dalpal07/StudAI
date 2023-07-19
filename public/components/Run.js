@@ -1,5 +1,5 @@
 import {Box, Typography} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function Run(props) {
     const [response, setResponse] = useState("")
@@ -20,11 +20,13 @@ export default function Run(props) {
             setResponse(JSON.stringify(data))
         }
     }
-
+    useEffect(() => {
+        if (props.script !== "") {
+            handleClick()
+        }
+    }, [props.script])
     return (
         <Box>
-            <h1>Run</h1>
-            <button onClick={handleClick}>Run the Script</button>
             <Typography><b>Response:</b></Typography>
             <Typography>{response}</Typography>
         </Box>
