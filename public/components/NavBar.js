@@ -1,5 +1,6 @@
 import {Box, styled} from "@mui/material";
 import Image from "next/image";
+import React from 'react';
 
 const NavBox = styled(Box) ({
     position: "sticky",
@@ -19,12 +20,29 @@ const Spacer = styled(Box) ({
     flex: "1 0 0"
 });
 
-export default function NavBar() {
+export default function NavBar(props) {
+    const Profile = () => {
+        if (props.isLoading) return <Box>Loading...</Box>
+        if (props.error) return <Box>{error.message}</Box>
+        if (props.user) return (
+            <Box>
+                <a href="/api/auth/logout">Logout</a>
+                {props.user.name}
+            </Box>
+        )
+        return (
+            <Box>
+                <a href="/api/auth/login">Login</a>
+                <Image src={"./images/Profile.svg"} alt={"Profile"} width={30} height={30}/>
+            </Box>
+        )
+    }
+
     return (
         <NavBox>
             <Image src={"./images/Logo.svg"} alt={"StudAI Logo"} width={151.9} height={27.5}/>
             <Spacer/>
-            <Image src={"./images/Profile.svg"} alt={"Profile"} width={30} height={30}/>
+            <Profile/>
         </NavBox>
     );
 }
