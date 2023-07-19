@@ -1,6 +1,6 @@
-import {Box, styled} from "@mui/material";
+import {Box, Button, styled} from "@mui/material";
 import Image from "next/image";
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const NavBox = styled(Box) ({
     position: "sticky",
@@ -20,21 +20,100 @@ const Spacer = styled(Box) ({
     flex: "1 0 0"
 });
 
+const SignInButton = styled(Button)({
+    display: "flex",
+    padding: "0.5rem 1.5rem",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "1.25rem",
+    background: "#E3E3E3",
+    color: "var(--main-black, #3F3636)",
+    fontFamily: "Inter",
+    fontSize: "1.125rem",
+    fontStyle: "normal",
+    fontWeight: 700,
+    lineHeight: "normal",
+    textTransform: "none",
+    marginRight: "1.75rem",
+});
+
+const ProfileBox = styled(Box)({
+    display: "flex",
+    alignItems: "center",
+});
+
+const UserNameText = styled(Box)({
+    color: "var(--main-black, #3F3636)",
+    fontFamily: "Inter",
+    fontSize: "1.125rem",
+    fontStyle: "normal",
+    fontWeight: 700,
+    lineHeight: "normal",
+    textTransform: "none",
+    marginRight: "1.75rem",
+});
+
+const ProfileButton = styled(Button)({
+    padding: 0,
+    margin: 0,
+    width: "fit-content",
+    height: "fit-content",
+    minWidth: 0,
+});
+
+const SignOutButton = styled(Button)({
+    position: "absolute",
+    top: 67,
+    right: 0,
+    background: "#F2F2F2",
+    color: "var(--main-black, #3F3636)",
+    textTransform: "none",
+    boxShadow: "0px 1px 1px 0px rgba(0, 0, 0, 0.30), 0px 4px 8px 0px rgba(0, 0, 0, 0.15), 0px 10px 20px 0px rgba(0, 0, 0, 0.05)",
+    borderRadius: 0,
+    width: "7rem",
+    justifyContent: "left",
+});
+
 export default function NavBar(props) {
+    const [clicked, setClicked] = useState(false);
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const handleOutSideClick = (event) => {
+            if (!ref.current?.contains(event.target)) {
+                setClicked(false);
+            }
+        };
+
+        window.addEventListener("mousedown", handleOutSideClick);
+
+        return () => {
+            window.removeEventListener("mousedown", handleOutSideClick);
+        };
+    }, [ref]);
+    const IsSignOutButton = () => {
+        if (clicked) return <a href="/api/auth/logout" ref={ref}><SignOutButton>Sign Out</SignOutButton></a>
+    }
+    const handleProfileClick = () => {
+        setClicked(!clicked);
+    }
     const Profile = () => {
         if (props.isLoading) return <Box>Loading...</Box>
-        if (props.error) return <Box>{error.message}</Box>
+        if (props.error) return <Box>{props.error.message}</Box>
         if (props.user) return (
-            <Box>
-                <a href="/api/auth/logout">Logout</a>
-                {props.user.name}
-            </Box>
+            <ProfileBox>
+                <UserNameText>{props.user.name}</UserNameText>
+                <ProfileButton onClick={handleProfileClick} ref={ref}>
+                    <Image src={"./images/Profile.svg"} alt={"Profile"} width={30} height={30}/>
+                </ProfileButton>
+                <IsSignOutButton/>
+            </ProfileBox>
         )
         return (
-            <Box>
-                <a href="/api/auth/login">Login</a>
+            <ProfileBox>
+                <a href="/api/auth/login" style={{textDecoration: "none"}}><SignInButton>Sign In</SignInButton></a>
                 <Image src={"./images/Profile.svg"} alt={"Profile"} width={30} height={30}/>
-            </Box>
+            </ProfileBox>
         )
     }
 

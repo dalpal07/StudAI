@@ -1,10 +1,6 @@
 import {Box, Button, styled, Typography} from "@mui/material";
 import Image from "next/image";
 
-const OuterBox = styled(Box)({
-    position: "relative",
-});
-
 const InnerBox = styled(Box)({
     position: "absolute",
     top: 70,
@@ -44,13 +40,14 @@ const SeeText = styled(Text)({
 })
 
 const GreenButton = styled(Button)({
-    marginTop: "3.85rem",
+    marginTop: "3rem",
     display: "flex",
     padding: "0.5rem 1.5rem",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: "1.25rem",
     background: "var(--main-green, #53B753)",
+    textTransform: "none"
 });
 
 export default function Intro() {
@@ -59,7 +56,11 @@ export default function Intro() {
             <WelcomeText>Welcome to</WelcomeText>
             <Image src={"./images/FullLogo.svg"} alt={"StudAI Logo"} width={400} height={72.42}/>
             <DataMaidText>Your Personal Data Maid</DataMaidText>
-            <GreenButton><SeeText>See what stud can do</SeeText></GreenButton>
+            <a href="/api/auth/login" style={{textDecoration: "none"}}>
+                <GreenButton>
+                    <SeeText>See what stud can do</SeeText>
+                </GreenButton>
+            </a>
         </InnerBox>
     )
 }
