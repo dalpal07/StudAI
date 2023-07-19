@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const InnerBox = styled(Box)({
     position: "absolute",
-    top: 66,
+    top: 60,
     bottom: 0,
     width: "100%",
     justifyContent: "center",
