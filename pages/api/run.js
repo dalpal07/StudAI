@@ -1,0 +1,38 @@
+function getCorrectStart(functionString) {
+    // Make sure start of functionString is "function"
+    while (true) {
+        if (functionString.length === 0) {
+            throw new Error("Wrong format for functionString");
+        }
+        if (functionString.startsWith("function")) {
+            return functionString;
+        }
+        else {
+            functionString = functionString.slice(1);
+        }
+    }
+}
+
+export default async function handler(req, res) {
+    if (req.method === 'POST') {
+        try {
+            const body = JSON.parse(req.body);
+            const generatedFunction = getCorrectStart(body.generatedFunction);
+            console.log(generatedFunction)
+            const headers = body.headers;
+            console.log(headers)
+            const entries = body.entries;
+            console.log(entries)
+            console.log("Running script")
+            const performRequest = await eval(`(${generatedFunction})`)
+            console.log("Script evaluated")
+            const response = await performRequest(headers, entries)
+            console.log("Script run: " + response)
+            res.status(200).json(response);
+        }
+        catch (err) {
+            console.log(err)
+            res.status(500).json({ error: err.message });
+        }
+    }
+}

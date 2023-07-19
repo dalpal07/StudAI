@@ -3,6 +3,7 @@ import FileUpload from "@/public/components/FileUpload";
 import Script from "@/public/components/Script";
 import {Box, styled, Typography} from "@mui/material";
 import {useState} from "react";
+import Run from "@/public/components/Run";
 
 const InnerBox = styled(Box) ({
     margin: "1.5rem",
@@ -27,6 +28,7 @@ export default function Product() {
     const [conversation, setConversation] = useState([]);
     const [csvData, setCsvData] = useState("")
     const [fileName, setFileName] = useState("")
+    const [script, setScript] = useState("")
 
     async function getFileHeaders() {
         let headers = []
@@ -40,6 +42,22 @@ export default function Product() {
         }
         console.log(headers)
         return headers
+    }
+    async function getFileEntries() {
+        let entries = []
+        let lines = csvData.split("\n")
+        if (lines.length > 1) {
+            for (let i = 1; i < lines.length; i++) {
+                let line = lines[i]
+                let entry = line.split(",")
+                for (let j = 0; j < entry.length; j++) {
+                    entry[j] = entry[j].trim()
+                }
+                entries.push(entry)
+            }
+        }
+        console.log(entries)
+        return entries
     }
     async function extendPrompt(prompt) {
         if (fileName !== "") {
@@ -70,7 +88,8 @@ export default function Product() {
             </TitleBox>
             <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}/>
             <FileUpload setCsvData={setCsvData} setFileName={setFileName} fileName={fileName}/>
-            <Script extendPrompt={extendPrompt}/>
+            <Script extendPrompt={extendPrompt} script={script} setScript={setScript}/>
+            <Run getFileHeaders={getFileHeaders} getFileEntries={getFileEntries} script={script}/>
         </InnerBox>
     )
 }

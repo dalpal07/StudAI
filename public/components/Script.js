@@ -28,20 +28,19 @@ const GetButton = styled(Button)({
 });
 
 export default function Script(props) {
-    const [prompt, setPrompt] = useState("Given information about a user's data and a conversation of their request, please write a VBA script that will perform the request.");
-    const [script, setScript] = useState("");
+    const [prompt, setPrompt] = useState("Given information about a user's data and a conversation of their request, please write a nodejs function titled \"performRequest\" (i.e., \"function performRequest(headers, entries){...}\") that takes in an array of headers as well as an array of arrays (representing entries and cells) to perform the user's request. Please return an object with attributes \"headers\" and \"entries\". These should contain most of the original data set, just with the modifications requested. The code should not include any comments.");
     const handlePromptChange = (event) => {
         setPrompt(event.target.value)
     }
 
     function renderScript() {
-        if (script === "") {
+        if (props.script === "") {
             return (<ScriptBox/>)
         } else {
             return (
                 <ScriptBox>
                     <Typography><b>Try this script:</b></Typography>
-                    <Typography>{script}</Typography>
+                    <Typography>{props.script}</Typography>
                 </ScriptBox>
             )
         }
@@ -55,7 +54,7 @@ export default function Script(props) {
         })
         if (response.status === 200) {
             const data = await response.json()
-            setScript(data.response)
+            props.setScript(data.response)
         }
     }
 
