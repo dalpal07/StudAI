@@ -87,12 +87,12 @@ const ChatInputOuterBox = styled(Box)({
     width: "100%",
 });
 
-const ChatInput = styled(Input)(({ hasValue }) => ({
+const ChatInput = styled(Input)(({ hasvalue }) => ({
     width: "100%",
     color: "var(--main-black, #3F3636)",
     fontFamily: "Inter",
     fontSize: "0.875rem",
-    fontStyle: hasValue ? "normal" : "italic",
+    fontStyle: hasvalue === "true" ? "normal" : "italic",
     fontWeight: "500",
     lineHeight: "normal",
 }));
@@ -192,7 +192,7 @@ export default function Chat(props) {
                 <BottomBox>
                     <ChatInputOuterBox>
                         <ChatInput placeholder="What can Stud do for you today?"
-                                   hasValue={input !== ""}
+                                   hasvalue={(input !== "").toString()}
                                    disableUnderline={true}
                                    value={input}
                                    onChange={handleInputChange}
@@ -204,7 +204,7 @@ export default function Chat(props) {
             <InputBox>
                 <Typography><b>Prompt:</b></Typography>
                 <ChatInput placeholder="Fill in AI prompt here..." multiline rows={4}
-                           hasValue={prompt !== ""}
+                           hasvalue={(prompt !== "").toString()}
                            value={prompt}
                            onChange={handlePromptChange}/>
             </InputBox>
