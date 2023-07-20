@@ -115,22 +115,30 @@ export default function FileUpload(props) {
         }
     }
     const handleDrop = (event) => {
-        event.preventDefault();
-        const file = event.dataTransfer.files[0];
-        handleFileChange(file)
-        setIsDraggingOver(false);
+        if (!props.dataProcessing) {
+            event.preventDefault();
+            const file = event.dataTransfer.files[0];
+            handleFileChange(file)
+            setIsDraggingOver(false);
+        }
     };
     const handleUpload = (event) => {
         const file = event.target.files[0];
         handleFileChange(file)
     }
+    const handleButtonClick = () => {
+        // Trigger the click event on the hidden file input
+        document.getElementById("fileInput").click();
+    };
 
     return (
         <UploadBox
             onDrop={handleDrop}
             onDragOver={(event) => {
-                event.preventDefault()
-                setIsDraggingOver(true)
+                if (!props.dataProcessing) {
+                    event.preventDefault()
+                    setIsDraggingOver(true)
+                }
             }}
             onDragLeave={() => setIsDraggingOver(false)}
         >
@@ -138,16 +146,13 @@ export default function FileUpload(props) {
                 <DragDropTypography>Drag and drop messy data here</DragDropTypography>
                 <DragDropSubTypography>Make sure your files are messy</DragDropSubTypography>
             </TextBox>
-            <FileButton>
-                <label htmlFor="fileInput"
-                       style={{ width: "100%", height: "100%" }}>
-                    Upload Messy Data
-                    <FileInput
-                        id="fileInput"
-                        type={"file"}
-                        onChange={handleUpload}
-                    />
-                </label>
+            <FileInput
+                id="fileInput"
+                type={"file"}
+                onChange={handleUpload}
+            />
+            <FileButton htmlFor="fileInput" onClick={handleButtonClick} disabled={props.dataProcessing}>
+                Upload Messy Data
             </FileButton>
             <FileTypography>{props.fileName !== "" ? props.fileName : "No file selected"}</FileTypography>
         </UploadBox>

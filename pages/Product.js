@@ -1,8 +1,8 @@
 import Chat from "@/public/components/Chat";
 import FileUpload from "@/public/components/FileUpload";
 import Script from "@/public/components/Script";
-import {Box, styled, Typography} from "@mui/material";
-import {useState} from "react";
+import {Box, Button, styled, Typography} from "@mui/material";
+import {useEffect, useState} from "react";
 import Run from "@/public/components/Run";
 
 const InnerBox = styled(Box) ({
@@ -24,12 +24,22 @@ const TitleTypography = styled(Typography) ({
     lineHeight: "normal",
 });
 
-export default function Product() {
-    const [conversation, setConversation] = useState([]);
+export default function Product(props) {
+    const [conversation, setConversation] = useState([])
     const [csvData, setCsvData] = useState("")
     const [fileName, setFileName] = useState("")
     const [script, setScript] = useState("")
-
+    const [dataProcessing, setDataProcessing] = useState(false)
+    useEffect(() => {
+        if (dataProcessing) {
+            document.body.style.setProperty("opacity", "0.5")
+            document.body.style.setProperty("overflow", "hidden")
+        }
+        else {
+            document.body.style.setProperty("opacity", "1")
+            document.body.style.setProperty("overflow", "auto")
+        }
+    }, [dataProcessing])
     async function getFileHeaders() {
         let headers = []
         let lines = csvData.split("\n")
@@ -86,10 +96,10 @@ export default function Product() {
             <TitleBox>
                 <TitleTypography>Give Stud a Try</TitleTypography>
             </TitleBox>
-            <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}/>
-            <FileUpload setCsvData={setCsvData} setFileName={setFileName} fileName={fileName}/>
-            <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation}/>
-            <Run getFileHeaders={getFileHeaders} getFileEntries={getFileEntries} script={script} fileName={fileName}/>
+            <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt} dataProcessing={dataProcessing}/>
+            <FileUpload setCsvData={setCsvData} setFileName={setFileName} fileName={fileName} dataProcessing={dataProcessing}/>
+            <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}/>
+            <Run getFileHeaders={getFileHeaders} getFileEntries={getFileEntries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}/>
         </InnerBox>
     )
 }

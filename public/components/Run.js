@@ -23,6 +23,7 @@ export default function Run(props) {
                 entries: entries
             })
         })
+        props.setDataProcessing(false)
         if (response.status === 200) {
             const data = await response.json()
             downloadFile(data.content, props.fileName)

@@ -183,11 +183,12 @@ export default function Chat(props) {
                         <ChatInput placeholder="What can Stud do for you today?"
                                    hasvalue={(input !== "").toString()}
                                    disableUnderline={true}
+                                   disabled={props.dataProcessing}
                                    value={input}
                                    onChange={handleInputChange}
                                    onKeyPress={handleKeyPress}/>
                     </ChatInputOuterBox>
-                    <SendButton onClick={handleSendButtonClick}><Image src={"./images/send.svg"} alt={"Send"} width={40} height={40}/></SendButton>
+                    <SendButton onClick={handleSendButtonClick} disabled={props.dataProcessing}><Image src={"./images/send.svg"} alt={"Send"} width={40} height={40}/></SendButton>
                 </BottomBox>
             </ChatBox>
         </Box>
