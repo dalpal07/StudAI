@@ -14,7 +14,7 @@
 
 html,
 body {
-
+  background: #F2F2F2;
 }
 
 body {
@@ -36,4 +36,13 @@ a {
   src: url("../public/fonts/Inter/Inter-VariableFont_slnt,wght.ttf");
   font-weight: 400;
   font-style: normal;
+}
+
+@keyframes spin-anim {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
