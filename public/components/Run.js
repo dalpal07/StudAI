@@ -28,6 +28,9 @@ export default function Run(props) {
             const data = await response.json()
             downloadFile(data.content, props.fileName)
         }
+        else {
+            alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
+        }
     }
     useEffect(() => {
         if (props.script !== "" && props.script !== localScript) {
