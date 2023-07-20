@@ -1,9 +1,17 @@
-import {Box, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
+import { saveAs } from 'file-saver';
+
+function downloadFile(content, fileName) {
+    // if fileName extension is not csv, change to csv
+    if (fileName.split(".")[1] !== "csv") {
+        fileName = fileName.split(".")[0] + ".csv"
+    }
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    saveAs(blob, fileName);
+}
 
 export default function Run(props) {
-    const [response, setResponse] = useState("")
-
+    const [localScript, setLocalScript] = useState("")
     const handleClick = async () => {
         const headers = await props.getFileHeaders()
         const entries = await props.getFileEntries()
@@ -17,18 +25,13 @@ export default function Run(props) {
         })
         if (response.status === 200) {
             const data = await response.json()
-            setResponse(JSON.stringify(data))
+            downloadFile(data.content, props.fileName)
         }
     }
     useEffect(() => {
-        if (props.script !== "") {
+        if (props.script !== "" && props.script !== localScript) {
+            setLocalScript(props.script)
             handleClick()
         }
     }, [props.script])
-    return (
-        <Box>
-            <Typography><b>Response:</b></Typography>
-            <Typography>{response}</Typography>
-        </Box>
-    )
 }
