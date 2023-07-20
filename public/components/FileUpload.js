@@ -115,10 +115,12 @@ export default function FileUpload(props) {
         }
     }
     const handleDrop = (event) => {
-        event.preventDefault();
-        const file = event.dataTransfer.files[0];
-        handleFileChange(file)
-        setIsDraggingOver(false);
+        if (!props.dataProcessing) {
+            event.preventDefault();
+            const file = event.dataTransfer.files[0];
+            handleFileChange(file)
+            setIsDraggingOver(false);
+        }
     };
     const handleUpload = (event) => {
         const file = event.target.files[0];
@@ -133,8 +135,10 @@ export default function FileUpload(props) {
         <UploadBox
             onDrop={handleDrop}
             onDragOver={(event) => {
-                event.preventDefault()
-                setIsDraggingOver(true)
+                if (!props.dataProcessing) {
+                    event.preventDefault()
+                    setIsDraggingOver(true)
+                }
             }}
             onDragLeave={() => setIsDraggingOver(false)}
         >
@@ -147,7 +151,7 @@ export default function FileUpload(props) {
                 type={"file"}
                 onChange={handleUpload}
             />
-            <FileButton htmlFor="fileInput" onClick={handleButtonClick}>
+            <FileButton htmlFor="fileInput" onClick={handleButtonClick} disabled={props.dataProcessing}>
                 Upload Messy Data
             </FileButton>
             <FileTypography>{props.fileName !== "" ? props.fileName : "No file selected"}</FileTypography>

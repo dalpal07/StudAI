@@ -1,4 +1,6 @@
-function getCorrectStart(functionString) {
+function getCorrectFunctionString(functionString) {
+    // Remove the semicolon at the end if it exists
+    functionString = functionString.trim().replace(/;$/, '');
     // Make sure start of functionString is "function"
     while (true) {
         if (functionString.length === 0) {
@@ -17,7 +19,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
             const body = JSON.parse(req.body);
-            const generatedFunction = getCorrectStart(body.generatedFunction);
+            const generatedFunction = getCorrectFunctionString(body.generatedFunction);
             console.log(generatedFunction)
             const headers = body.headers;
             console.log(headers)

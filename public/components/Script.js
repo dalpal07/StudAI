@@ -21,6 +21,7 @@ export default function Script(props) {
                     console.log("Successful update called to get script.")
                     setLocalMessage(lastMessage.message)
                     sendToServer()
+                    props.setDataProcessing(true)
                 }
             }
         }
