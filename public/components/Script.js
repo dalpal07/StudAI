@@ -1,52 +1,7 @@
-import {Box, Button, Input, styled, Typography} from "@mui/material";
-import {useState} from "react";
-
-const InputBox = styled(Box)({
-    border: "1px solid black",
-    height: "100px",
-    display: "flex",
-});
-
-const ChatInput = styled(Input)({
-    width: "100%",
-    paddingLeft: "10px",
-    paddingRight: "10px",
-    borderBottom: "none",
-    overflowX: "wrap",
-    overflowWrap: "break-word",
-    overflowY: "scroll",
-    height: "100%",
-    display: "inline-block",
-});
-
-const ScriptBox = styled(Box)({
-   marginBottom: "50px",
-});
-
-const GetButton = styled(Button)({
-    display: "inline-block",
-});
-
+import {useEffect, useState} from "react";
 export default function Script(props) {
-    const [prompt, setPrompt] = useState("Given information about a user's data and a conversation of their request, please write a VBA script that will perform the request.");
-    const [script, setScript] = useState("");
-    const handlePromptChange = (event) => {
-        setPrompt(event.target.value)
-    }
-
-    function renderScript() {
-        if (script === "") {
-            return (<ScriptBox/>)
-        } else {
-            return (
-                <ScriptBox>
-                    <Typography><b>Try this script:</b></Typography>
-                    <Typography>{script}</Typography>
-                </ScriptBox>
-            )
-        }
-    }
-
+    const [localMessage, setLocalMessage] = useState("")
+    const prompt = "Given information about a user's data and a conversation of their request, please write a nodejs function titled \"performRequest\" (i.e., \"function performRequest(headers, entries){...}\") that takes in an array of headers as well as an array of arrays (representing entries and cells) to perform the user's request. Please return an object with attributes \"headers\" and \"entries\". These should contain most of the original data set, just with the modifications requested. The code should not include any comments."
     const sendToServer = async () => {
         const req = await props.extendPrompt(prompt)
         const response = await fetch("/api/chat", {
@@ -55,25 +10,19 @@ export default function Script(props) {
         })
         if (response.status === 200) {
             const data = await response.json()
-            setScript(data.response)
+            props.setScript(data.response)
         }
     }
-
-    const handleGetButtonClick = () => {
-        sendToServer()
-    }
-
-    return (
-        <div>
-            <h1>Script</h1>
-            <InputBox>
-                <Typography><b>Prompt:</b></Typography>
-                <ChatInput placeholder="Fill in AI prompt here..." multiline rows={4}
-                           value={prompt}
-                           onChange={handlePromptChange}/>
-                <GetButton onClick={handleGetButtonClick}>Get</GetButton>
-            </InputBox>
-            {renderScript()}
-        </div>
-    );
+    useEffect(() => {
+        if (props.conversation.length > 0) {
+            const lastMessage = props.conversation[props.conversation.length - 1]
+            if (lastMessage.type === "assistant") {
+                if (!lastMessage.message.includes("?") && lastMessage.message !== localMessage) {
+                    console.log("Successful update called to get script.")
+                    setLocalMessage(lastMessage.message)
+                    sendToServer()
+                }
+            }
+        }
+    }, [props.conversation])
 }

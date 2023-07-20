@@ -61,13 +61,6 @@ const AssistantChatMessage = styled(ChatMessage)({
     color: "var(--main-black, #3F3636)",
 });
 
-const InputBox = styled(Box)({
-    border: "1px solid black",
-    borderTop: "none",
-    height: "100px",
-    display: "flex",
-});
-
 const BottomBox = styled(Box)({
     display: "flex",
     width: "100%",
@@ -105,7 +98,7 @@ const SendButton = styled(Button)({
 
 export default function Chat(props) {
     const [input, setInput] = useState("");
-    const [prompt, setPrompt] = useState("You are an AI chatbot named Stud. Your goal is to chat with users about their data requests until you sufficiently understand the details of what they're asking. When you sufficiently understand, let the user know that you will take care of their request.")
+    const prompt= "You are an AI chatbot named Stud. Your goal is to chat with users about their data requests until you sufficiently understand the details of what they're asking. When you sufficiently understand, let the user know that you will take care of their request. No need to ask if there's anything else you can do."
     const sendToServer = async () => {
         const req = await props.extendPrompt(prompt)
         const response = await fetch("/api/chat", {
@@ -135,10 +128,6 @@ export default function Chat(props) {
             temp = temp.substring(0, temp.length - 1)
         }
         setInput(temp)
-    }
-
-    const handlePromptChange = (event) => {
-        setPrompt(event.target.value)
     }
 
     const scrollableBoxRef = useRef(null);
@@ -201,13 +190,6 @@ export default function Chat(props) {
                     <SendButton onClick={handleSendButtonClick}><Image src={"./images/send.svg"} alt={"Send"} width={40} height={40}/></SendButton>
                 </BottomBox>
             </ChatBox>
-            <InputBox>
-                <Typography><b>Prompt:</b></Typography>
-                <ChatInput placeholder="Fill in AI prompt here..." multiline rows={4}
-                           hasvalue={(prompt !== "").toString()}
-                           value={prompt}
-                           onChange={handlePromptChange}/>
-            </InputBox>
         </Box>
     )
 }
