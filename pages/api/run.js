@@ -15,6 +15,15 @@ function getCorrectFunctionString(functionString) {
     }
 }
 
+function addQuotes(row) {
+    for (let i = 0; i < row.length; i++) {
+        if (row[i].length > 0 && row[i][0] !== "\"" && row[i].includes(",")) {
+            row[i] = "\"" + row[i] + "\"";
+        }
+    }
+    return row;
+}
+
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
@@ -30,12 +39,12 @@ export default async function handler(req, res) {
             console.log("Script evaluated")
             const response = await performRequest(headers, entries)
             console.log("Script run: " + response)
-            const newHeaders = response.headers
+            const newHeaders = addQuotes(response.headers)
             let newEntries = response.entries
             let tempEntries = []
             for (let i = 0; i < newEntries.length; i++) {
                 if (newEntries[i].length === newHeaders.length) {
-                    tempEntries.push(newEntries[i])
+                    tempEntries.push(addQuotes(newEntries[i]))
                 }
             }
             newEntries = tempEntries

@@ -69,12 +69,30 @@ export default function Product(props) {
             document.body.style.setProperty("overflow", "auto")
         }
     }, [dataProcessing])
+    function splitLine(row) {
+        let entries = []
+        let entry = ""
+        let inQuotes = false
+        for (let i = 0; i < row.length; i++) {
+            if (row[i] === "\"") {
+                inQuotes = !inQuotes
+            }
+            if (row[i] === "," && !inQuotes) {
+                entries.push(entry)
+                entry = ""
+            } else {
+                entry = entry + row[i]
+            }
+        }
+        entries.push(entry)
+        return entries
+    }
     async function getFileHeaders() {
         let headers = []
         let lines = csvData.split("\n")
         if (lines.length > 0) {
             let headerLine = lines[0]
-            headers = headerLine.split(",")
+            headers = splitLine(headerLine)
             for (let i = 0; i < headers.length; i++) {
                 headers[i] = headers[i].trim()
             }
@@ -85,15 +103,13 @@ export default function Product(props) {
     async function getFileEntries() {
         let entries = []
         let lines = csvData.split("\n")
-        if (lines.length > 1) {
-            for (let i = 1; i < lines.length; i++) {
-                let line = lines[i]
-                let entry = line.split(",")
-                for (let j = 0; j < entry.length; j++) {
-                    entry[j] = entry[j].trim()
-                }
-                entries.push(entry)
+        for (let i = 1; i < lines.length; i++) {
+            let line = lines[i]
+            let entry = splitLine(line)
+            for (let j = 0; j < entry.length; j++) {
+                entry[j] = entry[j].trim()
             }
+            entries.push(entry)
         }
         console.log(entries)
         return entries
