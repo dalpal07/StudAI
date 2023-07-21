@@ -31,14 +31,9 @@ export default async function handler(req, res) {
             const generatedFunction = getCorrectFunctionString(body.generatedFunction);
             console.log(generatedFunction)
             const headers = body.headers;
-            console.log(headers)
             const entries = body.entries;
-            console.log(entries)
-            console.log("Running script")
             const performRequest = await eval(`(${generatedFunction})`)
-            console.log("Script evaluated")
             const response = await performRequest(headers, entries)
-            console.log("Script run: " + response)
             const newHeaders = addQuotes(response.headers)
             let newEntries = response.entries
             let tempEntries = []
