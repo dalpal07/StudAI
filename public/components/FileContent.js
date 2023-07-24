@@ -17,17 +17,6 @@ const Cell = styled(TableCell)(({rowIndex}) => ({
     textTransform: "none",
 }));
 export default function FileContent(props) {
-    const handleCellChange = (event, rowIndex, cellIndex) => {
-        if (rowIndex === 0) {
-            const newHeaders = [...props.headers];
-            newHeaders[cellIndex] = event.target.value;
-            props.setHeaders(newHeaders);
-            return;
-        }
-        const newEntries = [...props.entries];
-        newEntries[rowIndex - 1][cellIndex] = event.target.value;
-        props.setEntries(newEntries);
-    }
     return (
         <TableContainer>
             <Table>
