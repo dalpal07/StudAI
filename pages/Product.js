@@ -113,7 +113,8 @@ export default function Product(props) {
                 <FileUpload setFileName={setFileName} fileName={fileName} dataProcessing={dataProcessing}
                             headers={headers} setHeaders={setHeaders} entries={entries} setEntries={setEntries}/>
                 <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}/>
-                <Run headers={headers} entries={entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}/>
+                <Run headers={headers}  entries={entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
+                     setHeaders={setHeaders} setEntries={setEntries} dataProcessing={dataProcessing}/>
             </InnerBox>
             <HandleLoading/>
         </>
