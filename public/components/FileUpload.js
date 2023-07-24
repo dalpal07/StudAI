@@ -106,8 +106,8 @@ export default function FileUpload(props) {
             readCsvFile(file).then((content) => {
                 const headers = getFileHeaders(content)
                 const entries = getFileEntries(content)
-                props.setHeaders(headers)
-                props.setEntries(entries)
+                props.setDataIndex(0)
+                props.setDataHistory([{headers: headers, entries: entries, prev: null, next: null}])
             });
         }
         else if (fileExtension === "xlsx") {
@@ -115,8 +115,8 @@ export default function FileUpload(props) {
             readXlsxFile(file).then((content) => {
                 const headers = getFileHeaders(content)
                 const entries = getFileEntries(content)
-                props.setHeaders(headers)
-                props.setEntries(entries)
+                props.setDataIndex(0)
+                props.setDataHistory([{headers: headers, entries: entries, prev: null, next: null}])
             });
         }
         else {
@@ -148,7 +148,7 @@ export default function FileUpload(props) {
             {props.fileName === "" ?
                 <NoFileContent handleFileChange={handleFileChange} isDraggingOver={isDraggingOver} dataProcessing={props.dataProcessing}/>
                 :
-                <FileContent headers={props.headers} setHeaders={props.setHeaders} entries={props.entries} setEntries={props.setEntries}/>
+                <FileContent headers={props.headers} entries={props.entries}/>
             }
         </UploadBox>
     )

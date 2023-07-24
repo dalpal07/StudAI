@@ -53,11 +53,11 @@ const Spinner = styled(Box) ({
     marginBottom: "1.5rem",
 });
 
-export default function Product(props) {
+export default function Product() {
     const [conversation, setConversation] = useState([{type: "assistant", message: "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, rearrange, or filter your data. For example, try asking \"Can you please swap the first 2 columns in my file?\"."}])
     const [conversationIndex, setConversationIndex] = useState(0)
-    const [headers, setHeaders] = useState([])
-    const [entries, setEntries] = useState([])
+    const [dataHistory, setDataHistory] = useState([{headers: [], entries: [], prev: null, next: null}])
+    const [dataIndex, setDataIndex] = useState(0)
     const [fileName, setFileName] = useState("")
     const [script, setScript] = useState("")
     const [dataProcessing, setDataProcessing] = useState(false)
@@ -74,43 +74,43 @@ export default function Product(props) {
     async function extendPrompt(prompt, isScript) {
         if (fileName !== "") {
             prompt = prompt + "\n\nInformation about the data:\n\nName: " + fileName + "\nHeaders: "
-            for (let i = 0; i < headers.length; i++) {
-                if (i === headers.length - 1) {
-                    prompt = prompt + headers[i]
+            for (let i = 0; i < dataHistory[dataIndex].headers.length; i++) {
+                if (i === dataHistory[dataIndex].headers.length - 1) {
+                    prompt = prompt + dataHistory[dataIndex].headers[i]
                     break
                 }
-                prompt = prompt + headers[i] + ", "
+                prompt = prompt + dataHistory[dataIndex].headers[i] + ", "
             }
-            if (entries.length > 0) {
+            if (dataHistory[dataIndex].entries.length > 0) {
                 prompt = prompt + "\nSample entries for reference:\n"
-                if (entries.length > 5) {
+                if (dataHistory[dataIndex].entries.length > 5) {
                     const randomIndices = []
                     while (randomIndices.length < 5) {
-                        const randomIndex = Math.floor(Math.random() * entries.length)
+                        const randomIndex = Math.floor(Math.random() * dataHistory[dataIndex].entries.length)
                         if (!randomIndices.includes(randomIndex)) {
                             randomIndices.push(randomIndex)
                         }
                     }
                     for (let i = 0; i < randomIndices.length; i++) {
-                        for (let j = 0; j < entries[randomIndices[i]].length; j++) {
-                            if (j === entries[randomIndices[i]].length - 1) {
-                                prompt = prompt + entries[randomIndices[i]][j]
+                        for (let j = 0; j < dataHistory[dataIndex].entries[randomIndices[i]].length; j++) {
+                            if (j === dataHistory[dataIndex].entries[randomIndices[i]].length - 1) {
+                                prompt = prompt + dataHistory[dataIndex].entries[randomIndices[i]][j]
                                 break
                             }
-                            prompt = prompt + entries[randomIndices[i]][j] + ", "
+                            prompt = prompt + dataHistory[dataIndex].entries[randomIndices[i]][j] + ", "
                         }
                         prompt = prompt + "\n"
                     }
                     prompt = prompt + "\n"
                 }
                 else {
-                    for (let i = 0; i < entries.length; i++) {
-                        for (let j = 0; j < entries[i].length; j++) {
-                            if (j === entries[i].length - 1) {
-                                prompt = prompt + entries[i][j]
+                    for (let i = 0; i < dataHistory[dataIndex].entries.length; i++) {
+                        for (let j = 0; j < dataHistory[dataIndex].entries[i].length; j++) {
+                            if (j === dataHistory[dataIndex].entries[i].length - 1) {
+                                prompt = prompt + dataHistory[dataIndex].entries[i][j]
                                 break
                             }
-                            prompt = prompt + entries[i][j] + ", "
+                            prompt = prompt + dataHistory[dataIndex].entries[i][j] + ", "
                         }
                         prompt = prompt + "\n"
                     }
@@ -170,11 +170,12 @@ export default function Product(props) {
                 <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}
                       dataProcessing={dataProcessing} fileName={fileName}/>
                 <FileUpload setFileName={setFileName} fileName={fileName} dataProcessing={dataProcessing}
-                            headers={headers} setHeaders={setHeaders} entries={entries} setEntries={setEntries}/>
+                            headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
+                            entries={dataHistory[dataIndex].entries} setDataIndex={setDataIndex}/>
                 <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}
                         setConversationIndex={setConversationIndex}/>
-                <Run headers={headers}  entries={entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
-                     setHeaders={setHeaders} setEntries={setEntries} dataProcessing={dataProcessing}/>
+                <Run headers={dataHistory[dataIndex].headers}  entries={dataHistory[dataIndex].entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
+                     setDataIndex={setDataIndex} setDataHistory={setDataHistory} dataProcessing={dataProcessing} dataIndex={dataIndex} dataHistory={dataHistory}/>
             </InnerBox>
             <HandleLoading/>
         </>
