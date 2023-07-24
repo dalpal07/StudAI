@@ -43,8 +43,7 @@ export default async function handler(req, res) {
                 }
             }
             newEntries = tempEntries
-            const newContent = newHeaders.join(",") + "\n" + newEntries.map(entry => entry.join(",")).join("\n")
-            res.status(200).json({ content: newContent });
+            res.status(200).json({ headers: newHeaders, entries: newEntries });
         }
         catch (err) {
             console.log(err)

@@ -55,7 +55,8 @@ const Spinner = styled(Box) ({
 
 export default function Product(props) {
     const [conversation, setConversation] = useState([])
-    const [csvData, setCsvData] = useState("")
+    const [headers, setHeaders] = useState([])
+    const [entries, setEntries] = useState([])
     const [fileName, setFileName] = useState("")
     const [script, setScript] = useState("")
     const [dataProcessing, setDataProcessing] = useState(false)
@@ -69,55 +70,9 @@ export default function Product(props) {
             document.body.style.setProperty("overflow", "auto")
         }
     }, [dataProcessing])
-    function splitLine(row) {
-        let entries = []
-        let entry = ""
-        let inQuotes = false
-        for (let i = 0; i < row.length; i++) {
-            if (row[i] === "\"") {
-                inQuotes = !inQuotes
-            }
-            if (row[i] === "," && !inQuotes) {
-                entries.push(entry)
-                entry = ""
-            } else {
-                entry = entry + row[i]
-            }
-        }
-        entries.push(entry)
-        return entries
-    }
-    async function getFileHeaders() {
-        let headers = []
-        let lines = csvData.split("\n")
-        if (lines.length > 0) {
-            let headerLine = lines[0]
-            headers = splitLine(headerLine)
-            for (let i = 0; i < headers.length; i++) {
-                headers[i] = headers[i].trim()
-            }
-        }
-        console.log(headers)
-        return headers
-    }
-    async function getFileEntries() {
-        let entries = []
-        let lines = csvData.split("\n")
-        for (let i = 1; i < lines.length; i++) {
-            let line = lines[i]
-            let entry = splitLine(line)
-            for (let j = 0; j < entry.length; j++) {
-                entry[j] = entry[j].trim()
-            }
-            entries.push(entry)
-        }
-        console.log(entries)
-        return entries
-    }
     async function extendPrompt(prompt) {
         if (fileName !== "") {
             prompt = prompt + "\n\nHere is some information about the data:\n\nName: " + fileName + "\nHeaders: "
-            let headers = await getFileHeaders()
             for (let i = 0; i < headers.length; i++) {
                 if (i === headers.length - 1) {
                     prompt = prompt + headers[i]
@@ -155,9 +110,11 @@ export default function Product(props) {
                     <TitleTypography>Give Stud a Try</TitleTypography>
                 </TitleBox>
                 <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt} dataProcessing={dataProcessing}/>
-                <FileUpload setCsvData={setCsvData} setFileName={setFileName} fileName={fileName} dataProcessing={dataProcessing}/>
+                <FileUpload setFileName={setFileName} fileName={fileName} dataProcessing={dataProcessing}
+                            headers={headers} setHeaders={setHeaders} entries={entries} setEntries={setEntries}/>
                 <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}/>
-                <Run getFileHeaders={getFileHeaders} getFileEntries={getFileEntries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}/>
+                <Run headers={headers}  entries={entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
+                     setHeaders={setHeaders} setEntries={setEntries} dataProcessing={dataProcessing}/>
             </InnerBox>
             <HandleLoading/>
         </>

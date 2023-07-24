@@ -1,72 +1,75 @@
-import {Box, Button, Input, styled, Typography} from "@mui/material";
+import {Button, styled} from "@mui/material";
 import {useState} from "react";
 import { read, utils } from 'xlsx';
+import NoFileContent from "@/public/components/NoFileContent";
+import FileContent from "@/public/components/FileContent";
 
-const FileInput = styled(Input) ({
-    display: 'none'
-})
+const UploadBox = styled(Button) (({isDraggingOver}) => ({
+    width: "100%",
+    marginTop: "1.5rem",
+    display: "flex",
+    height: "18.875rem",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "1.5rem",
+    alignSelf: "stretch",
+    borderRadius: "1.25rem",
+    border: "2px dashed var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+    background: "#E3E3E3",
+    boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.10) inset",
+    backgroundColor: isDraggingOver ? '#F5F5F5' : 'transparent'
+}))
+
+function splitLine(row) {
+    let entries = []
+    let entry = ""
+    let inQuotes = false
+    for (let i = 0; i < row.length; i++) {
+        if (row[i] === "\"") {
+            inQuotes = !inQuotes
+        }
+        if (row[i] === "," && !inQuotes) {
+            entries.push(entry)
+            entry = ""
+        } else {
+            entry = entry + row[i]
+        }
+    }
+    entries.push(entry)
+    return entries
+}
+function getFileHeaders(csvData) {
+    let headers = []
+    let lines = csvData.split("\n")
+    if (lines.length > 0) {
+        let headerLine = lines[0]
+        headers = splitLine(headerLine)
+        for (let i = 0; i < headers.length; i++) {
+            headers[i] = headers[i].trim()
+        }
+    }
+    console.log(headers)
+    return headers
+}
+function getFileEntries(csvData) {
+    let entries = []
+    let lines = csvData.split("\n")
+    for (let i = 1; i < lines.length; i++) {
+        let line = lines[i]
+        let entry = splitLine(line)
+        for (let j = 0; j < entry.length; j++) {
+            entry[j] = entry[j].trim()
+        }
+        entries.push(entry)
+    }
+    console.log(entries)
+    return entries
+}
 
 export default function FileUpload(props) {
     const [isDraggingOver, setIsDraggingOver] = useState(false);
 
-    const UploadBox = styled(Box) ({
-        marginTop: "1.5rem",
-        display: "flex",
-        height: "18.875rem",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "1.5rem",
-        alignSelf: "stretch",
-        borderRadius: "1.25rem",
-        border: "2px dashed var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
-        background: "#E3E3E3",
-        boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.10) inset",
-        backgroundColor: isDraggingOver ? '#F5F5F5' : 'transparent'
-    })
-
-    const TextBox = styled(Box)({
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "0.5rem",
-    });
-
-    const DragDropTypography = styled(Typography)({
-        color: "var(--main-black, #3F3636)",
-        fontFamily: "Inter",
-        fontSize: "1.125rem",
-        fontStyle: "normal",
-        fontWeight: "700",
-        lineHeight: "normal",
-    });
-
-    const DragDropSubTypography = styled(Typography)({
-        color: "var(--main-black, #3F3636)",
-        fontFamily: "Inter",
-        fontSize: "0.875rem",
-        fontStyle: "normal",
-        fontWeight: "700",
-        lineHeight: "normal",
-        opacity: 0.5,
-    });
-
-    const FileButton = styled(Button) ({
-        color: "white",
-        display: "flex",
-        padding: "0.5rem 1.5rem",
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: "1.25rem",
-        backgroundColor: isDraggingOver ? 'gray' : 'var(--main-green, #53B753)',
-    })
-
-    const FileTypography = styled(Typography) ({
-        display: 'inline-block',
-        fontSize: '1rem',
-        color: isDraggingOver ? 'gray' : 'black'
-    })
     const getFileExtension = (filename) => {
         return filename.slice(((filename.lastIndexOf('.') - 1) >>> 0) + 2).toLowerCase();
     };
@@ -101,13 +104,19 @@ export default function FileUpload(props) {
         const fileExtension = getFileExtension(file.name);
         if (fileExtension === "csv") {
             readCsvFile(file).then((content) => {
-                props.setCsvData(content)
+                const headers = getFileHeaders(content)
+                const entries = getFileEntries(content)
+                props.setHeaders(headers)
+                props.setEntries(entries)
             });
         }
         else if (fileExtension === "xlsx") {
             console.log("xlsx")
             readXlsxFile(file).then((content) => {
-                props.setCsvData(content)
+                const headers = getFileHeaders(content)
+                const entries = getFileEntries(content)
+                props.setHeaders(headers)
+                props.setEntries(entries)
             });
         }
         else {
@@ -122,17 +131,11 @@ export default function FileUpload(props) {
             setIsDraggingOver(false);
         }
     };
-    const handleUpload = (event) => {
-        const file = event.target.files[0];
-        handleFileChange(file)
-    }
-    const handleButtonClick = () => {
-        // Trigger the click event on the hidden file input
-        document.getElementById("fileInput").click();
-    };
+
 
     return (
         <UploadBox
+            isDraggingOver={isDraggingOver}
             onDrop={handleDrop}
             onDragOver={(event) => {
                 if (!props.dataProcessing) {
@@ -142,19 +145,11 @@ export default function FileUpload(props) {
             }}
             onDragLeave={() => setIsDraggingOver(false)}
         >
-            <TextBox>
-                <DragDropTypography>Drag and drop messy data here</DragDropTypography>
-                <DragDropSubTypography>Make sure your files are messy</DragDropSubTypography>
-            </TextBox>
-            <FileInput
-                id="fileInput"
-                type={"file"}
-                onChange={handleUpload}
-            />
-            <FileButton htmlFor="fileInput" onClick={handleButtonClick} disabled={props.dataProcessing}>
-                Upload Messy Data
-            </FileButton>
-            <FileTypography>{props.fileName !== "" ? props.fileName : "No file selected"}</FileTypography>
+            {props.fileName === "" ?
+                <NoFileContent handleFileChange={handleFileChange} isDraggingOver={isDraggingOver} dataProcessing={props.dataProcessing}/>
+                :
+                <FileContent headers={props.headers} setHeaders={props.setHeaders} entries={props.entries} setEntries={props.setEntries}/>
+            }
         </UploadBox>
     )
 }

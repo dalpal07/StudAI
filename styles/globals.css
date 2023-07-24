@@ -38,6 +38,13 @@ a {
   font-style: normal;
 }
 
+@font-face {
+  font-family: Inter;
+  src: url("../public/fonts/Inter/static/Inter-Bold.ttf");
+  font-weight: 700;
+  font-style: normal;
+}
+
 @keyframes spin-anim {
   0% {
     transform: rotate(0deg);
