@@ -54,7 +54,7 @@ const Spinner = styled(Box) ({
 });
 
 export default function Product(props) {
-    const [conversation, setConversation] = useState([])
+    const [conversation, setConversation] = useState([{type: "assistant", message: "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, rearrange, or filter your data. For example, try asking \"Can you please swap the first 2 columns in my file?\"."}])
     const [conversationIndex, setConversationIndex] = useState(0)
     const [headers, setHeaders] = useState([])
     const [entries, setEntries] = useState([])
@@ -167,7 +167,8 @@ export default function Product(props) {
                 <TitleBox>
                     <TitleTypography>Give Stud a Try</TitleTypography>
                 </TitleBox>
-                <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt} dataProcessing={dataProcessing}/>
+                <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}
+                      dataProcessing={dataProcessing} fileName={fileName}/>
                 <FileUpload setFileName={setFileName} fileName={fileName} dataProcessing={dataProcessing}
                             headers={headers} setHeaders={setHeaders} entries={entries} setEntries={setEntries}/>
                 <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}
