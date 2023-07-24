@@ -26,7 +26,9 @@ export default function Run(props) {
         props.setDataProcessing(false)
         if (response.status === 200) {
             const data = await response.json()
-            downloadFile(data.content, props.fileName)
+            const {headers, entries} = data
+            const csvContent = headers.join(",") + "\n" + entries.map(e => e.join(",")).join("\n")
+            downloadFile(csvContent, props.fileName)
         }
         else {
             alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
