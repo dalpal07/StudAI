@@ -55,6 +55,7 @@ const Spinner = styled(Box) ({
 
 export default function Product(props) {
     const [conversation, setConversation] = useState([])
+    const [conversationIndex, setConversationIndex] = useState(0)
     const [headers, setHeaders] = useState([])
     const [entries, setEntries] = useState([])
     const [fileName, setFileName] = useState("")
@@ -70,9 +71,9 @@ export default function Product(props) {
             document.body.style.setProperty("overflow", "auto")
         }
     }, [dataProcessing])
-    async function extendPrompt(prompt) {
+    async function extendPrompt(prompt, isScript) {
         if (fileName !== "") {
-            prompt = prompt + "\n\nHere is some information about the data:\n\nName: " + fileName + "\nHeaders: "
+            prompt = prompt + "\n\nInformation about the data:\n\nName: " + fileName + "\nHeaders: "
             for (let i = 0; i < headers.length; i++) {
                 if (i === headers.length - 1) {
                     prompt = prompt + headers[i]
@@ -80,14 +81,71 @@ export default function Product(props) {
                 }
                 prompt = prompt + headers[i] + ", "
             }
-        }
-        prompt = prompt + "\n\nRespond to this conversation:\n" + conversation.map((line) => {
-            if (line.type === "user") {
-                return "\nUser: " + line.message
-            } else {
-                return "\nStud: " + line.message
+            if (entries.length > 0) {
+                prompt = prompt + "\nSample entries for reference:\n"
+                if (entries.length > 5) {
+                    const randomIndices = []
+                    while (randomIndices.length < 5) {
+                        const randomIndex = Math.floor(Math.random() * entries.length)
+                        if (!randomIndices.includes(randomIndex)) {
+                            randomIndices.push(randomIndex)
+                        }
+                    }
+                    for (let i = 0; i < randomIndices.length; i++) {
+                        for (let j = 0; j < entries[randomIndices[i]].length; j++) {
+                            if (j === entries[randomIndices[i]].length - 1) {
+                                prompt = prompt + entries[randomIndices[i]][j]
+                                break
+                            }
+                            prompt = prompt + entries[randomIndices[i]][j] + ", "
+                        }
+                        prompt = prompt + "\n"
+                    }
+                    prompt = prompt + "\n"
+                }
+                else {
+                    for (let i = 0; i < entries.length; i++) {
+                        for (let j = 0; j < entries[i].length; j++) {
+                            if (j === entries[i].length - 1) {
+                                prompt = prompt + entries[i][j]
+                                break
+                            }
+                            prompt = prompt + entries[i][j] + ", "
+                        }
+                        prompt = prompt + "\n"
+                    }
+                }
             }
-        }) + "\nStud: [insert]"
+        }
+        if (!isScript) {
+            if (conversationIndex !== 0) {
+                prompt = prompt + "\nPrevious conversation for reference:\n" + conversation.slice(0, conversationIndex).map((line) => {
+                    if (line.type === "user") {
+                        return "\nUser: " + line.message
+                    } else {
+                        return "\nStud: " + line.message
+                    }
+                })
+                prompt = prompt + "\n\n"
+            }
+            prompt = prompt + "\nRespond to this conversation:\n" + conversation.slice(conversationIndex).map((line) => {
+                if (line.type === "user") {
+                    return "\nUser: " + line.message
+                } else {
+                    return "\nStud: " + line.message
+                }
+            }) + "\nStud: [insert]"
+        }
+        else {
+            prompt = prompt + "\nConversation for reference:\n" + conversation.map((line) => {
+                if (line.type === "user") {
+                    return "\nUser: " + line.message
+                } else {
+                    return "\nStud: " + line.message
+                }
+            })
+        }
+        console.log(prompt)
         return prompt
     }
     const HandleLoading = () => {
@@ -112,7 +170,8 @@ export default function Product(props) {
                 <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt} dataProcessing={dataProcessing}/>
                 <FileUpload setFileName={setFileName} fileName={fileName} dataProcessing={dataProcessing}
                             headers={headers} setHeaders={setHeaders} entries={entries} setEntries={setEntries}/>
-                <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}/>
+                <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}
+                        setConversationIndex={setConversationIndex}/>
                 <Run headers={headers}  entries={entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
                      setHeaders={setHeaders} setEntries={setEntries} dataProcessing={dataProcessing}/>
             </InnerBox>
