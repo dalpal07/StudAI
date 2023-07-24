@@ -19,6 +19,7 @@ const DragDropTypography = styled(Typography)({
     fontStyle: "normal",
     fontWeight: "700",
     lineHeight: "normal",
+    textTransform: "none",
 });
 
 const DragDropSubTypography = styled(Typography)({
@@ -29,6 +30,7 @@ const DragDropSubTypography = styled(Typography)({
     fontWeight: "700",
     lineHeight: "normal",
     opacity: 0.5,
+    textTransform: "none",
 });
 
 const FileButton = styled(Button) (({isDraggingOver}) => ({

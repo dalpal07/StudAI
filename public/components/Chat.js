@@ -98,7 +98,7 @@ const SendButton = styled(Button)({
 
 export default function Chat(props) {
     const [input, setInput] = useState("");
-    const prompt= "You are an AI chatbot named Stud. Your goal is to chat with users about their data requests until you sufficiently understand the details of what they're asking. When you sufficiently understand, let the user know that you will take care of their request. No need to ask if there's anything else you can do."
+    const prompt= "You are a chatbot named Stud. Your goal is to chat with users about their data requests until you understand what they're asking. When you sufficiently understand, let the user know that you will take care of their request."
     const sendToServer = async () => {
         const req = await props.extendPrompt(prompt, false)
         const response = await fetch("/api/chat", {
@@ -188,7 +188,7 @@ export default function Chat(props) {
                                    onChange={handleInputChange}
                                    onKeyPress={handleKeyPress}/>
                     </ChatInputOuterBox>
-                    <SendButton onClick={handleSendButtonClick} disabled={props.dataProcessing}><Image src={"./images/send.svg"} alt={"Send"} width={40} height={40}/></SendButton>
+                    <SendButton onClick={handleSendButtonClick} disabled={props.dataProcessing || props.fileName === ""}><Image src={"./images/send.svg"} alt={"Send"} width={40} height={40}/></SendButton>
                 </BottomBox>
             </ChatBox>
         </Box>
