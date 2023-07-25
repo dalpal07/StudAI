@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const InnerBox = styled(Box)({
     position: "absolute",
-    top: 60,
+    top: 50,
     bottom: 0,
     width: "100%",
     justifyContent: "center",
@@ -47,7 +47,10 @@ const GreenButton = styled(Button)({
     alignItems: "center",
     borderRadius: "1.25rem",
     background: "var(--main-green, #53B753)",
-    textTransform: "none"
+    textTransform: "none",
+    "&:hover": {
+        background: "var(--main-green-hover, #4AAE4A)",
+    }
 });
 
 export default function Intro() {
@@ -58,7 +61,7 @@ export default function Intro() {
             <DataMaidText>Your Personal Data Maid</DataMaidText>
             <a href="/api/auth/login" style={{textDecoration: "none"}}>
                 <GreenButton>
-                    <SeeText>See what stud can do</SeeText>
+                    <SeeText>See what Stud can do</SeeText>
                 </GreenButton>
             </a>
         </InnerBox>

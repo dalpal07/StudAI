@@ -4,7 +4,8 @@ import Image from "next/image";
 
 const ChatBox = styled(Box)({
     display: "flex",
-    height: "373px",
+    height: "100%",
+    minHeight: "15rem",
     padding: "1.125rem",
     paddingLeft: "1.75rem",
     paddingRight: "1.75rem",
@@ -91,13 +92,13 @@ const ChatInput = styled(Input)(({ hasvalue }) => ({
 }));
 
 const SendButton = styled(Button)({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    border: "none",
 });
 
 export default function Chat(props) {
     const [input, setInput] = useState("");
+    const [sendHover, setSendHover] = useState(false);
+    const sendDisabled = props.dataProcessing || props.fileName === "" || input === "";
     const prompt= "You are a chatbot named Stud. Your goal is to chat with users about their data requests until you understand what they're asking. When you sufficiently understand, let the user know that you will take care of their request."
     const sendToServer = async () => {
         const req = await props.extendPrompt(prompt, false)
@@ -159,38 +160,47 @@ export default function Chat(props) {
     }, [props.conversation]);
 
     return (
-        <Box>
-            <ChatBox>
-                <UpperBox ref={scrollableBoxRef}>
-                    {props.conversation.map((line) => {
-                        return (
-                            <>
-                                {line.type === "user" ?
-                                    <UserChatLine>
-                                        <UserChatMessage>{line.message}</UserChatMessage>
-                                    </UserChatLine>
-                                    :
-                                    <AssistantChatLine>
-                                        <AssistantChatMessage>{line.message}</AssistantChatMessage>
-                                    </AssistantChatLine>
-                                }
-                            </>
-                        )
-                    })}
-                </UpperBox>
-                <BottomBox>
-                    <ChatInputOuterBox>
-                        <ChatInput placeholder="What can Stud do for you today?"
-                                   hasvalue={(input !== "").toString()}
-                                   disableUnderline={true}
-                                   disabled={props.dataProcessing}
-                                   value={input}
-                                   onChange={handleInputChange}
-                                   onKeyPress={handleKeyPress}/>
-                    </ChatInputOuterBox>
-                    <SendButton onClick={handleSendButtonClick} disabled={props.dataProcessing || props.fileName === ""}><Image src={"./images/send.svg"} alt={"Send"} width={40} height={40}/></SendButton>
-                </BottomBox>
-            </ChatBox>
-        </Box>
+        <ChatBox>
+            <UpperBox ref={scrollableBoxRef}>
+                {props.conversation.map((line) => {
+                    return (
+                        <>
+                            {line.type === "user" ?
+                                <UserChatLine>
+                                    <UserChatMessage>{line.message}</UserChatMessage>
+                                </UserChatLine>
+                                :
+                                <AssistantChatLine>
+                                    <AssistantChatMessage>{line.message}</AssistantChatMessage>
+                                </AssistantChatLine>
+                            }
+                        </>
+                    )
+                })}
+            </UpperBox>
+            <BottomBox>
+                <ChatInputOuterBox>
+                    <ChatInput placeholder="What can Stud do for you today?"
+                               hasvalue={(input !== "").toString()}
+                               disableUnderline={true}
+                               disabled={props.dataProcessing}
+                               value={input}
+                               onChange={handleInputChange}
+                               onKeyPress={handleKeyPress}/>
+                </ChatInputOuterBox>
+                <SendButton onClick={handleSendButtonClick} disableTouchRipple disabled={sendDisabled}
+                            onMouseEnter={() => setSendHover(true)} onMouseLeave={() => setSendHover(false)}>
+                    <Image src={
+                        sendDisabled ?
+                            "/images/send-disabled.svg"
+                            :
+                            sendHover ?
+                                "/images/send-hover.svg"
+                                :
+                                "/images/send.svg"
+                    } alt={"Send"} width={40} height={40}/>
+                </SendButton>
+            </BottomBox>
+        </ChatBox>
     )
 }

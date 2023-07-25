@@ -10,6 +10,8 @@ const DownloadContainer = styled(Box) ({
     justifyContent: "center",
     flexDirection: "row",
     alignItems: "center",
+    marginTop: "1rem",
+    marginBottom: "1rem",
 });
 
 const DownloadButton = styled(Button)({
@@ -21,7 +23,14 @@ const DownloadButton = styled(Button)({
     borderRadius: "1.25rem",
     backgroundColor: 'var(--main-green, #53B753)',
     textTransform: "none",
-    margin: "1rem 0",
+    "&:disabled": {
+        backgroundColor: "#D6D6D6",
+        color: "#3F3636",
+        opacity: 0.5,
+    },
+    "&:hover": {
+        backgroundColor: "var(--main-green-hover, #4AAE4A)",
+    }
 });
 
 const Spacer = styled(Box)({
@@ -38,6 +47,9 @@ const UndoRedoButton = styled(Button)({
     backgroundColor: "var(--main-gray, #E5E5E5)",
     color: "var(--main-black, #3F3636)",
     marginRight: "0.5rem",
+    "&:hover": {
+        background: "#D6D6D6",
+    }
 });
 
 function downloadFile(content, fileName) {

@@ -7,7 +7,7 @@ const NavBox = styled(Box) ({
     top: 0,
     zIndex: 1,
     display: "flex",
-    padding: "1.125rem 1.75rem",
+    padding: "1rem 1.5rem",
     alignItems: "center",
     gap: "1.75rem",
     alignSelf: "stretch",
@@ -22,19 +22,22 @@ const Spacer = styled(Box) ({
 
 const SignInButton = styled(Button)({
     display: "flex",
-    padding: "0.5rem 1.5rem",
+    padding: "0.5rem 1.25rem",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: "1.25rem",
     background: "#E3E3E3",
     color: "var(--main-black, #3F3636)",
     fontFamily: "Inter",
-    fontSize: "1.125rem",
+    fontSize: "1rem",
     fontStyle: "normal",
     fontWeight: 700,
     lineHeight: "normal",
     textTransform: "none",
     marginRight: "1.75rem",
+    "&:hover": {
+        background: "#D6D6D6",
+    }
 });
 
 const ProfileBox = styled(Box)({
@@ -53,17 +56,9 @@ const UserNameText = styled(Box)({
     marginRight: "1.75rem",
 });
 
-const ProfileButton = styled(Button)({
-    padding: 0,
-    margin: 0,
-    width: "fit-content",
-    height: "fit-content",
-    minWidth: 0,
-});
-
 const SignOutButton = styled(Button)({
     position: "absolute",
-    top: 67,
+    top: 68,
     right: 0,
     background: "#F2F2F2",
     color: "var(--main-black, #3F3636)",
@@ -103,16 +98,14 @@ export default function NavBar(props) {
         if (props.user) return (
             <ProfileBox>
                 <UserNameText>{props.user.name}</UserNameText>
-                <ProfileButton onClick={handleProfileClick} ref={ref}>
-                    <Image src={"./images/Profile.svg"} alt={"Profile"} width={30} height={30}/>
-                </ProfileButton>
+                <Button class={"profile-button svg-button"} onClick={handleProfileClick} ref={ref} disableTouchRipple></Button>
                 <IsSignOutButton/>
             </ProfileBox>
         )
         return (
             <ProfileBox>
                 <a href="/api/auth/login" style={{textDecoration: "none"}}><SignInButton>Sign In</SignInButton></a>
-                <Image src={"./images/Profile.svg"} alt={"Profile"} width={30} height={30}/>
+                <Image src={"./images/Profile.svg"} alt={"Profile"} width={35.5} height={35.5}/>
             </ProfileBox>
         )
     }

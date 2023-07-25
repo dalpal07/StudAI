@@ -53,3 +53,20 @@ a {
     transform: rotate(360deg);
   }
 }
+
+.svg-button {
+  border: none;
+  cursor: pointer;
+}
+
+.profile-button {
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 35px;
+  height: 35px;
+  background-image: url('../public/images/Profile.svg');
+}
+
+.profile-button:hover {
+  background-image: url('../public/images/Profile-Hover.svg');
+}
