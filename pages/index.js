@@ -9,6 +9,7 @@ const OuterBox = styled(Box) ({
     flexDirection: "column",
     borderRadius: "0.3125rem",
     background: "#EEE",
+    height: "100vh",
 });
 
 export default function Home() {

@@ -7,7 +7,7 @@ const NavBox = styled(Box) ({
     top: 0,
     zIndex: 1,
     display: "flex",
-    padding: "1.125rem 1.75rem",
+    padding: "1rem 1.5rem",
     alignItems: "center",
     gap: "1.75rem",
     alignSelf: "stretch",
@@ -22,14 +22,14 @@ const Spacer = styled(Box) ({
 
 const SignInButton = styled(Button)({
     display: "flex",
-    padding: "0.5rem 1.5rem",
+    padding: "0.5rem 1.25rem",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: "1.25rem",
     background: "#E3E3E3",
     color: "var(--main-black, #3F3636)",
     fontFamily: "Inter",
-    fontSize: "1.125rem",
+    fontSize: "1rem",
     fontStyle: "normal",
     fontWeight: 700,
     lineHeight: "normal",
@@ -104,7 +104,7 @@ export default function NavBar(props) {
             <ProfileBox>
                 <UserNameText>{props.user.name}</UserNameText>
                 <ProfileButton onClick={handleProfileClick} ref={ref}>
-                    <Image src={"./images/Profile.svg"} alt={"Profile"} width={30} height={30}/>
+                    <Image src={"./images/Profile.svg"} alt={"Profile"} width={35.5} height={35.5}/>
                 </ProfileButton>
                 <IsSignOutButton/>
             </ProfileBox>
@@ -112,7 +112,7 @@ export default function NavBar(props) {
         return (
             <ProfileBox>
                 <a href="/api/auth/login" style={{textDecoration: "none"}}><SignInButton>Sign In</SignInButton></a>
-                <Image src={"./images/Profile.svg"} alt={"Profile"} width={30} height={30}/>
+                <Image src={"./images/Profile.svg"} alt={"Profile"} width={35.5} height={35.5}/>
             </ProfileBox>
         )
     }
