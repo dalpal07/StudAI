@@ -6,7 +6,10 @@ import {useEffect, useState} from "react";
 import Run from "@/public/components/Run";
 
 const InnerBox = styled(Box) ({
-    margin: "1.5rem",
+    margin: "0.75rem 1.5rem",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
 });
 
 const TitleBox = styled(Box) ({

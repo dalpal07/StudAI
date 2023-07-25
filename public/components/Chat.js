@@ -4,7 +4,8 @@ import Image from "next/image";
 
 const ChatBox = styled(Box)({
     display: "flex",
-    height: "373px",
+    height: "100%",
+    minHeight: "15rem",
     padding: "1.125rem",
     paddingLeft: "1.75rem",
     paddingRight: "1.75rem",
@@ -159,38 +160,36 @@ export default function Chat(props) {
     }, [props.conversation]);
 
     return (
-        <Box>
-            <ChatBox>
-                <UpperBox ref={scrollableBoxRef}>
-                    {props.conversation.map((line) => {
-                        return (
-                            <>
-                                {line.type === "user" ?
-                                    <UserChatLine>
-                                        <UserChatMessage>{line.message}</UserChatMessage>
-                                    </UserChatLine>
-                                    :
-                                    <AssistantChatLine>
-                                        <AssistantChatMessage>{line.message}</AssistantChatMessage>
-                                    </AssistantChatLine>
-                                }
-                            </>
-                        )
-                    })}
-                </UpperBox>
-                <BottomBox>
-                    <ChatInputOuterBox>
-                        <ChatInput placeholder="What can Stud do for you today?"
-                                   hasvalue={(input !== "").toString()}
-                                   disableUnderline={true}
-                                   disabled={props.dataProcessing}
-                                   value={input}
-                                   onChange={handleInputChange}
-                                   onKeyPress={handleKeyPress}/>
-                    </ChatInputOuterBox>
-                    <SendButton onClick={handleSendButtonClick} disabled={props.dataProcessing || props.fileName === ""}><Image src={"./images/send.svg"} alt={"Send"} width={40} height={40}/></SendButton>
-                </BottomBox>
-            </ChatBox>
-        </Box>
+        <ChatBox>
+            <UpperBox ref={scrollableBoxRef}>
+                {props.conversation.map((line) => {
+                    return (
+                        <>
+                            {line.type === "user" ?
+                                <UserChatLine>
+                                    <UserChatMessage>{line.message}</UserChatMessage>
+                                </UserChatLine>
+                                :
+                                <AssistantChatLine>
+                                    <AssistantChatMessage>{line.message}</AssistantChatMessage>
+                                </AssistantChatLine>
+                            }
+                        </>
+                    )
+                })}
+            </UpperBox>
+            <BottomBox>
+                <ChatInputOuterBox>
+                    <ChatInput placeholder="What can Stud do for you today?"
+                               hasvalue={(input !== "").toString()}
+                               disableUnderline={true}
+                               disabled={props.dataProcessing}
+                               value={input}
+                               onChange={handleInputChange}
+                               onKeyPress={handleKeyPress}/>
+                </ChatInputOuterBox>
+                <SendButton onClick={handleSendButtonClick} disabled={props.dataProcessing || props.fileName === ""}><Image src={"./images/send.svg"} alt={"Send"} width={40} height={40}/></SendButton>
+            </BottomBox>
+        </ChatBox>
     )
 }

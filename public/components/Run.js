@@ -10,6 +10,7 @@ const DownloadContainer = styled(Box) ({
     justifyContent: "center",
     flexDirection: "row",
     alignItems: "center",
+    marginTop: "1rem",
 });
 
 const DownloadButton = styled(Button)({
@@ -21,7 +22,6 @@ const DownloadButton = styled(Button)({
     borderRadius: "1.25rem",
     backgroundColor: 'var(--main-green, #53B753)',
     textTransform: "none",
-    margin: "1rem 0",
 });
 
 const Spacer = styled(Box)({
