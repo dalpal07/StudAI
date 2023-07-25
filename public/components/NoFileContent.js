@@ -42,6 +42,9 @@ const FileButton = styled(Button) (({isDraggingOver}) => ({
     borderRadius: "1.25rem",
     backgroundColor: isDraggingOver ? 'gray' : 'var(--main-green, #53B753)',
     textTransform: "none",
+    "&:hover": {
+        backgroundColor: isDraggingOver ? 'gray' : "var(--main-green-hover, #4AAE4A)",
+    }
 }))
 
 export default function NoFileContent(props) {

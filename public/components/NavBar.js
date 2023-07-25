@@ -56,17 +56,6 @@ const UserNameText = styled(Box)({
     marginRight: "1.75rem",
 });
 
-const ProfileButton = styled(Button)({
-    padding: 0,
-    margin: 0,
-    width: "fit-content",
-    height: "fit-content",
-    minWidth: 0,
-    "&:hover": {
-        opacity: 0.75,
-    }
-});
-
 const SignOutButton = styled(Button)({
     position: "absolute",
     top: 68,
@@ -109,9 +98,7 @@ export default function NavBar(props) {
         if (props.user) return (
             <ProfileBox>
                 <UserNameText>{props.user.name}</UserNameText>
-                <ProfileButton onClick={handleProfileClick} ref={ref}>
-                    <Image src={"./images/Profile.svg"} alt={"Profile"} width={35.5} height={35.5}/>
-                </ProfileButton>
+                <Button class={"profile-button svg-button"} onClick={handleProfileClick} ref={ref} disableTouchRipple></Button>
                 <IsSignOutButton/>
             </ProfileBox>
         )
