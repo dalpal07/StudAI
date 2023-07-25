@@ -47,7 +47,10 @@ const GreenButton = styled(Button)({
     alignItems: "center",
     borderRadius: "1.25rem",
     background: "var(--main-green, #53B753)",
-    textTransform: "none"
+    textTransform: "none",
+    "&:hover": {
+        background: "var(--main-green-hover, #4AAE4A)",
+    }
 });
 
 export default function Intro() {

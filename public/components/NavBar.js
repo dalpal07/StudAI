@@ -36,8 +36,7 @@ const SignInButton = styled(Button)({
     textTransform: "none",
     marginRight: "1.75rem",
     "&:hover": {
-        background: "var(--main-black, #3F3636)",
-        color: "#F2F2F2",
+        background: "#D6D6D6",
     }
 });
 
