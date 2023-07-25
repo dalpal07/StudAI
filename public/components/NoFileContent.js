@@ -34,16 +34,17 @@ const DragDropSubTypography = styled(Typography)({
 });
 
 const FileButton = styled(Button) (({isDraggingOver}) => ({
-    color: "white",
+    color: isDraggingOver ? '#3F3636' : 'white',
+    opacity: isDraggingOver ? 0.5 : 1,
     display: "flex",
     padding: "0.5rem 1.5rem",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: "1.25rem",
-    backgroundColor: isDraggingOver ? 'gray' : 'var(--main-green, #53B753)',
+    backgroundColor: isDraggingOver ? '#D6D6D6' : 'var(--main-green, #53B753)',
     textTransform: "none",
     "&:hover": {
-        backgroundColor: isDraggingOver ? 'gray' : "var(--main-green-hover, #4AAE4A)",
+        backgroundColor: isDraggingOver ? '#D6D6D6' : "var(--main-green-hover, #4AAE4A)",
     }
 }))
 

@@ -22,6 +22,11 @@ const DownloadButton = styled(Button)({
     borderRadius: "1.25rem",
     backgroundColor: 'var(--main-green, #53B753)',
     textTransform: "none",
+    "&:disabled": {
+        backgroundColor: "#D6D6D6",
+        color: "#3F3636",
+        opacity: 0.5,
+    },
     "&:hover": {
         backgroundColor: "var(--main-green-hover, #4AAE4A)",
     }
