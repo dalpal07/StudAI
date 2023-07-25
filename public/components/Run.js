@@ -11,6 +11,7 @@ const DownloadContainer = styled(Box) ({
     flexDirection: "row",
     alignItems: "center",
     marginTop: "1rem",
+    marginBottom: "1rem",
 });
 
 const DownloadButton = styled(Button)({
