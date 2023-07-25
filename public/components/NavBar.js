@@ -35,6 +35,10 @@ const SignInButton = styled(Button)({
     lineHeight: "normal",
     textTransform: "none",
     marginRight: "1.75rem",
+    "&:hover": {
+        background: "var(--main-black, #3F3636)",
+        color: "#F2F2F2",
+    }
 });
 
 const ProfileBox = styled(Box)({
