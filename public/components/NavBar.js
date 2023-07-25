@@ -62,11 +62,14 @@ const ProfileButton = styled(Button)({
     width: "fit-content",
     height: "fit-content",
     minWidth: 0,
+    "&:hover": {
+        opacity: 0.75,
+    }
 });
 
 const SignOutButton = styled(Button)({
     position: "absolute",
-    top: 67,
+    top: 68,
     right: 0,
     background: "#F2F2F2",
     color: "var(--main-black, #3F3636)",
