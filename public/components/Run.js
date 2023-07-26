@@ -1,19 +1,10 @@
 import {useEffect, useState} from "react";
-import { saveAs } from 'file-saver';
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import {GreenButton, UndoRedoButton} from "@/public/components/common/Buttons";
 import {WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 import {DownloadContainer, BasicBox} from "@/public/components/common/Boxes";
-
-function downloadFile(content, fileName) {
-    // if fileName extension is not csv, change to csv
-    if (fileName.split(".")[1] !== "csv") {
-        fileName = fileName.split(".")[0] + ".csv"
-    }
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    saveAs(blob, fileName);
-}
+import {downloadFile} from "@/public/functions/DownloadFile";
 
 export default function Run(props) {
     const [localScript, setLocalScript] = useState("")

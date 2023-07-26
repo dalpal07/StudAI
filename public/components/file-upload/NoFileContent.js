@@ -1,11 +1,7 @@
-import {Input, styled} from "@mui/material";
 import {BoldText, FadedBoldText} from "@/public/components/common/Typographies";
 import {GreenButton} from "@/public/components/common/Buttons";
 import {TextBox} from "@/public/components/common/Boxes";
-
-const FileInput = styled(Input) ({
-    display: 'none'
-})
+import {HiddenInput} from "@/public/components/common/Inputs";
 
 export default function NoFileContent(props) {
     const handleUpload = (event) => {
@@ -22,7 +18,7 @@ export default function NoFileContent(props) {
                 <BoldText size={"1.125rem"}>Drag and drop messy data here</BoldText>
                 <FadedBoldText size={"0.875rem"}>Make sure your files are messy</FadedBoldText>
             </TextBox>
-            <FileInput
+            <HiddenInput
                 id="fileInput"
                 type={"file"}
                 onChange={handleUpload}

@@ -1,16 +1,7 @@
-import {styled, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {Table, TableBody, TableHead, TableRow} from "@mui/material";
 import {TableContainer} from "@/public/components/common/Boxes";
+import {Cell} from "@/public/components/common/Miscellaneous";
 
-const Cell = styled(TableCell)(({rowIndex}) => ({
-    padding: "0.5rem",
-    textAlign: "left",
-    fontFamily: "Inter",
-    fontSize: "0.875rem",
-    fontStyle: "normal",
-    fontWeight: rowIndex === 0 ? "bold" : "normal",
-    lineHeight: "normal",
-    textTransform: "none",
-}));
 export default function FileContent(props) {
     return (
         <TableContainer>
