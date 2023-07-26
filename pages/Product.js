@@ -4,7 +4,7 @@ import Script from "@/public/components/Script";
 import {Box, Button, styled, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import Run from "@/public/components/Run";
-import { TitleText } from "/public/components/Typographies"
+import { BoldText } from "/public/components/Typographies"
 
 const InnerBox = styled(Box) ({
     margin: "0.75rem 1.5rem",
@@ -149,7 +149,7 @@ export default function Product() {
                 <LoadingContainer>
                     <LoadingBox>
                         <Spinner/>
-                        <TitleText>Processing Your Data...</TitleText>
+                        <BoldText size={"1.5rem"}>Processing Your Data...</BoldText>
                     </LoadingBox>
                 </LoadingContainer>
             )
@@ -160,7 +160,7 @@ export default function Product() {
         <>
             <InnerBox id={"inner"}>
                 <TitleBox>
-                    <TitleText>Give Stud a Try</TitleText>
+                    <BoldText size={"1.5rem"}>Give Stud a Try</BoldText>
                 </TitleBox>
                 <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}
                       dataProcessing={dataProcessing} fileName={fileName}/>

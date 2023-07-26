@@ -1,5 +1,5 @@
 import {Box, Button, Input, styled} from "@mui/material";
-import { LargeBoldText, FadedSmallBoldText} from "@/public/components/Typographies";
+import { BoldText, FadedBoldText} from "@/public/components/Typographies";
 
 const FileInput = styled(Input) ({
     display: 'none'
@@ -40,8 +40,8 @@ export default function NoFileContent(props) {
     return (
         <>
             <TextBox>
-                <LargeBoldText>Drag and drop messy data here</LargeBoldText>
-                <FadedSmallBoldText>Make sure your files are messy</FadedSmallBoldText>
+                <BoldText size={"1.125rem"}>Drag and drop messy data here</BoldText>
+                <FadedBoldText size={"0.875rem"}>Make sure your files are messy</FadedBoldText>
             </TextBox>
             <FileInput
                 id="fileInput"

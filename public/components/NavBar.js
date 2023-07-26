@@ -1,7 +1,7 @@
 import {Box, Button, styled} from "@mui/material";
 import Image from "next/image";
 import React, {useEffect, useRef, useState} from 'react';
-import { LargeBoldText } from "./Typographies";
+import { BoldText } from "./Typographies";
 import {WidthSpacer} from "@/public/components/Spacers";
 
 const NavBox = styled(Box) ({
@@ -84,11 +84,11 @@ export default function NavBar(props) {
         setClicked(!clicked);
     }
     const Profile = () => {
-        if (props.isLoading) return <LargeBoldText>Loading...</LargeBoldText>
-        if (props.error) return <LargeBoldText>{props.error.message}</LargeBoldText>
+        if (props.isLoading) return <BoldText size={"1.125rem"}>Loading...</BoldText>
+        if (props.error) return <BoldText size={"1.125rem"}>{props.error.message}</BoldText>
         if (props.user) return (
             <ProfileBox>
-                <LargeBoldText>{props.user.name}</LargeBoldText>
+                <BoldText size={"1.125rem"}>{props.user.name}</BoldText>
                 <WidthSpacer width={"1.75rem"}/>
                 <Button class={"profile-button svg-button"} onClick={handleProfileClick} ref={ref} disableTouchRipple></Button>
                 <IsSignOutButton/>

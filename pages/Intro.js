@@ -1,6 +1,6 @@
-import {Box, Button, styled, Typography} from "@mui/material";
+import {Box, Button, styled} from "@mui/material";
 import Image from "next/image";
-import { LargeBoldText, LargerBoldText, WhiteLargeBoldText } from "/public/components/Typographies";
+import { BoldText, WhiteBoldText } from "/public/components/Typographies";
 import {HeightSpacer} from "@/public/components/Spacers";
 
 const InnerBox = styled(Box)({
@@ -34,15 +34,15 @@ const GreenButton = styled(Button)({
 export default function Intro() {
     return (
         <InnerBox>
-            <LargeBoldText>Welcome to</LargeBoldText>
+            <BoldText size={"1.125rem"}>Welcome to</BoldText>
             <HeightSpacer height={"1.1rem"}/>
             <Image src={"./images/FullLogo.svg"} alt={"StudAI Logo"} width={400} height={72.42}/>
             <HeightSpacer height={"1.65rem"}/>
-            <LargerBoldText>Your Personal Data Maid</LargerBoldText>
+            <BoldText size={"1.75rem"}>Your Personal Data Maid</BoldText>
             <HeightSpacer height={"1.125rem"}/>
             <a href="/api/auth/login" style={{textDecoration: "none"}}>
                 <GreenButton>
-                    <WhiteLargeBoldText>See what Stud can do</WhiteLargeBoldText>
+                    <WhiteBoldText size={"1.125rem"}>See what Stud can do</WhiteBoldText>
                 </GreenButton>
             </a>
         </InnerBox>
