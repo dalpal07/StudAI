@@ -1,32 +1,11 @@
-import {Box, Button, styled} from "@mui/material";
+import {Button} from "@mui/material";
 import Image from "next/image";
 import React, {useEffect, useRef, useState} from 'react';
-import {BoldText, Text} from "./Typographies";
-import {WidthSpacer} from "@/public/components/Spacers";
-import {DefaultButton, MenuButton} from "@/public/components/Buttons";
-
-const NavBox = styled(Box) ({
-    position: "sticky",
-    top: 0,
-    zIndex: 1,
-    display: "flex",
-    padding: "1rem 1.5rem",
-    alignItems: "center",
-    gap: "1.75rem",
-    alignSelf: "stretch",
-    backgroundColor: "#F2F2F2",
-    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.30), 0px 0px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.05)"
-});
-
-const Spacer = styled(Box) ({
-    height: "1.0625rem",
-    flex: "1 0 0"
-});
-
-const ProfileBox = styled(Box)({
-    display: "flex",
-    alignItems: "center",
-});
+import {BoldText, Text} from "./common/Typographies";
+import {WidthSpacer} from "@/public/components/common/Spacers";
+import {DefaultButton, MenuButton} from "@/public/components/common/Buttons";
+import {WidthFlexSpacer} from "@/public/components/common/Spacers";
+import {NavBox, ProfileBox} from "@/public/components/common/Boxes";
 
 export default function NavBar(props) {
     const [clicked, setClicked] = useState(false);
@@ -76,7 +55,7 @@ export default function NavBar(props) {
     return (
         <NavBox>
             <Image src={"./images/Logo.svg"} alt={"StudAI Logo"} width={151.9} height={27.5}/>
-            <Spacer/>
+            <WidthFlexSpacer/>
             <Profile/>
         </NavBox>
     );

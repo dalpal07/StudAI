@@ -1,86 +1,8 @@
-import {Box, Input, styled} from "@mui/material";
+import {Input, styled} from "@mui/material";
 import {useEffect, useRef, useState} from "react";
 import Image from "next/image";
-import {IconButton} from "@/public/components/Buttons";
-
-const ChatBox = styled(Box)({
-    display: "flex",
-    height: "100%",
-    minHeight: "15rem",
-    padding: "1.125rem",
-    paddingLeft: "1.75rem",
-    paddingRight: "1.75rem",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    gap: "0.5rem",
-    flex: "1 0 0",
-    borderRadius: "1.25rem",
-    border: "1px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
-    background: "#F2F2F2",
-});
-
-const UpperBox = styled(Box)({
-    overflowY: "scroll",
-    width: "100%"
-});
-
-const ChatLine = styled(Box)({
-    display: "flex",
-});
-
-const AssistantChatLine = styled(ChatLine)({
-
-});
-
-const UserChatLine = styled(ChatLine)({
-    justifyContent: "flex-end",
-    alignItems: "flex-end"
-});
-
-const ChatMessage = styled(Box)({
-    textAlign: "left",
-    fontFamily: "Inter",
-    fontSize: "0.875rem",
-    fontStyle: "normal",
-    fontWeight: "500",
-    lineHeight: "normal",
-    padding: "0.75rem 1.125rem",
-    gap: "0.625rem",
-    borderRadius: "1.25rem",
-    marginBottom: "0.75rem",
-    maxWidth: "60%",
-});
-
-const UserChatMessage = styled(ChatMessage)({
-    alignItems: "flex-end",
-    background: "#53B753",
-    color: "#F2F2F2",
-});
-
-const AssistantChatMessage = styled(ChatMessage)({
-    background: "#E3E3E3",
-    color: "var(--main-black, #3F3636)",
-});
-
-const BottomBox = styled(Box)({
-    display: "flex",
-    width: "100%",
-    height: "fit-content",
-    alignItems: "center",
-    justifyContent: "center",
-});
-
-const ChatInputOuterBox = styled(Box)({
-    display: "flex",
-    padding: "0.75rem",
-    alignItems: "center",
-    gap: "0.5rem",
-    borderRadius: "1.25rem",
-    background: "#E3E3E3",
-    height: "1em",
-    width: "100%",
-});
+import {IconButton} from "@/public/components/common/Buttons";
+import {ChatBox, UpperBox, UserChatLine, AssistantChatLine, UserChatMessage, AssistantChatMessage, BottomBox, ChatInputOuterBox} from "@/public/components/common/Boxes";
 
 const ChatInput = styled(Input)(({ hasvalue }) => ({
     width: "100%",

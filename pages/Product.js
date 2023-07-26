@@ -1,52 +1,11 @@
 import Chat from "@/public/components/Chat";
 import FileUpload from "@/public/components/FileUpload";
 import Script from "@/public/components/Script";
-import {Box, Button, styled, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import Run from "@/public/components/Run";
-import { BoldText } from "/public/components/Typographies"
-
-const InnerBox = styled(Box) ({
-    margin: "0.75rem 1.5rem",
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-});
-
-const TitleBox = styled(Box) ({
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "0.5rem",
-});
-
-const LoadingContainer = styled(Box) ({
-    display: "flex",
-    position: "fixed",
-    top: "30%",
-    width: "100%",
-    justifyContent: "center",
-});
-
-const LoadingBox = styled(Box) ({
-    background: "#F2F2F2",
-    display: "flex",
-    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.30), 0px 0px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.05)",
-    width: "35rem",
-    height: "15rem",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-});
-
-const Spinner = styled(Box) ({
-    width: 64,
-    height: 64,
-    border: "8px solid",
-    borderColor: "var(--main-green, #53B753) transparent var(--main-green, #53B753) transparent",
-    borderRadius: "50%",
-    animation: "spin-anim 1.2s linear infinite",
-    marginBottom: "1.5rem",
-});
+import { BoldText } from "/public/components/common/Typographies"
+import {InnerBox2, LoadingContainer, LoadingBox, Spinner} from "@/public/components/common/Boxes";
+import {HeightSpacer} from "@/public/components/common/Spacers";
 
 export default function Product() {
     const [conversation, setConversation] = useState([{type: "assistant", message: "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, rearrange, or filter your data."}])
@@ -158,10 +117,9 @@ export default function Product() {
 
     return (
         <>
-            <InnerBox id={"inner"}>
-                <TitleBox>
-                    <BoldText size={"1.5rem"}>Give Stud a Try</BoldText>
-                </TitleBox>
+            <InnerBox2 id={"inner"}>
+                <BoldText size={"1.5rem"}>Give Stud a Try</BoldText>
+                <HeightSpacer height={"0.75rem"}/>
                 <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}
                       dataProcessing={dataProcessing} fileName={fileName}/>
                 <FileUpload setFileName={setFileName} fileName={fileName} dataProcessing={dataProcessing}
@@ -171,7 +129,7 @@ export default function Product() {
                         setConversationIndex={setConversationIndex} conversationIndex={conversationIndex}/>
                 <Run headers={dataHistory[dataIndex].headers}  entries={dataHistory[dataIndex].entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
                      setDataIndex={setDataIndex} setDataHistory={setDataHistory} dataProcessing={dataProcessing} dataIndex={dataIndex} dataHistory={dataHistory}/>
-            </InnerBox>
+            </InnerBox2>
             <HandleLoading/>
         </>
     )

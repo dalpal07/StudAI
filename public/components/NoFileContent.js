@@ -1,18 +1,11 @@
-import {Box, Input, styled} from "@mui/material";
-import {BoldText, FadedBoldText, WhiteBoldText} from "@/public/components/Typographies";
-import {GreenButton} from "@/public/components/Buttons";
+import {Input, styled} from "@mui/material";
+import {BoldText, FadedBoldText} from "@/public/components/common/Typographies";
+import {GreenButton} from "@/public/components/common/Buttons";
+import {TextBox} from "@/public/components/common/Boxes";
 
 const FileInput = styled(Input) ({
     display: 'none'
 })
-
-const TextBox = styled(Box)({
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "0.5rem",
-});
 
 export default function NoFileContent(props) {
     const handleUpload = (event) => {

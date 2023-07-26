@@ -15,6 +15,7 @@ export const WidthHeightSpacer = styled(Box)(({width, height}) => ({
 
 export const WidthFlexSpacer = styled(Box)({
     width: "100%",
+    flex: "1 0 0",
 });
 
 export const HeightFlexSpacer = styled(Box)({

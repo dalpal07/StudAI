@@ -1,10 +1,5 @@
-import {Box, styled, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
-
-const TableContainer = styled(Box)({
-    width: "100%",
-    height: "100%",
-    overflow: "scroll",
-});
+import {styled, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {TableContainer} from "@/public/components/common/Boxes";
 
 const Cell = styled(TableCell)(({rowIndex}) => ({
     padding: "0.5rem",

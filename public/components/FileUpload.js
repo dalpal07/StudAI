@@ -2,7 +2,7 @@ import {useState} from "react";
 import { read, utils } from 'xlsx';
 import NoFileContent from "@/public/components/NoFileContent";
 import FileContent from "@/public/components/FileContent";
-import {UploadBox} from "@/public/components/Buttons";
+import {UploadBoxButton} from "@/public/components/common/Buttons";
 
 function splitLine(row) {
     let entries = []
@@ -117,7 +117,7 @@ export default function FileUpload(props) {
 
 
     return (
-        <UploadBox
+        <UploadBoxButton
             isDraggingOver={isDraggingOver}
             onDrop={handleDrop}
             onDragOver={(event) => {
@@ -133,6 +133,6 @@ export default function FileUpload(props) {
                 :
                 <FileContent headers={props.headers} entries={props.entries}/>
             }
-        </UploadBox>
+        </UploadBoxButton>
     )
 }

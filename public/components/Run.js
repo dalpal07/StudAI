@@ -1,30 +1,10 @@
 import {useEffect, useState} from "react";
 import { saveAs } from 'file-saver';
-import {Box, styled} from "@mui/material";
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
-import {GreenButton, UndoRedoButton} from "@/public/components/Buttons";
-import {WhiteBoldText} from "@/public/components/Typographies";
-import {WidthSpacer} from "@/public/components/Spacers";
-
-const DownloadContainer = styled(Box) ({
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: "1rem",
-    marginBottom: "1rem",
-});
-
-const Spacer = styled(Box)({
-    display: "flex",
-    width: "100%",
-});
-
-const UndoRedoContainer = styled(Box)({
-    display: "flex",
-});
+import {GreenButton, UndoRedoButton} from "@/public/components/common/Buttons";
+import {WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
+import {DownloadContainer, BasicBox} from "@/public/components/common/Boxes";
 
 function downloadFile(content, fileName) {
     // if fileName extension is not csv, change to csv
@@ -87,7 +67,7 @@ export default function Run(props) {
     }, [props.script])
     return (
         <DownloadContainer>
-            <UndoRedoContainer>
+            <BasicBox>
                 <UndoRedoButton onClick={handleUndo} disabled={props.dataHistory[props.dataIndex].prev === null || props.dataProcessing}>
                     <UndoIcon/>
                 </UndoRedoButton>
@@ -95,8 +75,8 @@ export default function Run(props) {
                 <UndoRedoButton onClick={handleRedo} disabled={props.dataHistory[props.dataIndex].next === null || props.dataProcessing}>
                     <RedoIcon/>
                 </UndoRedoButton>
-            </UndoRedoContainer>
-            <Spacer/>
+            </BasicBox>
+            <WidthFlexSpacer/>
             <GreenButton onClick={handleButton} disabled={props.dataProcessing || props.fileName === ""}>
                 Download
             </GreenButton>

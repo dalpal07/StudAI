@@ -1,22 +1,8 @@
-import {Box, Button, styled} from "@mui/material";
 import Image from "next/image";
-import { BoldText, WhiteBoldText } from "/public/components/Typographies";
-import {HeightSpacer} from "@/public/components/Spacers";
-import {GreenButton} from "@/public/components/Buttons";
-
-const InnerBox = styled(Box)({
-    position: "absolute",
-    top: 50,
-    bottom: 0,
-    width: "100%",
-    justifyContent: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    flex: "1 0 0",
-    alignSelf: "stretch",
-    background: "linear-gradient(180deg, #F2F2F2 0%, rgba(242, 242, 242, 0.00) 57.81%, rgba(83, 183, 83, 0.16) 100%)",
-});
+import { BoldText } from "/public/components/common/Typographies";
+import {HeightSpacer} from "@/public/components/common/Spacers";
+import {GreenButton} from "@/public/components/common/Buttons";
+import {InnerBox} from "@/public/components/common/Boxes";
 
 export default function Intro() {
     return (
