@@ -1,60 +1,13 @@
-import Chat from "@/public/components/Chat";
-import FileUpload from "@/public/components/FileUpload";
+import Chat from "@/public/components/chat/Chat";
+import FileUpload from "@/public/components/file-upload/FileUpload";
 import Script from "@/public/components/Script";
-import {Box, Button, styled, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import Run from "@/public/components/Run";
-
-const InnerBox = styled(Box) ({
-    margin: "0.75rem 1.5rem",
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-});
-
-const TitleBox = styled(Box) ({
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "0.5rem",
-});
-
-const TitleTypography = styled(Typography) ({
-    color: "var(--main-black, #3F3636)",
-    fontFamily: "Inter",
-    fontSize: "1.5rem",
-    fontStyle: "normal",
-    fontWeight: "700",
-    lineHeight: "normal",
-});
-
-const LoadingContainer = styled(Box) ({
-    display: "flex",
-    position: "fixed",
-    top: "30%",
-    width: "100%",
-    justifyContent: "center",
-});
-
-const LoadingBox = styled(Box) ({
-    background: "#F2F2F2",
-    display: "flex",
-    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.30), 0px 0px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.05)",
-    width: "35rem",
-    height: "15rem",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-});
-
-const Spinner = styled(Box) ({
-    width: 64,
-    height: 64,
-    border: "8px solid",
-    borderColor: "var(--main-green, #53B753) transparent var(--main-green, #53B753) transparent",
-    borderRadius: "50%",
-    animation: "spin-anim 1.2s linear infinite",
-    marginBottom: "1.5rem",
-});
+import { BoldText } from "/public/components/common/Typographies"
+import {InnerBox2} from "@/public/components/common/Boxes";
+import {HeightSpacer} from "@/public/components/common/Spacers";
+import ExtendPrompt from "@/public/functions/ExtendPrompt";
+import Loading from "@/public/components/conditionals/Loading";
 
 export default function Product() {
     const [conversation, setConversation] = useState([{type: "assistant", message: "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, rearrange, or filter your data."}])
@@ -74,102 +27,22 @@ export default function Product() {
             document.body.style.setProperty("overflow", "auto")
         }
     }, [dataProcessing])
-    async function extendPrompt(prompt, isScript) {
-        if (fileName !== "") {
-            prompt = prompt + "\n\nInformation about the data (this information need not be requested again from the user):\n\nName: " + fileName + "\nHeaders: "
-            for (let i = 0; i < dataHistory[dataIndex].headers.length; i++) {
-                if (i === dataHistory[dataIndex].headers.length - 1) {
-                    prompt = prompt + dataHistory[dataIndex].headers[i]
-                    break
-                }
-                prompt = prompt + dataHistory[dataIndex].headers[i] + ", "
-            }
-            if (dataHistory[dataIndex].entries.length > 0) {
-                prompt = prompt + "\nSample entries for reference (these entries should only be used for understanding what format the data generally follows):\n"
-                if (dataHistory[dataIndex].entries.length > 5) {
-                    const randomIndices = []
-                    while (randomIndices.length < 5) {
-                        const randomIndex = Math.floor(Math.random() * dataHistory[dataIndex].entries.length)
-                        if (!randomIndices.includes(randomIndex)) {
-                            randomIndices.push(randomIndex)
-                        }
-                    }
-                    for (let i = 0; i < randomIndices.length; i++) {
-                        for (let j = 0; j < dataHistory[dataIndex].entries[randomIndices[i]].length; j++) {
-                            if (j === dataHistory[dataIndex].entries[randomIndices[i]].length - 1) {
-                                prompt = prompt + dataHistory[dataIndex].entries[randomIndices[i]][j]
-                                break
-                            }
-                            prompt = prompt + dataHistory[dataIndex].entries[randomIndices[i]][j] + ", "
-                        }
-                        prompt = prompt + "\n"
-                    }
-                    prompt = prompt + "\n"
-                }
-                else {
-                    for (let i = 0; i < dataHistory[dataIndex].entries.length; i++) {
-                        for (let j = 0; j < dataHistory[dataIndex].entries[i].length; j++) {
-                            if (j === dataHistory[dataIndex].entries[i].length - 1) {
-                                prompt = prompt + dataHistory[dataIndex].entries[i][j]
-                                break
-                            }
-                            prompt = prompt + dataHistory[dataIndex].entries[i][j] + ", "
-                        }
-                        prompt = prompt + "\n"
-                    }
-                }
-            }
-        }
-        if (!isScript) {
-            if (conversationIndex > 0) {
-                prompt = prompt + "\nPrevious conversation for reference (this information should not be used unless the user specifically refers to it in the current conversation):\n" + conversation.slice(0, conversationIndex).map((line) => {
-                    if (line.type === "user") {
-                        return "\nUser: " + line.message
-                    } else {
-                        return "\nStud: " + line.message
-                    }
-                })
-                prompt = prompt + "\n\n"
-            }
-            prompt = prompt + "\nRespond to the current conversation:\n" + conversation.slice(conversationIndex).map((line) => {
-                if (line.type === "user") {
-                    return "\nUser: " + line.message
-                } else {
-                    return "\nStud: " + line.message
-                }
-            }) + "\nStud: [insert]"
-        }
-        else {
-            prompt = prompt + "\nConversation:\n" + conversation.slice(conversationIndex).map((line) => {
-                if (line.type === "user") {
-                    return "\nUser: " + line.message
-                } else {
-                    return "\nStud: " + line.message
-                }
-            })
-        }
-        console.log(prompt)
-        return prompt
+    const extendPrompt = async (prompt, isScript) => {
+        return await ExtendPrompt({
+            prompt: prompt,
+            isScript: isScript,
+            fileName: fileName,
+            dataHistory: dataHistory,
+            dataIndex: dataIndex,
+            conversation: conversation,
+            conversationIndex: conversationIndex,
+        })
     }
-    const HandleLoading = () => {
-        if (dataProcessing) {
-            return (
-                <LoadingContainer>
-                    <LoadingBox>
-                        <Spinner/>
-                        <TitleTypography>Processing Your Data...</TitleTypography>
-                    </LoadingBox>
-                </LoadingContainer>
-            )
-        }
-    }
-
     return (
         <>
-            <InnerBox id={"inner"}>
-                <TitleBox>
-                    <TitleTypography>Give Stud a Try</TitleTypography>
-                </TitleBox>
+            <InnerBox2 id={"inner"}>
+                <BoldText size={"1.5rem"}>Give Stud a Try</BoldText>
+                <HeightSpacer height={"0.75rem"}/>
                 <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}
                       dataProcessing={dataProcessing} fileName={fileName}/>
                 <FileUpload setFileName={setFileName} fileName={fileName} dataProcessing={dataProcessing}
@@ -179,8 +52,8 @@ export default function Product() {
                         setConversationIndex={setConversationIndex} conversationIndex={conversationIndex}/>
                 <Run headers={dataHistory[dataIndex].headers}  entries={dataHistory[dataIndex].entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
                      setDataIndex={setDataIndex} setDataHistory={setDataHistory} dataProcessing={dataProcessing} dataIndex={dataIndex} dataHistory={dataHistory}/>
-            </InnerBox>
-            <HandleLoading/>
+            </InnerBox2>
+            <Loading dataProcessing={dataProcessing}/>
         </>
     )
 }

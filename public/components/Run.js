@@ -1,65 +1,10 @@
 import {useEffect, useState} from "react";
-import { saveAs } from 'file-saver';
-import {Box, Button, styled} from "@mui/material";
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
-
-const DownloadContainer = styled(Box) ({
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: "1rem",
-    marginBottom: "1rem",
-});
-
-const DownloadButton = styled(Button)({
-    color: "white",
-    display: "flex",
-    padding: "0.5rem 1.5rem",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: "1.25rem",
-    backgroundColor: 'var(--main-green, #53B753)',
-    textTransform: "none",
-    "&:disabled": {
-        backgroundColor: "#D6D6D6",
-        color: "#3F3636",
-        opacity: 0.5,
-    },
-    "&:hover": {
-        backgroundColor: "var(--main-green-hover, #4AAE4A)",
-    }
-});
-
-const Spacer = styled(Box)({
-    display: "flex",
-    width: "100%",
-});
-
-const UndoRedoContainer = styled(Box)({
-    display: "flex",
-});
-
-const UndoRedoButton = styled(Button)({
-    padding: "0.5rem 1.5rem",
-    backgroundColor: "var(--main-gray, #E5E5E5)",
-    color: "var(--main-black, #3F3636)",
-    marginRight: "0.5rem",
-    "&:hover": {
-        background: "#D6D6D6",
-    }
-});
-
-function downloadFile(content, fileName) {
-    // if fileName extension is not csv, change to csv
-    if (fileName.split(".")[1] !== "csv") {
-        fileName = fileName.split(".")[0] + ".csv"
-    }
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    saveAs(blob, fileName);
-}
+import {GreenButton, UndoRedoButton} from "@/public/components/common/Buttons";
+import {WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
+import {DownloadContainer, BasicBox} from "@/public/components/common/Boxes";
+import {downloadFile} from "@/public/functions/DownloadFile";
 
 export default function Run(props) {
     const [localScript, setLocalScript] = useState("")
@@ -113,18 +58,19 @@ export default function Run(props) {
     }, [props.script])
     return (
         <DownloadContainer>
-            <UndoRedoContainer>
+            <BasicBox>
                 <UndoRedoButton onClick={handleUndo} disabled={props.dataHistory[props.dataIndex].prev === null || props.dataProcessing}>
                     <UndoIcon/>
                 </UndoRedoButton>
+                <WidthSpacer width={"0.5rem"}/>
                 <UndoRedoButton onClick={handleRedo} disabled={props.dataHistory[props.dataIndex].next === null || props.dataProcessing}>
                     <RedoIcon/>
                 </UndoRedoButton>
-            </UndoRedoContainer>
-            <Spacer/>
-            <DownloadButton onClick={handleButton} disabled={props.dataProcessing || props.fileName === ""}>
+            </BasicBox>
+            <WidthFlexSpacer/>
+            <GreenButton onClick={handleButton} disabled={props.dataProcessing || props.fileName === ""}>
                 Download
-            </DownloadButton>
+            </GreenButton>
         </DownloadContainer>
     )
 }

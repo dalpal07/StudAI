@@ -1,67 +1,21 @@
-import {Box, Button, styled, Typography} from "@mui/material";
 import Image from "next/image";
-
-const InnerBox = styled(Box)({
-    position: "absolute",
-    top: 50,
-    bottom: 0,
-    width: "100%",
-    justifyContent: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "1.125rem",
-    flex: "1 0 0",
-    alignSelf: "stretch",
-    background: "linear-gradient(180deg, #F2F2F2 0%, rgba(242, 242, 242, 0.00) 57.81%, rgba(83, 183, 83, 0.16) 100%)",
-});
-
-const Text = styled(Typography)({
-    marginTop: "1.12rem",
-    color: "var(--main-black, #3F3636)",
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontWeight: "700",
-    lineHeight: "normal",
-});
-
-const WelcomeText = styled(Text)({
-    fontSize: "1.125rem",
-});
-
-const DataMaidText = styled(Text)({
-    fontSize: "1.75rem",
-});
-
-const SeeText = styled(Text)({
-    marginTop: 0,
-    fontSize: "1.125rem",
-    color: "#F2F2F2",
-})
-
-const GreenButton = styled(Button)({
-    marginTop: "3rem",
-    display: "flex",
-    padding: "0.5rem 1.5rem",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: "1.25rem",
-    background: "var(--main-green, #53B753)",
-    textTransform: "none",
-    "&:hover": {
-        background: "var(--main-green-hover, #4AAE4A)",
-    }
-});
+import { BoldText } from "/public/components/common/Typographies";
+import {HeightSpacer} from "@/public/components/common/Spacers";
+import {GreenButton} from "@/public/components/common/Buttons";
+import {InnerBox} from "@/public/components/common/Boxes";
 
 export default function Intro() {
     return (
         <InnerBox>
-            <WelcomeText>Welcome to</WelcomeText>
+            <BoldText size={"1.125rem"}>Welcome to</BoldText>
+            <HeightSpacer height={"1.1rem"}/>
             <Image src={"./images/FullLogo.svg"} alt={"StudAI Logo"} width={400} height={72.42}/>
-            <DataMaidText>Your Personal Data Maid</DataMaidText>
+            <HeightSpacer height={"2rem"}/>
+            <BoldText size={"1.75rem"}>Your Personal Data Maid</BoldText>
+            <HeightSpacer height={"4.125rem"}/>
             <a href="/api/auth/login" style={{textDecoration: "none"}}>
-                <GreenButton>
-                    <SeeText>See what Stud can do</SeeText>
+                <GreenButton size={"1.125rem"} padding={"0.25rem 1.5rem"}>
+                    See what Stud can do
                 </GreenButton>
             </a>
         </InnerBox>
