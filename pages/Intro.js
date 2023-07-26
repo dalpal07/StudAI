@@ -1,5 +1,7 @@
 import {Box, Button, styled, Typography} from "@mui/material";
 import Image from "next/image";
+import { LargeBoldText, LargerBoldText, WhiteLargeBoldText } from "/public/components/Typographies";
+import {HeightSpacer} from "@/public/components/Spacers";
 
 const InnerBox = styled(Box)({
     position: "absolute",
@@ -10,34 +12,10 @@ const InnerBox = styled(Box)({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "1.125rem",
     flex: "1 0 0",
     alignSelf: "stretch",
     background: "linear-gradient(180deg, #F2F2F2 0%, rgba(242, 242, 242, 0.00) 57.81%, rgba(83, 183, 83, 0.16) 100%)",
 });
-
-const Text = styled(Typography)({
-    marginTop: "1.12rem",
-    color: "var(--main-black, #3F3636)",
-    fontFamily: "Inter",
-    fontStyle: "normal",
-    fontWeight: "700",
-    lineHeight: "normal",
-});
-
-const WelcomeText = styled(Text)({
-    fontSize: "1.125rem",
-});
-
-const DataMaidText = styled(Text)({
-    fontSize: "1.75rem",
-});
-
-const SeeText = styled(Text)({
-    marginTop: 0,
-    fontSize: "1.125rem",
-    color: "#F2F2F2",
-})
 
 const GreenButton = styled(Button)({
     marginTop: "3rem",
@@ -56,12 +34,15 @@ const GreenButton = styled(Button)({
 export default function Intro() {
     return (
         <InnerBox>
-            <WelcomeText>Welcome to</WelcomeText>
+            <LargeBoldText>Welcome to</LargeBoldText>
+            <HeightSpacer height={"1.1rem"}/>
             <Image src={"./images/FullLogo.svg"} alt={"StudAI Logo"} width={400} height={72.42}/>
-            <DataMaidText>Your Personal Data Maid</DataMaidText>
+            <HeightSpacer height={"1.65rem"}/>
+            <LargerBoldText>Your Personal Data Maid</LargerBoldText>
+            <HeightSpacer height={"1.125rem"}/>
             <a href="/api/auth/login" style={{textDecoration: "none"}}>
                 <GreenButton>
-                    <SeeText>See what Stud can do</SeeText>
+                    <WhiteLargeBoldText>See what Stud can do</WhiteLargeBoldText>
                 </GreenButton>
             </a>
         </InnerBox>

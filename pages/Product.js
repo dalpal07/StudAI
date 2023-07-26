@@ -4,6 +4,7 @@ import Script from "@/public/components/Script";
 import {Box, Button, styled, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import Run from "@/public/components/Run";
+import { TitleText } from "/public/components/Typographies"
 
 const InnerBox = styled(Box) ({
     margin: "0.75rem 1.5rem",
@@ -16,15 +17,6 @@ const TitleBox = styled(Box) ({
     display: "flex",
     alignItems: "center",
     marginBottom: "0.5rem",
-});
-
-const TitleTypography = styled(Typography) ({
-    color: "var(--main-black, #3F3636)",
-    fontFamily: "Inter",
-    fontSize: "1.5rem",
-    fontStyle: "normal",
-    fontWeight: "700",
-    lineHeight: "normal",
 });
 
 const LoadingContainer = styled(Box) ({
@@ -157,7 +149,7 @@ export default function Product() {
                 <LoadingContainer>
                     <LoadingBox>
                         <Spinner/>
-                        <TitleTypography>Processing Your Data...</TitleTypography>
+                        <TitleText>Processing Your Data...</TitleText>
                     </LoadingBox>
                 </LoadingContainer>
             )
@@ -168,7 +160,7 @@ export default function Product() {
         <>
             <InnerBox id={"inner"}>
                 <TitleBox>
-                    <TitleTypography>Give Stud a Try</TitleTypography>
+                    <TitleText>Give Stud a Try</TitleText>
                 </TitleBox>
                 <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}
                       dataProcessing={dataProcessing} fileName={fileName}/>

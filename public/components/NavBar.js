@@ -1,6 +1,8 @@
 import {Box, Button, styled} from "@mui/material";
 import Image from "next/image";
 import React, {useEffect, useRef, useState} from 'react';
+import { LargeBoldText } from "./Typographies";
+import {WidthSpacer} from "@/public/components/Spacers";
 
 const NavBox = styled(Box) ({
     position: "sticky",
@@ -45,17 +47,6 @@ const ProfileBox = styled(Box)({
     alignItems: "center",
 });
 
-const UserNameText = styled(Box)({
-    color: "var(--main-black, #3F3636)",
-    fontFamily: "Inter",
-    fontSize: "1.125rem",
-    fontStyle: "normal",
-    fontWeight: 700,
-    lineHeight: "normal",
-    textTransform: "none",
-    marginRight: "1.75rem",
-});
-
 const SignOutButton = styled(Button)({
     position: "absolute",
     top: 68,
@@ -93,11 +84,12 @@ export default function NavBar(props) {
         setClicked(!clicked);
     }
     const Profile = () => {
-        if (props.isLoading) return <UserNameText>Loading...</UserNameText>
-        if (props.error) return <UserNameText>{props.error.message}</UserNameText>
+        if (props.isLoading) return <LargeBoldText>Loading...</LargeBoldText>
+        if (props.error) return <LargeBoldText>{props.error.message}</LargeBoldText>
         if (props.user) return (
             <ProfileBox>
-                <UserNameText>{props.user.name}</UserNameText>
+                <LargeBoldText>{props.user.name}</LargeBoldText>
+                <WidthSpacer width={"1.75rem"}/>
                 <Button class={"profile-button svg-button"} onClick={handleProfileClick} ref={ref} disableTouchRipple></Button>
                 <IsSignOutButton/>
             </ProfileBox>

@@ -1,4 +1,5 @@
-import {Box, Button, Input, styled, Typography} from "@mui/material";
+import {Box, Button, Input, styled} from "@mui/material";
+import { LargeBoldText, FadedSmallBoldText} from "@/public/components/Typographies";
 
 const FileInput = styled(Input) ({
     display: 'none'
@@ -10,27 +11,6 @@ const TextBox = styled(Box)({
     justifyContent: "center",
     alignItems: "center",
     gap: "0.5rem",
-});
-
-const DragDropTypography = styled(Typography)({
-    color: "var(--main-black, #3F3636)",
-    fontFamily: "Inter",
-    fontSize: "1.125rem",
-    fontStyle: "normal",
-    fontWeight: "700",
-    lineHeight: "normal",
-    textTransform: "none",
-});
-
-const DragDropSubTypography = styled(Typography)({
-    color: "var(--main-black, #3F3636)",
-    fontFamily: "Inter",
-    fontSize: "0.875rem",
-    fontStyle: "normal",
-    fontWeight: "700",
-    lineHeight: "normal",
-    opacity: 0.5,
-    textTransform: "none",
 });
 
 const FileButton = styled(Button) (({isDraggingOver}) => ({
@@ -60,8 +40,8 @@ export default function NoFileContent(props) {
     return (
         <>
             <TextBox>
-                <DragDropTypography>Drag and drop messy data here</DragDropTypography>
-                <DragDropSubTypography>Make sure your files are messy</DragDropSubTypography>
+                <LargeBoldText>Drag and drop messy data here</LargeBoldText>
+                <FadedSmallBoldText>Make sure your files are messy</FadedSmallBoldText>
             </TextBox>
             <FileInput
                 id="fileInput"
