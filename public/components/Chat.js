@@ -1,6 +1,7 @@
-import {Box, Button, Input, styled, Typography} from "@mui/material";
+import {Box, Input, styled} from "@mui/material";
 import {useEffect, useRef, useState} from "react";
 import Image from "next/image";
+import {IconButton} from "@/public/components/Buttons";
 
 const ChatBox = styled(Box)({
     display: "flex",
@@ -90,10 +91,6 @@ const ChatInput = styled(Input)(({ hasvalue }) => ({
     fontWeight: "500",
     lineHeight: "normal",
 }));
-
-const SendButton = styled(Button)({
-    border: "none",
-});
 
 export default function Chat(props) {
     const [input, setInput] = useState("");
@@ -191,7 +188,7 @@ export default function Chat(props) {
                                onChange={handleInputChange}
                                onKeyPress={handleKeyPress}/>
                 </ChatInputOuterBox>
-                <SendButton onClick={handleSendButtonClick} disableTouchRipple disabled={sendDisabled}
+                <IconButton onClick={handleSendButtonClick} disableTouchRipple disabled={sendDisabled}
                             onMouseEnter={() => setSendHover(true)} onMouseLeave={() => setSendHover(false)}>
                     <Image src={
                         sendDisabled ?
@@ -202,7 +199,7 @@ export default function Chat(props) {
                                 :
                                 "/images/send.svg"
                     } alt={"Send"} width={40} height={40}/>
-                </SendButton>
+                </IconButton>
             </BottomBox>
         </ChatBox>
     )

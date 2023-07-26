@@ -1,6 +1,6 @@
 import {styled, Typography} from "@mui/material";
 
-const Text = styled(Typography)(({size}) => ({
+export const Text = styled(Typography)(({size}) => ({
     color: "var(--main-black, #3F3636)",
     fontFamily: "Inter",
     textTransform: "none",

@@ -1,5 +1,6 @@
-import {Box, Button, Input, styled} from "@mui/material";
-import { BoldText, FadedBoldText} from "@/public/components/Typographies";
+import {Box, Input, styled} from "@mui/material";
+import {BoldText, FadedBoldText, WhiteBoldText} from "@/public/components/Typographies";
+import {GreenButton} from "@/public/components/Buttons";
 
 const FileInput = styled(Input) ({
     display: 'none'
@@ -12,21 +13,6 @@ const TextBox = styled(Box)({
     alignItems: "center",
     gap: "0.5rem",
 });
-
-const FileButton = styled(Button) (({isDraggingOver}) => ({
-    color: isDraggingOver ? '#3F3636' : 'white',
-    opacity: isDraggingOver ? 0.5 : 1,
-    display: "flex",
-    padding: "0.5rem 1.5rem",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: "1.25rem",
-    backgroundColor: isDraggingOver ? '#D6D6D6' : 'var(--main-green, #53B753)',
-    textTransform: "none",
-    "&:hover": {
-        backgroundColor: isDraggingOver ? '#D6D6D6' : "var(--main-green-hover, #4AAE4A)",
-    }
-}))
 
 export default function NoFileContent(props) {
     const handleUpload = (event) => {
@@ -48,9 +34,9 @@ export default function NoFileContent(props) {
                 type={"file"}
                 onChange={handleUpload}
             />
-            <FileButton htmlFor="fileInput" onClick={handleButtonClick} disabled={props.dataProcessing} isDraggingOver={props.isDraggingOver}>
+            <GreenButton htmlFor="fileInput" onClick={handleButtonClick} disabled={props.dataProcessing || props.isDraggingOver}>
                 Upload Messy Data
-            </FileButton>
+            </GreenButton>
         </>
     )
 }

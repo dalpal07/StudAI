@@ -1,26 +1,8 @@
-import {Button, styled} from "@mui/material";
 import {useState} from "react";
 import { read, utils } from 'xlsx';
 import NoFileContent from "@/public/components/NoFileContent";
 import FileContent from "@/public/components/FileContent";
-
-const UploadBox = styled(Button) (({isDraggingOver}) => ({
-    width: "100%",
-    marginTop: "1.5rem",
-    display: "flex",
-    height: "100%",
-    minHeight: "12rem",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "1.5rem",
-    alignSelf: "stretch",
-    borderRadius: "1.25rem",
-    border: "2px dashed var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
-    background: "#E3E3E3",
-    boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.10) inset",
-    backgroundColor: isDraggingOver ? '#F5F5F5' : 'transparent'
-}))
+import {UploadBox} from "@/public/components/Buttons";
 
 function splitLine(row) {
     let entries = []
