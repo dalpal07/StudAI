@@ -99,7 +99,7 @@ export default function Chat(props) {
     const [input, setInput] = useState("");
     const [sendHover, setSendHover] = useState(false);
     const sendDisabled = props.dataProcessing || props.fileName === "" || input === "";
-    const prompt= "You are a chatbot named Stud. Your goal is to chat with users about their data requests until you understand what they're asking. When you sufficiently understand, let the user know that you will take care of their request."
+    const prompt= "You are a chatbot named Stud. Your goal is to chat with users about their data requests until you understand what they're asking for. When you sufficiently understand, reply with \"Please give me a moment while I process this request for you.\". Do not ask if there's anything else you can help with. Do not ask for unnecessary information about the file. If a user thanks you, tell them, \"You bet!\", and then end the conversation."
     const sendToServer = async () => {
         const req = await props.extendPrompt(prompt, false)
         const response = await fetch("/api/chat", {
@@ -108,6 +108,10 @@ export default function Chat(props) {
         })
         if (response.status === 200) {
             const data = await response.json()
+            // delete end of response if "[/insert]" is present
+            if (data.response.includes("[/insert]")) {
+                data.response = data.response.substring(0, data.response.indexOf("[/insert]"))
+            }
             props.setConversation([...props.conversation, {type: "assistant", message: data.response}])
         }
     }
@@ -144,8 +148,8 @@ export default function Chat(props) {
             method: "POST",
             body: ""
         })
-        if (response.status === 200) {
-            console.log("Cold call successful")
+        if (response.status !== 200) {
+            console.log("Cold call error: " + response.status)
         }
     }
 
@@ -153,8 +157,7 @@ export default function Chat(props) {
     useEffect(() => {
         coldCall();
         scrollToBottom();
-        if (props.conversation.length > 0 && props.conversation[props.conversation.length - 1].type === "user") {
-            console.log("Sending to server")
+        if (props.conversation.length > 1 && props.conversation[props.conversation.length - 1].type === "user") {
             sendToServer()
         }
     }, [props.conversation]);

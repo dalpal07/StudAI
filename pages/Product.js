@@ -57,7 +57,7 @@ const Spinner = styled(Box) ({
 });
 
 export default function Product() {
-    const [conversation, setConversation] = useState([{type: "assistant", message: "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, rearrange, or filter your data. For example, try asking \"Can you please swap the first 2 columns in my file?\"."}])
+    const [conversation, setConversation] = useState([{type: "assistant", message: "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, rearrange, or filter your data."}])
     const [conversationIndex, setConversationIndex] = useState(0)
     const [dataHistory, setDataHistory] = useState([{headers: [], entries: [], prev: null, next: null}])
     const [dataIndex, setDataIndex] = useState(0)
@@ -76,7 +76,7 @@ export default function Product() {
     }, [dataProcessing])
     async function extendPrompt(prompt, isScript) {
         if (fileName !== "") {
-            prompt = prompt + "\n\nInformation about the data:\n\nName: " + fileName + "\nHeaders: "
+            prompt = prompt + "\n\nInformation about the data (this information need not be requested again from the user):\n\nName: " + fileName + "\nHeaders: "
             for (let i = 0; i < dataHistory[dataIndex].headers.length; i++) {
                 if (i === dataHistory[dataIndex].headers.length - 1) {
                     prompt = prompt + dataHistory[dataIndex].headers[i]
@@ -85,7 +85,7 @@ export default function Product() {
                 prompt = prompt + dataHistory[dataIndex].headers[i] + ", "
             }
             if (dataHistory[dataIndex].entries.length > 0) {
-                prompt = prompt + "\nSample entries for reference:\n"
+                prompt = prompt + "\nSample entries for reference (these entries should only be used for understanding what format the data generally follows):\n"
                 if (dataHistory[dataIndex].entries.length > 5) {
                     const randomIndices = []
                     while (randomIndices.length < 5) {
@@ -121,8 +121,8 @@ export default function Product() {
             }
         }
         if (!isScript) {
-            if (conversationIndex !== 0) {
-                prompt = prompt + "\nPrevious conversation for reference:\n" + conversation.slice(0, conversationIndex).map((line) => {
+            if (conversationIndex > 0) {
+                prompt = prompt + "\nPrevious conversation for reference (this information should not be used unless the user specifically refers to it in the current conversation):\n" + conversation.slice(0, conversationIndex).map((line) => {
                     if (line.type === "user") {
                         return "\nUser: " + line.message
                     } else {
@@ -131,7 +131,7 @@ export default function Product() {
                 })
                 prompt = prompt + "\n\n"
             }
-            prompt = prompt + "\nRespond to this conversation:\n" + conversation.slice(conversationIndex).map((line) => {
+            prompt = prompt + "\nRespond to the current conversation:\n" + conversation.slice(conversationIndex).map((line) => {
                 if (line.type === "user") {
                     return "\nUser: " + line.message
                 } else {
@@ -140,7 +140,7 @@ export default function Product() {
             }) + "\nStud: [insert]"
         }
         else {
-            prompt = prompt + "\nConversation for reference:\n" + conversation.map((line) => {
+            prompt = prompt + "\nConversation:\n" + conversation.slice(conversationIndex).map((line) => {
                 if (line.type === "user") {
                     return "\nUser: " + line.message
                 } else {
@@ -176,7 +176,7 @@ export default function Product() {
                             headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
                             entries={dataHistory[dataIndex].entries} setDataIndex={setDataIndex}/>
                 <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}
-                        setConversationIndex={setConversationIndex}/>
+                        setConversationIndex={setConversationIndex} conversationIndex={conversationIndex}/>
                 <Run headers={dataHistory[dataIndex].headers}  entries={dataHistory[dataIndex].entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
                      setDataIndex={setDataIndex} setDataHistory={setDataHistory} dataProcessing={dataProcessing} dataIndex={dataIndex} dataHistory={dataHistory}/>
             </InnerBox>
