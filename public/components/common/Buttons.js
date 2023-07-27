@@ -14,18 +14,18 @@ export const DefaultButton = styled(Button)(({size, padding}) => ({
     fontWeight: "bold",
     "&:hover": {
         background: "#D6D6D6",
-    }
+    },
+    "&:disabled": {
+        backgroundColor: "#D6D6D6",
+        color: "#3F3636",
+        opacity: 0.5,
+    },
 }));
 export const GreenButton = styled(DefaultButton)({
     background: "var(--main-green, #53B753)",
     color: "var(--main-white, #F2F2F2)",
     "&:hover": {
         background: "var(--main-green-hover, #4AAE4A)",
-    },
-    "&:disabled": {
-        backgroundColor: "#D6D6D6",
-        color: "#3F3636",
-        opacity: 0.5,
     },
 });
 export const IconButton = styled(Button)({

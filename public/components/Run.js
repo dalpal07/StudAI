@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
-import {GreenButton, UndoRedoButton} from "@/public/components/common/Buttons";
+import {DefaultButton, GreenButton, UndoRedoButton} from "@/public/components/common/Buttons";
 import {WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 import {DownloadContainer, BasicBox} from "@/public/components/common/Boxes";
 import {downloadFile} from "@/public/functions/DownloadFile";
@@ -50,6 +50,11 @@ export default function Run(props) {
         }
         props.setDataIndex(indexToGo)
     }
+    const clearData = () => {
+        props.setDataHistory([{headers: [], entries: [], prev: null, next: null}])
+        props.setDataIndex(0)
+        props.setFileName("")
+    }
     useEffect(() => {
         if (props.script !== "" && props.script !== localScript) {
             setLocalScript(props.script)
@@ -68,6 +73,10 @@ export default function Run(props) {
                 </UndoRedoButton>
             </BasicBox>
             <WidthFlexSpacer/>
+            <DefaultButton onClick={clearData} disabled={props.dataProcessing || props.fileName === ""}>
+                Clear
+            </DefaultButton>
+            <WidthSpacer width={"0.5rem"}/>
             <GreenButton onClick={handleButton} disabled={props.dataProcessing || props.fileName === ""}>
                 Download
             </GreenButton>
