@@ -107,17 +107,17 @@ export const AssistantChatMessage = styled(ChatMessage)({
 export const BottomBox = styled(BasicBox)({
     width: "100%",
     height: "fit-content",
-    alignItems: "center",
+    alignItems: "top",
     justifyContent: "center",
 });
 
 export const ChatInputOuterBox = styled(BasicBox)({
-    padding: "0.75rem",
+    padding: "0.5rem 1rem",
     alignItems: "center",
     gap: "0.5rem",
     borderRadius: "1.25rem",
     background: "#E3E3E3",
-    height: "1em",
+    height: "fit-content",
     width: "100%",
 });
 // FileContent.js

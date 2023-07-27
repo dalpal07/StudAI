@@ -31,6 +31,7 @@ export default function LowerChat(props) {
         <BottomBox>
             <ChatInputOuterBox>
                 <ChatInput placeholder="What can Stud do for you today?"
+                           multiline
                            hasvalue={(input !== "").toString()}
                            disableUnderline={true}
                            disabled={props.dataProcessing}
