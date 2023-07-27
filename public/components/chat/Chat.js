@@ -1,8 +1,5 @@
-import {useEffect, useRef, useState} from "react";
-import Image from "next/image";
-import {IconButton} from "@/public/components/common/Buttons";
-import {ChatBox, UpperBox, UserChatLine, AssistantChatLine, UserChatMessage, AssistantChatMessage, BottomBox, ChatInputOuterBox} from "@/public/components/common/Boxes";
-import {ChatInput} from "@/public/components/common/Inputs";
+import {useEffect, useRef} from "react";
+import {ChatBox} from "@/public/components/common/Boxes";
 import UpperChat from "@/public/components/chat/UpperChat";
 import LowerChat from "@/public/components/chat/LowerChat";
 

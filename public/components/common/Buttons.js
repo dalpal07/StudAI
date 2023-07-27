@@ -30,6 +30,9 @@ export const GreenButton = styled(DefaultButton)({
 });
 export const IconButton = styled(Button)({
     border: "none",
+    width: "fit-content",
+    height: "fit-content",
+    padding: "0",
 });
 export const UploadBoxButton = styled(Button) (({isDraggingOver}) => ({
     width: "100%",
