@@ -65,7 +65,7 @@ export default function Product() {
                             verify={verifyReplaceFile} setVerify={setVerifyReplaceFile} replaceFileVerified={replaceFileVerified}
                             setReplaceFileVerified={setReplaceFileVerified}/>
                 <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}
-                        setConversationIndex={setConversationIndex} conversationIndex={conversationIndex}/>
+                        setConversationIndex={setConversationIndex} conversationIndex={conversationIndex} dataProcessing={dataProcessing}/>
                 <Run headers={dataHistory[dataIndex].headers}  entries={dataHistory[dataIndex].entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
                      setDataIndex={setDataIndex} setDataHistory={setDataHistory} disabled={disabled} dataIndex={dataIndex} dataHistory={dataHistory} setFileName={setFileName}
                      verify={verifyClearFile} setVerify={setVerifyClearFile} clearFileVerified={clearFileVerified} setClearFileVerified={setClearFileVerified}/>
