@@ -1,4 +1,5 @@
 import {styled, TableCell} from "@mui/material";
+import Image from "next/image";
 
 export const Cell = styled(TableCell)(({rowIndex}) => ({
     padding: "0.5rem",
@@ -10,3 +11,15 @@ export const Cell = styled(TableCell)(({rowIndex}) => ({
     lineHeight: "normal",
     textTransform: "none",
 }));
+
+const ChatBubbleTail = styled(Image)({
+    paddingBottom: "11px",
+});
+
+export const ChatBubbleTailLeft = styled(ChatBubbleTail)({
+    marginRight: "-10px"
+});
+
+export const ChatBubbleTailRight = styled(ChatBubbleTail)({
+    marginLeft: "-10px"
+});

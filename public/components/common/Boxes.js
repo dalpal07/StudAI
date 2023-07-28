@@ -75,7 +75,9 @@ export const UpperBox = styled(Box)({
     width: "100%"
 });
 export const AssistantChatLine = styled(BasicBox)({
-
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-end",
 });
 export const UserChatLine = styled(BasicBox)({
     justifyContent: "flex-end",
@@ -96,12 +98,12 @@ const ChatMessage = styled(Box)({
 });
 export const UserChatMessage = styled(ChatMessage)({
     alignItems: "flex-end",
-    background: "#53B753",
-    color: "#F2F2F2",
-});
-export const AssistantChatMessage = styled(ChatMessage)({
     background: "#E3E3E3",
     color: "var(--main-black, #3F3636)",
+});
+export const AssistantChatMessage = styled(ChatMessage)({
+    background: "#53B753",
+    color: "#F2F2F2",
 });
 
 export const BottomBox = styled(BasicBox)({
