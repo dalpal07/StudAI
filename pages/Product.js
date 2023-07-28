@@ -34,13 +34,13 @@ export default function Product() {
         }
     }, [disabled])
     useEffect(() => {
-        if (dataProcessing || verifyReplaceFile) {
+        if (dataProcessing || verifyReplaceFile || verifyClearFile) {
             setDisabled(true)
         }
         else {
             setDisabled(false)
         }
-    }, [dataProcessing, verifyReplaceFile])
+    }, [dataProcessing, verifyReplaceFile, verifyClearFile])
     const extendPrompt = async (prompt, isScript) => {
         return await ExtendPrompt({
             prompt: prompt,
