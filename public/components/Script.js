@@ -19,13 +19,18 @@ export default function Script(props) {
             if (lastMessage.type === "assistant") {
                 if (lastMessage.message.includes("Please give me a moment while I process this request for you.") && props.conversationIndex !== localIndex) {
                     setLocalIndex(props.conversationIndex)
-                    sendToServer()
                     setTimeout(() => {
                         props.setDataProcessing(true)
-                    }, 1500)
-                    props.setConversationIndex(props.conversation.length)
+                    }, 1000)
                 }
             }
         }
     }, [props.conversation])
+    useEffect(() => {
+        if (props.dataProcessing) {
+            sendToServer().then(() => {
+                props.setConversationIndex(props.conversation.length)
+            });
+        }
+    }, [props.dataProcessing])
 }
