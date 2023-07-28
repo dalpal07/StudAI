@@ -32,13 +32,13 @@ export const InnerBox2 = styled(StackColumnBox) ({
     margin: "0.75rem 1.5rem",
     height: "100%",
 });
-export const LoadingContainer = styled(BasicBox) ({
+export const OverlayContainer = styled(BasicBox) ({
     position: "fixed",
     top: "30%",
     width: "100%",
     justifyContent: "center",
 });
-export const LoadingBox = styled(StackColumnBox) ({
+export const OverlayBox = styled(StackColumnBox) ({
     background: "#F2F2F2",
     boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.30), 0px 0px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.05)",
     width: "35rem",

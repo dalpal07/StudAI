@@ -8,6 +8,7 @@ import {InnerBox2} from "@/public/components/common/Boxes";
 import {HeightSpacer} from "@/public/components/common/Spacers";
 import ExtendPrompt from "@/public/functions/ExtendPrompt";
 import Loading from "@/public/components/conditionals/Loading";
+import Verify from "@/public/components/conditionals/Verify";
 
 export default function Product() {
     const [conversation, setConversation] = useState([{type: "assistant", message: "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, rearrange, or filter your data."}])
@@ -17,8 +18,11 @@ export default function Product() {
     const [fileName, setFileName] = useState("")
     const [script, setScript] = useState("")
     const [dataProcessing, setDataProcessing] = useState(false)
+    const [verify, setVerify] = useState(false)
+    const [replaceFileVerified, setReplaceFileVerified] = useState(null)
+    const [disabled, setDisabled] = useState(false)
     useEffect(() => {
-        if (dataProcessing) {
+        if (disabled) {
             document.getElementById("inner").style.setProperty("opacity", "0.5")
             document.body.style.setProperty("overflow", "hidden")
         }
@@ -26,7 +30,15 @@ export default function Product() {
             document.getElementById("inner").style.setProperty("opacity", "1")
             document.body.style.setProperty("overflow", "auto")
         }
-    }, [dataProcessing])
+    }, [disabled])
+    useEffect(() => {
+        if (dataProcessing || verify) {
+            setDisabled(true)
+        }
+        else {
+            setDisabled(false)
+        }
+    }, [dataProcessing, verify])
     const extendPrompt = async (prompt, isScript) => {
         return await ExtendPrompt({
             prompt: prompt,
@@ -44,16 +56,18 @@ export default function Product() {
                 <BoldText size={"1.5rem"}>Give Stud a Try</BoldText>
                 <HeightSpacer height={"0.75rem"}/>
                 <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}
-                      dataProcessing={dataProcessing} fileName={fileName}/>
-                <FileUpload setFileName={setFileName} fileName={fileName} dataProcessing={dataProcessing}
+                      disabled={disabled} fileName={fileName}/>
+                <FileUpload setFileName={setFileName} fileName={fileName} disabled={disabled}
                             headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
-                            entries={dataHistory[dataIndex].entries} setDataIndex={setDataIndex}/>
+                            entries={dataHistory[dataIndex].entries} setDataIndex={setDataIndex}
+                            verify={verify} setVerify={setVerify} replaceFileVerified={replaceFileVerified}/>
                 <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}
                         setConversationIndex={setConversationIndex} conversationIndex={conversationIndex}/>
                 <Run headers={dataHistory[dataIndex].headers}  entries={dataHistory[dataIndex].entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
-                     setDataIndex={setDataIndex} setDataHistory={setDataHistory} dataProcessing={dataProcessing} dataIndex={dataIndex} dataHistory={dataHistory} setFileName={setFileName}/>
+                     setDataIndex={setDataIndex} setDataHistory={setDataHistory} disabled={disabled} dataIndex={dataIndex} dataHistory={dataHistory} setFileName={setFileName}/>
             </InnerBox2>
             <Loading dataProcessing={dataProcessing}/>
+            <Verify verify={verify} setVerified={setReplaceFileVerified} message={"Are you sure you want to replace this file? This action cannot be undone."}/>
         </>
     )
 }

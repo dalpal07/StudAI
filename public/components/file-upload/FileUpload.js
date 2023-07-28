@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import NoFileContent from "@/public/components/file-upload/NoFileContent";
 import FileContent from "@/public/components/file-upload/FileContent";
 import {UploadBoxButton} from "@/public/components/common/Buttons";
@@ -12,6 +12,8 @@ import {
 
 export default function FileUpload(props) {
     const [isDraggingOver, setIsDraggingOver] = useState(false);
+    const [verified, setVerified] = useState(null);
+    const [tempFile, setTempFile] = useState(null);
     const handleFileChange = (file) => {
         props.setFileName(file.name)
         const fileExtension = getFileExtension(file.name);
@@ -36,20 +38,41 @@ export default function FileUpload(props) {
             alert("Invalid file type. Please upload a .csv or .xlsx file.")
         }
     }
+    const setNewFile = (file) => {
+
+        handleFileChange(file)
+        setIsDraggingOver(false);
+    }
     const handleDrop = (event) => {
-        if (!props.dataProcessing) {
+        if (!props.disabled) {
             event.preventDefault();
             const file = event.dataTransfer.files[0];
-            handleFileChange(file)
-            setIsDraggingOver(false);
+            if (props.fileName === "") {
+                setNewFile(file);
+            }
+            else {
+                setTempFile(file)
+                props.setVerify(true)
+            }
         }
     };
+    useEffect(() => {
+        if (props.replaceFileVerified) {
+            props.setVerify(false)
+            setVerified(null)
+            setNewFile(tempFile)
+        }
+        else if (props.replaceFileVerified === false) {
+            props.setVerify(false)
+            setVerified(null)
+        }
+    }, [props.replaceFileVerified])
     return (
         <UploadBoxButton
             isDraggingOver={isDraggingOver}
             onDrop={handleDrop}
             onDragOver={(event) => {
-                if (!props.dataProcessing) {
+                if (!props.disabled) {
                     event.preventDefault()
                     setIsDraggingOver(true)
                 }
@@ -57,7 +80,7 @@ export default function FileUpload(props) {
             onDragLeave={() => setIsDraggingOver(false)}
         >
             {props.fileName === "" ?
-                <NoFileContent handleFileChange={handleFileChange} isDraggingOver={isDraggingOver} dataProcessing={props.dataProcessing}/>
+                <NoFileContent handleFileChange={handleFileChange} isDraggingOver={isDraggingOver} disabled={props.disabled}/>
                 :
                 <FileContent headers={props.headers} entries={props.entries}/>
             }

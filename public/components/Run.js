@@ -64,20 +64,20 @@ export default function Run(props) {
     return (
         <DownloadContainer>
             <BasicBox>
-                <UndoRedoButton onClick={handleUndo} disabled={props.dataHistory[props.dataIndex].prev === null || props.dataProcessing}>
+                <UndoRedoButton onClick={handleUndo} disabled={props.dataHistory[props.dataIndex].prev === null || props.disabled}>
                     <UndoIcon/>
                 </UndoRedoButton>
                 <WidthSpacer width={"0.5rem"}/>
-                <UndoRedoButton onClick={handleRedo} disabled={props.dataHistory[props.dataIndex].next === null || props.dataProcessing}>
+                <UndoRedoButton onClick={handleRedo} disabled={props.dataHistory[props.dataIndex].next === null || props.disabled}>
                     <RedoIcon/>
                 </UndoRedoButton>
             </BasicBox>
             <WidthFlexSpacer/>
-            <DefaultButton onClick={clearData} disabled={props.dataProcessing || props.fileName === ""}>
+            <DefaultButton onClick={clearData} disabled={props.disabled || props.fileName === ""}>
                 Clear
             </DefaultButton>
             <WidthSpacer width={"0.5rem"}/>
-            <GreenButton onClick={handleButton} disabled={props.dataProcessing || props.fileName === ""}>
+            <GreenButton onClick={handleButton} disabled={props.disabled || props.fileName === ""}>
                 Download
             </GreenButton>
         </DownloadContainer>

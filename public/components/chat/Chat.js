@@ -53,7 +53,7 @@ export default function Chat(props) {
     return (
         <ChatBox>
             <UpperChat scrollableBoxRef={scrollableBoxRef} conversation={props.conversation}/>
-            <LowerChat dataProcessing={props.dataProcessing} conversation={props.conversation}
+            <LowerChat disabled={props.disabled} conversation={props.conversation}
                        setConversation={props.setConversation} fileName={props.fileName}/>
         </ChatBox>
     )
