@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
-import {GreenButton, UndoRedoButton} from "@/public/components/common/Buttons";
+import {DefaultButton, GreenButton, UndoRedoButton} from "@/public/components/common/Buttons";
 import {WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 import {DownloadContainer, BasicBox} from "@/public/components/common/Boxes";
 import {downloadFile} from "@/public/functions/DownloadFile";
@@ -50,25 +50,45 @@ export default function Run(props) {
         }
         props.setDataIndex(indexToGo)
     }
+    const clearData = () => {
+        props.setDataHistory([{headers: [], entries: [], prev: null, next: null}])
+        props.setDataIndex(0)
+        props.setFileName("")
+    }
     useEffect(() => {
         if (props.script !== "" && props.script !== localScript) {
             setLocalScript(props.script)
             handleClick()
         }
     }, [props.script])
+    useEffect(() => {
+        if (props.clearFileVerified) {
+            props.setVerify(false)
+            props.setClearFileVerified(null)
+            clearData()
+        }
+        else if (props.clearFileVerified === false) {
+            props.setVerify(false)
+            props.setClearFileVerified(null)
+        }
+    }, [props.clearFileVerified])
     return (
         <DownloadContainer>
             <BasicBox>
-                <UndoRedoButton onClick={handleUndo} disabled={props.dataHistory[props.dataIndex].prev === null || props.dataProcessing}>
+                <UndoRedoButton onClick={handleUndo} disabled={props.dataHistory[props.dataIndex].prev === null || props.disabled}>
                     <UndoIcon/>
                 </UndoRedoButton>
                 <WidthSpacer width={"0.5rem"}/>
-                <UndoRedoButton onClick={handleRedo} disabled={props.dataHistory[props.dataIndex].next === null || props.dataProcessing}>
+                <UndoRedoButton onClick={handleRedo} disabled={props.dataHistory[props.dataIndex].next === null || props.disabled}>
                     <RedoIcon/>
                 </UndoRedoButton>
             </BasicBox>
             <WidthFlexSpacer/>
-            <GreenButton onClick={handleButton} disabled={props.dataProcessing || props.fileName === ""}>
+            <DefaultButton onClick={() => props.setVerify(true)} disabled={props.disabled || props.fileName === ""}>
+                Clear
+            </DefaultButton>
+            <WidthSpacer width={"0.5rem"}/>
+            <GreenButton onClick={handleButton} disabled={props.disabled || props.fileName === ""}>
                 Download
             </GreenButton>
         </DownloadContainer>

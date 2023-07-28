@@ -7,7 +7,7 @@ import {useState} from "react";
 export default function LowerChat(props) {
     const [input, setInput] = useState("");
     const [sendHover, setSendHover] = useState(false);
-    const sendDisabled = props.dataProcessing || props.fileName === "" || input === "";
+    const sendDisabled = props.disabled || props.fileName === "" || input === "";
     const handleInputChange = (event) => {
         let temp = event.target.value
         if (temp.length > 0 && temp[temp.length - 1] === "\n") {
@@ -34,7 +34,7 @@ export default function LowerChat(props) {
                            multiline
                            hasvalue={(input !== "").toString()}
                            disableUnderline={true}
-                           disabled={props.dataProcessing}
+                           disabled={props.disabled}
                            value={input}
                            onChange={handleInputChange}
                            onKeyPress={handleKeyPress}/>

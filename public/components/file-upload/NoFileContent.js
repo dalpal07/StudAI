@@ -23,7 +23,7 @@ export default function NoFileContent(props) {
                 type={"file"}
                 onChange={handleUpload}
             />
-            <GreenButton htmlFor="fileInput" onClick={handleButtonClick} disabled={props.dataProcessing || props.isDraggingOver}>
+            <GreenButton htmlFor="fileInput" onClick={handleButtonClick} disabled={props.disabled || props.isDraggingOver}>
                 Upload Messy Data
             </GreenButton>
         </>
