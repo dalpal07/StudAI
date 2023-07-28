@@ -1,13 +1,13 @@
-import {OverlayBox, OverlayContainer, StackRowBox} from "@/public/components/common/Boxes";
+import {OverlayContainer, StackRowBox, VerifyOverlayBox} from "@/public/components/common/Boxes";
 import {BoldText} from "@/public/components/common/Typographies";
 import {DefaultButton, GreenButton} from "@/public/components/common/Buttons";
-import {HeightFlexSpacer, WidthFlexSpacer} from "@/public/components/common/Spacers";
+import {HeightFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 
 export default function Verify(props) {
     if (props.verify) {
         return (
             <OverlayContainer>
-                <OverlayBox>
+                <VerifyOverlayBox>
                     <HeightFlexSpacer/>
                     <BoldText>{props.message}</BoldText>
                     <HeightFlexSpacer/>
@@ -15,12 +15,12 @@ export default function Verify(props) {
                         <DefaultButton onClick={() => props.setVerified(false)}>
                             No
                         </DefaultButton>
-                        <WidthFlexSpacer/>
+                        <WidthSpacer width={"5rem"}/>
                         <GreenButton onClick={() => props.setVerified(true)}>
                             Yes
                         </GreenButton>
                     </StackRowBox>
-                </OverlayBox>
+                </VerifyOverlayBox>
             </OverlayContainer>
         )
     }

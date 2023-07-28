@@ -46,6 +46,12 @@ export const OverlayBox = styled(StackColumnBox) ({
     justifyContent: "center",
     alignItems: "center",
 });
+export const VerifyOverlayBox = styled(OverlayBox) ({
+    width: "25rem",
+    height: "10rem",
+    textAlign: "center",
+    padding: "0.75rem 1.5rem",
+});
 export const Spinner = styled(Box) ({
     width: 64,
     height: 64,

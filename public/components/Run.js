@@ -61,6 +61,17 @@ export default function Run(props) {
             handleClick()
         }
     }, [props.script])
+    useEffect(() => {
+        if (props.clearFileVerified) {
+            props.setVerify(false)
+            props.setClearFileVerified(null)
+            clearData()
+        }
+        else if (props.clearFileVerified === false) {
+            props.setVerify(false)
+            props.setClearFileVerified(null)
+        }
+    }, [props.clearFileVerified])
     return (
         <DownloadContainer>
             <BasicBox>
@@ -73,7 +84,7 @@ export default function Run(props) {
                 </UndoRedoButton>
             </BasicBox>
             <WidthFlexSpacer/>
-            <DefaultButton onClick={clearData} disabled={props.disabled || props.fileName === ""}>
+            <DefaultButton onClick={() => props.setVerify(true)} disabled={props.disabled || props.fileName === ""}>
                 Clear
             </DefaultButton>
             <WidthSpacer width={"0.5rem"}/>

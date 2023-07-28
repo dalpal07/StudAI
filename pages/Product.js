@@ -18,8 +18,10 @@ export default function Product() {
     const [fileName, setFileName] = useState("")
     const [script, setScript] = useState("")
     const [dataProcessing, setDataProcessing] = useState(false)
-    const [verify, setVerify] = useState(false)
+    const [verifyReplaceFile, setVerifyReplaceFile] = useState(false)
+    const [verifyClearFile, setVerifyClearFile] = useState(false)
     const [replaceFileVerified, setReplaceFileVerified] = useState(null)
+    const [clearFileVerified, setClearFileVerified] = useState(null)
     const [disabled, setDisabled] = useState(false)
     useEffect(() => {
         if (disabled) {
@@ -32,13 +34,13 @@ export default function Product() {
         }
     }, [disabled])
     useEffect(() => {
-        if (dataProcessing || verify) {
+        if (dataProcessing || verifyReplaceFile) {
             setDisabled(true)
         }
         else {
             setDisabled(false)
         }
-    }, [dataProcessing, verify])
+    }, [dataProcessing, verifyReplaceFile])
     const extendPrompt = async (prompt, isScript) => {
         return await ExtendPrompt({
             prompt: prompt,
@@ -60,14 +62,17 @@ export default function Product() {
                 <FileUpload setFileName={setFileName} fileName={fileName} disabled={disabled}
                             headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
                             entries={dataHistory[dataIndex].entries} setDataIndex={setDataIndex}
-                            verify={verify} setVerify={setVerify} replaceFileVerified={replaceFileVerified}/>
+                            verify={verifyReplaceFile} setVerify={setVerifyReplaceFile} replaceFileVerified={replaceFileVerified}
+                            setReplaceFileVerified={setReplaceFileVerified}/>
                 <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}
                         setConversationIndex={setConversationIndex} conversationIndex={conversationIndex}/>
                 <Run headers={dataHistory[dataIndex].headers}  entries={dataHistory[dataIndex].entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
-                     setDataIndex={setDataIndex} setDataHistory={setDataHistory} disabled={disabled} dataIndex={dataIndex} dataHistory={dataHistory} setFileName={setFileName}/>
+                     setDataIndex={setDataIndex} setDataHistory={setDataHistory} disabled={disabled} dataIndex={dataIndex} dataHistory={dataHistory} setFileName={setFileName}
+                     verify={verifyClearFile} setVerify={setVerifyClearFile} clearFileVerified={clearFileVerified} setClearFileVerified={setClearFileVerified}/>
             </InnerBox2>
             <Loading dataProcessing={dataProcessing}/>
-            <Verify verify={verify} setVerified={setReplaceFileVerified} message={"Are you sure you want to replace this file? This action cannot be undone."}/>
+            <Verify verify={verifyReplaceFile} setVerified={setReplaceFileVerified} message={"Are you sure you want to replace this file? This action cannot be undone."}/>
+            <Verify verify={verifyClearFile} setVerified={setClearFileVerified} message={"Are you sure you want to clear this file? This action cannot be undone."}/>
         </>
     )
 }

@@ -12,7 +12,6 @@ import {
 
 export default function FileUpload(props) {
     const [isDraggingOver, setIsDraggingOver] = useState(false);
-    const [verified, setVerified] = useState(null);
     const [tempFile, setTempFile] = useState(null);
     const handleFileChange = (file) => {
         props.setFileName(file.name)
@@ -59,12 +58,12 @@ export default function FileUpload(props) {
     useEffect(() => {
         if (props.replaceFileVerified) {
             props.setVerify(false)
-            setVerified(null)
+            props.setReplaceFileVerified(null)
             setNewFile(tempFile)
         }
         else if (props.replaceFileVerified === false) {
             props.setVerify(false)
-            setVerified(null)
+            props.setReplaceFileVerified(null)
         }
     }, [props.replaceFileVerified])
     return (
