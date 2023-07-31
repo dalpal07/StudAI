@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 export default function Script(props) {
     const [localIndex, setLocalIndex] = useState(-1)
-    const prompt = "Given information about a user's data and a conversation describing their data manipulation/filtering request, please write a nodejs function titled \"performRequest\" (i.e., \"function performRequest(headers, entries) {...}\") that takes in an array of headers as well as a double array of entries to carry out the user's request. Please return an object with attributes \"headers\" (an array of strings) and \"entries\" (a double array of strings) that contain the transformed/filtered data. If no changes are made to some of the data, please return that original data."
+    const prompt = "Given information about a user's data and a summary describing their data manipulation/filtering request, please write a single nodejs function that follows the following format:\n\"function performRequest(headers, entries) {\n// Your code here\nreturn {headers: newHeaders, entries: newEntries}\n}\"\nheaders and newHeaders will be single arrays of strings, while entries and newEntries will be double arrays of strings. Do not include comments in your code."
     const sendToServer = async () => {
         const req = await props.extendPrompt(prompt, true)
         const response = await fetch("/api/chat", {
