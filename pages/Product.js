@@ -45,7 +45,6 @@ export default function Product() {
         return await ExtendPrompt({
             prompt: prompt,
             isScript: isScript,
-            fileName: fileName,
             dataHistory: dataHistory,
             dataIndex: dataIndex,
             conversation: conversation,
@@ -68,7 +67,8 @@ export default function Product() {
                         setConversationIndex={setConversationIndex} conversationIndex={conversationIndex} dataProcessing={dataProcessing}/>
                 <Run headers={dataHistory[dataIndex].headers}  entries={dataHistory[dataIndex].entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
                      setDataIndex={setDataIndex} setDataHistory={setDataHistory} disabled={disabled} dataIndex={dataIndex} dataHistory={dataHistory} setFileName={setFileName}
-                     verify={verifyClearFile} setVerify={setVerifyClearFile} clearFileVerified={clearFileVerified} setClearFileVerified={setClearFileVerified}/>
+                     verify={verifyClearFile} setVerify={setVerifyClearFile} clearFileVerified={clearFileVerified} setClearFileVerified={setClearFileVerified}
+                     setScript={setScript}/>
             </InnerBox2>
             <Loading dataProcessing={dataProcessing}/>
             <Verify verify={verifyReplaceFile} setVerified={setReplaceFileVerified} message={"Are you sure you want to replace this file? This action cannot be undone."}/>

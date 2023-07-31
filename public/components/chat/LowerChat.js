@@ -17,7 +17,9 @@ export default function LowerChat(props) {
     }
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            handleSendButtonClick()
+            if (props.fileName !== "") {
+                handleSendButtonClick()
+            }
         }
     };
     const handleSendButtonClick = () => {
