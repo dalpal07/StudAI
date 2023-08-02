@@ -1,14 +1,14 @@
-import Chat from "@/public/components/chat/Chat";
-import FileUpload from "@/public/components/file-upload/FileUpload";
-import Script from "@/public/components/Script";
+import Chat from "../public/components/chat/Chat";
+import FileUpload from "../public/components/file-upload/FileUpload";
+import Script from "../public/components/Script";
 import {useEffect, useState} from "react";
-import Run from "@/public/components/Run";
+import Run from "../public/components/Run";
 import { BoldText } from "/public/components/common/Typographies"
-import {InnerBox2} from "@/public/components/common/Boxes";
-import {HeightSpacer} from "@/public/components/common/Spacers";
-import ExtendPrompt from "@/public/functions/ExtendPrompt";
-import Loading from "@/public/components/conditionals/Loading";
-import Verify from "@/public/components/conditionals/Verify";
+import {InnerBox2} from "../public/components/common/Boxes";
+import {HeightSpacer} from "../public/components/common/Spacers";
+import ExtendPrompt from "../public/functions/ExtendPrompt";
+import Loading from "../public/components/conditionals/Loading";
+import Verify from "../public/components/conditionals/Verify";
 
 export default function Product() {
     const [conversation, setConversation] = useState([{type: "assistant", message: "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, rearrange, or filter your data."}])
@@ -23,6 +23,7 @@ export default function Product() {
     const [replaceFileVerified, setReplaceFileVerified] = useState(null)
     const [clearFileVerified, setClearFileVerified] = useState(null)
     const [disabled, setDisabled] = useState(false)
+    const [currentAIMessage, setCurrentAIMessage] = useState("")
     useEffect(() => {
         if (disabled) {
             document.getElementById("inner").style.setProperty("opacity", "0.5")
@@ -57,7 +58,7 @@ export default function Product() {
                 <BoldText size={"1.5rem"}>Give Stud a Try</BoldText>
                 <HeightSpacer height={"0.75rem"}/>
                 <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}
-                      disabled={disabled} fileName={fileName}/>
+                      disabled={disabled} fileName={fileName} currentAIMessage={currentAIMessage} setCurrentAIMessage={setCurrentAIMessage}/>
                 <FileUpload setFileName={setFileName} fileName={fileName} disabled={disabled}
                             headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
                             entries={dataHistory[dataIndex].entries} setDataIndex={setDataIndex}

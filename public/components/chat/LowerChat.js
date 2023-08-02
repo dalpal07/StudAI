@@ -1,6 +1,6 @@
-import {BottomBox, ChatInputOuterBox} from "@/public/components/common/Boxes";
-import {ChatInput} from "@/public/components/common/Inputs";
-import {IconButton} from "@/public/components/common/Buttons";
+import {BottomBox, ChatInputOuterBox} from "../../../public/components/common/Boxes";
+import {ChatInput} from "../../../public/components/common/Inputs";
+import {IconButton} from "../../../public/components/common/Buttons";
 import Image from "next/image";
 import {useState} from "react";
 
