@@ -7,7 +7,7 @@ import {InnerBox} from "@/public/components/common/Boxes";
 export default function BetaAnnouncement() {
     return (
         <InnerBox>
-            <BoldText size={"3rem"}>Get excited for Beta</BoldText>
+            <BoldText size={"3rem"}>Get pumped for Beta</BoldText>
             <HeightSpacer size={"1rem"}/>
             <BoldText size={"1.5rem"}>Coming September 2023</BoldText>
         </InnerBox>
