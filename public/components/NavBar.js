@@ -1,8 +1,8 @@
 import Image from "next/image";
 import React, {useEffect, useRef, useState} from 'react';
-import {WidthFlexSpacer} from "@/public/components/common/Spacers";
-import {NavBox} from "@/public/components/common/Boxes";
-import Profile from "@/public/components/conditionals/Profile";
+import {WidthFlexSpacer} from "../../public/components/common/Spacers";
+import {NavBox} from "../../public/components/common/Boxes";
+import Profile from "../../public/components/conditionals/Profile";
 
 export default function NavBar(props) {
     return (

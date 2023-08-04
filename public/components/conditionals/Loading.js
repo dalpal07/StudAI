@@ -1,8 +1,7 @@
-import {OverlayBox, OverlayContainer, Spinner, StackRowBox} from "@/public/components/common/Boxes";
-import {BoldText} from "@/public/components/common/Typographies";
-import {DefaultButton, UndoRedoButton} from "@/public/components/common/Buttons";
-import {HeightFlexSpacer, HeightSpacer, WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
+import {UndoRedoButton} from "../../../public/components/common/Buttons";
 import CloseIcon from "@mui/icons-material/Close"
+import {OverlayBox, OverlayContainer, Spinner} from "../../../public/components/common/Boxes";
+import {BoldText} from "../../../public/components/common/Typographies";
 
 export default function Loading(props) {
     const handleCancel = () => {

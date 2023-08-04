@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
-import {DefaultButton, GreenButton, UndoRedoButton} from "@/public/components/common/Buttons";
-import {WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
-import {DownloadContainer, BasicBox} from "@/public/components/common/Boxes";
-import {downloadFile} from "@/public/functions/DownloadFile";
+import {DefaultButton, GreenButton, UndoRedoButton} from "../../public/components/common/Buttons";
+import {WidthFlexSpacer, WidthSpacer} from "../../public/components/common/Spacers";
+import {DownloadContainer, BasicBox} from "../../public/components/common/Boxes";
+import {downloadFile} from "../../public/functions/DownloadFile";
 export default function Run(props) {
     const [localScript, setLocalScript] = useState("")
     const handleFailedScript = async () => {

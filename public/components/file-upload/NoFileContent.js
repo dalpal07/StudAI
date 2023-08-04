@@ -1,7 +1,7 @@
-import {BoldText, FadedBoldText} from "@/public/components/common/Typographies";
-import {GreenButton} from "@/public/components/common/Buttons";
-import {TextBox} from "@/public/components/common/Boxes";
-import {HiddenInput} from "@/public/components/common/Inputs";
+import {BoldText, FadedBoldText} from "../../../public/components/common/Typographies";
+import {GreenButton} from "../../../public/components/common/Buttons";
+import {TextBox} from "../../../public/components/common/Boxes";
+import {HiddenInput} from "../../../public/components/common/Inputs";
 
 export default function NoFileContent(props) {
     const handleUpload = (event) => {
