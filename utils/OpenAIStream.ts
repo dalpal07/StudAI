@@ -17,7 +17,6 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 
     let counter = 0;
 
-    console.log("API key: " + process.env.OPENAI_API_KEY)
     console.log("AI Request body: " + JSON.stringify(payload))
 
     const res = await fetch("https://api.openai.com/v1/completions", {

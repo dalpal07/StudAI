@@ -8,6 +8,7 @@ export default function LowerChat(props) {
     const [input, setInput] = useState("");
     const [sendHover, setSendHover] = useState(false);
     const sendDisabled = props.disabled || props.fileName === "" || input === "";
+
     const handleInputChange = (event) => {
         let temp = event.target.value
         if (temp.length > 0 && temp[temp.length - 1] === "\n") {
