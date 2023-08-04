@@ -7,7 +7,7 @@ import Profile from "../../public/components/conditionals/Profile";
 export default function NavBar(props) {
     return (
         <NavBox>
-            <Image src={"./images/Logo.svg"} alt={"StudAI Logo"} width={151.9} height={27.5}/>
+            <Image src={"./images/Logo.svg"} alt={"StudAI Logo"} width={129.3} height={27.5}/>
             <WidthFlexSpacer/>
             <Profile isLoading={props.isLoading} error={props.error} user={props.user}/>
         </NavBox>
