@@ -17,7 +17,12 @@ export default function Script(props) {
         })
         // console.log("Edge function returned")
         if (response.status === 200) {
-            readStream(response)
+            if (!props.requestCancelled) {
+                readStream(response)
+            }
+            else {
+                props.setRequestCancelled(false)
+            }
         }
     }
 
