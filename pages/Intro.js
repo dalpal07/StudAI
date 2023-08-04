@@ -8,9 +8,9 @@ export default function Intro() {
     return (
         <InnerBox>
             <BoldText size={"1.125rem"}>Welcome to</BoldText>
-            <HeightSpacer height={"1.1rem"}/>
-            <Image src={"./images/FullLogo.svg"} alt={"StudAI Logo"} width={400} height={72.42}/>
-            <HeightSpacer height={"2rem"}/>
+            <HeightSpacer height={"0.85rem"}/>
+            <Image src={"./images/FullLogo.svg"} alt={"StudAI Logo"} width={361.9} height={77}/>
+            <HeightSpacer height={"1.35rem"}/>
             <BoldText size={"1.75rem"}>Your Personal Data Maid</BoldText>
             <HeightSpacer height={"4.125rem"}/>
             <a href="/api/auth/login" style={{textDecoration: "none"}}>
