@@ -40,6 +40,7 @@ export const UploadBoxButton = styled(Button) (({isDraggingOver}) => ({
     display: "flex",
     height: "100%",
     minHeight: "12rem",
+    maxHeight: "18rem",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
