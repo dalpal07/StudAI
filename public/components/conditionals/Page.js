@@ -28,9 +28,11 @@ export default function Page(props) {
                 <Product/>
             )
         }
-        return (
-            <BetaAnnouncement/>
-        )
+        else if (isWhiteListed === false) {
+            return (
+                <BetaAnnouncement/>
+            )
+        }
     }
     return (
         <Intro/>
