@@ -7,11 +7,9 @@ import {DownloadContainer, BasicBox} from "@/public/components/common/Boxes";
 import {downloadFile} from "@/public/functions/DownloadFile";
 export default function Run(props) {
     const [localScript, setLocalScript] = useState("")
-    const [triesRemaining, setTriesRemaining] = useState(2)
     const handleFailedScript = async () => {
         props.setDataProcessing(false)
         alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
-        setTriesRemaining(2)
     }
     const handleSuccessScript = async (data) => {
         const {headers, entries} = data
@@ -21,25 +19,8 @@ export default function Run(props) {
         props.setDataHistory(newHistory)
         props.setDataIndex(props.dataHistory.length)
         props.setDataProcessing(false)
-        setTriesRemaining(2)
-    }
-    const TryAgain = async (data) => {
-        const prompt = "I sent a generated function to my file and got an error. Please rewrite the function to fix the error. Keep in mind that any helper functions must be contained inside a single function, \"function performRequest\" and follow the exact format: \"function performRequest(headers, entries) {\n[insert code here]\n}\" and it must return an object \"{headers: newHeaders, entries: newEntries}\" where newHeaders is an array (i.e., [val1,val2,...]) and newEntries is an double array (i.e., [[val1,val2,...],[val1,val2,...],...]).\n\n"
-            + "generatedFunction:\n\"" + props.script  + "\n\nError:\n\n" + data.error
-        const response = await fetch("/api/chat", {
-            method: "POST",
-            body: prompt
-        })
-        if (response.status === 200) {
-            const data = await response.json()
-            props.setScript(data.response)
-        }
-        else {
-            await handleFailedScript()
-        }
     }
     const handleClick = async () => {
-        setTriesRemaining(triesRemaining - 1)
         const response = await fetch("/api/run", {
             method: "POST",
             body: JSON.stringify({
@@ -49,17 +30,16 @@ export default function Run(props) {
             })
         })
         if (response.status === 200) {
-            const data = await response.json()
-            await handleSuccessScript(data)
-        }
-        else {
-            if (triesRemaining > 0) {
+            if (!props.requestCancelled) {
                 const data = await response.json()
-                await TryAgain(data)
+                await handleSuccessScript(data)
             }
             else {
-                await handleFailedScript()
+                props.setRequestCancelled(false)
             }
+        }
+        else {
+            await handleFailedScript()
         }
     }
     const handleButton = () => {

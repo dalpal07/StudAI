@@ -45,6 +45,7 @@ export const OverlayBox = styled(StackColumnBox) ({
     height: "15rem",
     justifyContent: "center",
     alignItems: "center",
+    position: "fixed",
 });
 export const VerifyOverlayBox = styled(OverlayBox) ({
     width: "25rem",

@@ -9,8 +9,13 @@ export default function Script(props) {
             body: req
         })
         if (response.status === 200) {
-            const data = await response.json()
-            props.setScript(data.response)
+            if (!props.requestCancelled) {
+                const data = await response.json()
+                props.setScript(data.response)
+            }
+            else {
+                props.setRequestCancelled(false)
+            }
         }
     }
     useEffect(() => {

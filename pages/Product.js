@@ -23,6 +23,7 @@ export default function Product() {
     const [replaceFileVerified, setReplaceFileVerified] = useState(null)
     const [clearFileVerified, setClearFileVerified] = useState(null)
     const [disabled, setDisabled] = useState(false)
+    const [requestCancelled, setRequestCancelled] = useState(false)
     useEffect(() => {
         if (disabled) {
             document.getElementById("inner").style.setProperty("opacity", "0.5")
@@ -64,13 +65,14 @@ export default function Product() {
                             verify={verifyReplaceFile} setVerify={setVerifyReplaceFile} replaceFileVerified={replaceFileVerified}
                             setReplaceFileVerified={setReplaceFileVerified}/>
                 <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation} setDataProcessing={setDataProcessing}
-                        setConversationIndex={setConversationIndex} conversationIndex={conversationIndex} dataProcessing={dataProcessing}/>
+                        setConversationIndex={setConversationIndex} conversationIndex={conversationIndex} dataProcessing={dataProcessing}
+                        requestCancelled={requestCancelled} setRequestCancelled={setRequestCancelled}/>
                 <Run headers={dataHistory[dataIndex].headers}  entries={dataHistory[dataIndex].entries} script={script} fileName={fileName} setDataProcessing={setDataProcessing}
                      setDataIndex={setDataIndex} setDataHistory={setDataHistory} disabled={disabled} dataIndex={dataIndex} dataHistory={dataHistory} setFileName={setFileName}
                      verify={verifyClearFile} setVerify={setVerifyClearFile} clearFileVerified={clearFileVerified} setClearFileVerified={setClearFileVerified}
-                     setScript={setScript}/>
+                     setScript={setScript} requestCancelled={requestCancelled} setRequestCancelled={setRequestCancelled}/>
             </InnerBox2>
-            <Loading dataProcessing={dataProcessing}/>
+            <Loading dataProcessing={dataProcessing} setDataProcessing={setDataProcessing} setRequestCancelled={setRequestCancelled}/>
             <Verify verify={verifyReplaceFile} setVerified={setReplaceFileVerified} message={"Are you sure you want to replace this file? This action cannot be undone."}/>
             <Verify verify={verifyClearFile} setVerified={setClearFileVerified} message={"Are you sure you want to clear this file? This action cannot be undone."}/>
         </>
