@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { BoldText } from "/public/components/common/Typographies";
-import {HeightSpacer} from "@/public/components/common/Spacers";
-import {GreenButton} from "@/public/components/common/Buttons";
-import {InnerBox} from "@/public/components/common/Boxes";
-import {HiddenHref} from "@/public/components/common/Miscellaneous";
+import {HeightSpacer} from "../public/components/common/Spacers";
+import {GreenButton} from "../public/components/common/Buttons";
+import {InnerBox} from "../public/components/common/Boxes";
+import {HiddenHref} from "../public/components/common/Miscellaneous";
 
 export default function Intro() {
     return (

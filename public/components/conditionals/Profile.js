@@ -1,9 +1,9 @@
-import {BoldText} from "@/public/components/common/Typographies";
-import {ProfileBox} from "@/public/components/common/Boxes";
-import {WidthSpacer} from "@/public/components/common/Spacers";
+import {BoldText} from "../../../public/components/common/Typographies";
+import {ProfileBox} from "../../../public/components/common/Boxes";
+import {WidthSpacer} from "../../../public/components/common/Spacers";
 import {Button} from "@mui/material";
-import SignOutButton from "@/public/components/conditionals/SignOutButton";
-import {DefaultButton} from "@/public/components/common/Buttons";
+import SignOutButton from "../../../public/components/conditionals/SignOutButton";
+import {DefaultButton} from "../../../public/components/common/Buttons";
 import Image from "next/image";
 import React, {useEffect, useRef, useState} from "react";
 

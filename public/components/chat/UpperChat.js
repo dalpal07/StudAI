@@ -4,8 +4,8 @@ import {
     UpperBox,
     UserChatLine,
     UserChatMessage
-} from "@/public/components/common/Boxes";
-import {ChatBubbleTailLeft, ChatBubbleTailRight} from "@/public/components/common/Miscellaneous";
+} from "../../../public/components/common/Boxes";
+import {ChatBubbleTailLeft, ChatBubbleTailRight} from "../../../public/components/common/Miscellaneous";
 
 export default function UpperChat(props) {
     return (

@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
-import NoFileContent from "@/public/components/file-upload/NoFileContent";
-import FileContent from "@/public/components/file-upload/FileContent";
-import {UploadBoxButton} from "@/public/components/common/Buttons";
+import NoFileContent from "../../../public/components/file-upload/NoFileContent";
+import FileContent from "../../../public/components/file-upload/FileContent";
+import {UploadBoxButton} from "../../../public/components/common/Buttons";
 import {
     getFileEntries,
     getFileExtension,
     getFileHeaders,
     readCsvFile,
     readXlsxFile
-} from "@/public/functions/ExtractFileData";
+} from "../../../public/functions/ExtractFileData";
 
 export default function FileUpload(props) {
     const [isDraggingOver, setIsDraggingOver] = useState(false);

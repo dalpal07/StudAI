@@ -1,4 +1,4 @@
-import {MenuButton} from "@/public/components/common/Buttons";
+import {MenuButton} from "../../../public/components/common/Buttons";
 import React from "react";
 
 export default function SignOutButton({clicked, forwardRef}) {
