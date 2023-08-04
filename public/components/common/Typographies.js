@@ -5,6 +5,7 @@ export const Text = styled(Typography)(({size}) => ({
     fontFamily: "Inter",
     textTransform: "none",
     fontSize: size ? size : "1rem",
+    lineHeight: size ? size : "1rem",
 }));
 
 export const BoldText = styled(Text)({

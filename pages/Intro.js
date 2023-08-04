@@ -3,6 +3,7 @@ import { BoldText } from "/public/components/common/Typographies";
 import {HeightSpacer} from "@/public/components/common/Spacers";
 import {GreenButton} from "@/public/components/common/Buttons";
 import {InnerBox} from "@/public/components/common/Boxes";
+import {HiddenHref} from "@/public/components/common/Miscellaneous";
 
 export default function Intro() {
     return (
@@ -13,11 +14,11 @@ export default function Intro() {
             <HeightSpacer height={"1.35rem"}/>
             <BoldText size={"1.75rem"}>Your Personal Data Maid</BoldText>
             <HeightSpacer height={"4.125rem"}/>
-            <a href="/api/auth/login" style={{textDecoration: "none"}}>
+            <HiddenHref href="/api/auth/login">
                 <GreenButton size={"1.125rem"} padding={"0.25rem 1.5rem"}>
                     See what Stud can do
                 </GreenButton>
-            </a>
+            </HiddenHref>
         </InnerBox>
     )
 }

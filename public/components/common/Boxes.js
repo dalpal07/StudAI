@@ -164,3 +164,10 @@ export const DownloadContainer = styled(StackRowBox) ({
     marginTop: "1rem",
     marginBottom: "1rem",
 });
+// BetaAnnouncement.js
+export const BetaContainer = styled(StackRowBox) ({
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    lineHeight: "1rem",
+});

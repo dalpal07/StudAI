@@ -23,3 +23,7 @@ export const ChatBubbleTailLeft = styled(ChatBubbleTail)({
 export const ChatBubbleTailRight = styled(ChatBubbleTail)({
     marginLeft: "-10px"
 });
+
+export const HiddenHref = styled("a")({
+    textDecoration: "none",
+})
