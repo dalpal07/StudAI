@@ -1,6 +1,6 @@
 import {createParser, ParsedEvent, ReconnectInterval} from "eventsource-parser";
 
-export interface OpenAIStreamPayload {
+export interface OpenAIChatStreamPayload {
     model: string;
     messages: Array<{ role: string; content: string }>;
     temperature: number;
@@ -12,7 +12,7 @@ export interface OpenAIStreamPayload {
     stream: boolean;
 }
 
-export async function OpenAIStream(payload: OpenAIStreamPayload) {
+export async function OpenAIChatStream(payload: OpenAIChatStreamPayload) {
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
 

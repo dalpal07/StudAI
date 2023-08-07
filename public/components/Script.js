@@ -6,7 +6,7 @@ export default function Script(props) {
     const sendToServer = async () => {
         const reqString = await props.extendPrompt(prompt, true)
         // console.log("Prompt: " + reqString)
-        const response = await fetch("/api/chat", {
+        const response = await fetch("/api/script", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -50,8 +50,8 @@ export default function Script(props) {
     useEffect(() => {
         if (props.conversation.length > 0) {
             const lastMessage = props.conversation[props.conversation.length - 1]
-            if (lastMessage.type === "assistant") {
-                if (lastMessage.message.includes("Please give me a moment while I process this request for you.") && props.conversationIndex !== localIndex) {
+            if (lastMessage.role === "assistant") {
+                if (lastMessage.content.includes("Please give me a moment while I process this request for you.") && props.conversationIndex !== localIndex) {
                     setLocalIndex(props.conversationIndex)
                     setTimeout(() => {
                         props.setDataProcessing(true)

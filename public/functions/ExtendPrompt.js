@@ -9,10 +9,10 @@ export default async function ExtendPrompt({prompt, isScript, dataHistory, dataI
     }
     if (isScript) {
         prompt = prompt + "\nConversation:\n" + conversation.slice(conversationIndex).map((line) => {
-            if (line.type === "user") {
-                return "\nUser: " + line.message
+            if (line.role === "user") {
+                return "\nUser: " + line.content
             } else {
-                return "\nStud: " + line.message
+                return "\nStud: " + line.content
             }
         })
     }
