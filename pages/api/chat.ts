@@ -1,6 +1,5 @@
 import { OpenAIStream, OpenAIStreamPayload } from "../../utils/OpenAIStream";
 
-
 if (!process.env.OPENAI_API_KEY) {
     throw new Error("Missing env var from OpenAI");
 }
@@ -10,32 +9,29 @@ export const config = {
 };
 
 const handler = async (req: Request): Promise<Response> => {
-
-    const { reqString } = (await req.json()) as {
-        reqString?: string;
+    const { messages } = (await req.json()) as {
+        messages?: Array<{ role: string; content: string }>;
     };
-    console.log("backend prompt: " + reqString);
-
-    if (!reqString) {
-        console.log("No prompt in the request")
+    console.log(messages)
+    if (messages === undefined || messages.length === 0) {
+        console.log("No prompt in the request");
         return new Response("No prompt in the request", { status: 400 });
     }
 
-    console.log("Generating payload...")
     const payload: OpenAIStreamPayload = {
-        model: "text-davinci-003",
-        prompt: reqString,
-        temperature: 1,
-        max_tokens: 512,
+        model: "gpt-3.5-turbo", // Switch to the new model
+        messages: messages,
+        temperature: 0,
+        max_tokens: 256,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
         stream: true,
+        stop: "[DONE]",
     };
-    console.log("Getting stream...")
+    console.log(payload)
     const stream = await OpenAIStream(payload);
-    console.log("returning from API...")
-    return new Response(stream)
+    return new Response(stream);
 };
 
 export default handler;

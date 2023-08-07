@@ -1,13 +1,14 @@
-import { createParser, ParsedEvent, ReconnectInterval } from "eventsource-parser";
+import {createParser, ParsedEvent, ReconnectInterval} from "eventsource-parser";
 
 export interface OpenAIStreamPayload {
     model: string;
-    prompt: string;
+    messages: Array<{ role: string; content: string }>;
     temperature: number;
+    max_tokens: number;
     top_p: number;
     frequency_penalty: number;
     presence_penalty: number;
-    max_tokens: number;
+    stop: string;
     stream: boolean;
 }
 
@@ -17,9 +18,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 
     let counter = 0;
 
-    console.log("AI Request body: " + JSON.stringify(payload))
-
-    const res = await fetch("https://api.openai.com/v1/completions", {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? ""}`,
@@ -27,9 +26,8 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
         method: "POST",
         body: JSON.stringify(payload),
     });
-    console.log("Response from AI: " + res.body)
 
-    const stream = new ReadableStream({
+    return new ReadableStream({
         async start(controller) {
             function onParse(event: ParsedEvent | ReconnectInterval) {
                 if (event.type === "event") {
@@ -40,7 +38,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
                     }
                     try {
                         const json = JSON.parse(data);
-                        const text = json.choices[0].text;
+                        const text = json.choices[0].delta.content;
                         if (counter < 2 && (text.match(/\n/) || []).length) {
                             return;
                         }
@@ -53,16 +51,11 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
                 }
             }
 
-            // stream response (SSE) from OpenAI may be fragmented into multiple chunks
-            // this ensures we properly read chunks & invoke an event for each SSE event stream
             const parser = createParser(onParse);
 
-            // https://web.dev/streams/#asynchronous-iteration
             for await (const chunk of res.body as any) {
                 parser.feed(decoder.decode(chunk));
             }
         },
     });
-    console.log("Returning from OpenAIStream...")
-    return stream;
 }

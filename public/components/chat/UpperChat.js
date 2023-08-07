@@ -13,15 +13,15 @@ export default function UpperChat(props) {
             {props.conversation.map((line) => {
                 return (
                     <>
-                        {line.type === "user" ?
+                        {line.role === "user" ?
                             <UserChatLine>
-                                <UserChatMessage>{line.message}</UserChatMessage>
+                                <UserChatMessage>{line.content}</UserChatMessage>
                                 <ChatBubbleTailRight src={"./images/user-chat-tail.svg"} alt={"chat-tail"} height={20} width={20}/>
                             </UserChatLine>
                             :
                             <AssistantChatLine>
                                 <ChatBubbleTailLeft src={"./images/assistant-chat-tail.svg"} alt={"chat-tail"} height={20} width={20}/>
-                                <AssistantChatMessage>{line.message}</AssistantChatMessage>
+                                <AssistantChatMessage>{line.content}</AssistantChatMessage>
                             </AssistantChatLine>
                         }
                     </>
