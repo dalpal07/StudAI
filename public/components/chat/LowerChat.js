@@ -27,7 +27,7 @@ export default function LowerChat(props) {
         if (input === "") {
             return
         }
-        props.setConversation([...props.conversation, {type: "user", message: input}])
+        props.setConversation([...props.conversation, {"role": "user", "content": input}])
         setInput("")
     }
     return (

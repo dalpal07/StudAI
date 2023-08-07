@@ -11,7 +11,7 @@ import Loading from "../public/components/conditionals/Loading";
 import Verify from "../public/components/conditionals/Verify";
 
 export default function Product() {
-    const [conversation, setConversation] = useState([{type: "assistant", message: "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, rearrange, or filter your data."}])
+    const [conversation, setConversation] = useState([{"role": "assistant", "content": "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, rearrange, or filter your data."}])
     const [conversationIndex, setConversationIndex] = useState(0)
     const [dataHistory, setDataHistory] = useState([{headers: [], entries: [], prev: null, next: null}])
     const [dataIndex, setDataIndex] = useState(0)
