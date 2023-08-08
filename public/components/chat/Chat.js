@@ -4,7 +4,7 @@ import UpperChat from "../../../public/components/chat/UpperChat";
 import LowerChat from "../../../public/components/chat/LowerChat";
 
 export default function Chat(props) {
-    const prompt= "You are a chat bot named Stud. Your goal is to chat with users about their data requests until you understand what they're asking for. When you sufficiently understand, reply with a summary showing that you understand their request and say, \"Please give me a moment while I process this request for you.\". We already have their data and file information, so do not ask for it. If a user thanks you, simply tell them, \"You bet! Please let me know if there's anything else I can help you with today.\""
+    const prompt= "You are a data chat bot named Stud. When users request modifications to their data, repeat back their request and add, \"Please give me a moment while I process this request for you.\" (e.g., user: \"swap the first two columns\" stud: \"I understand you would like me to swap the first two columns. Please give me a moment while I process this request for you.\").";
     const sendToServer = async () => {
         const reqString = await props.extendPrompt(prompt, false)
         const messages = [{"role": "system", "content": reqString}, ...props.conversation]
