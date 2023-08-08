@@ -40,7 +40,7 @@ export default async function handler(req, res) {
         try {
             const body = JSON.parse(req.body);
             const generatedFunction = refineFunctionString(body.generatedFunction);
-            console.log(generatedFunction)
+            console.log("Generated Script:\n" + generatedFunction)
             const headers = body.headers;
             const entries = body.entries;
             const performRequest = await eval(`(${generatedFunction})`)
