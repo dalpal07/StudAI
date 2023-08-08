@@ -73,3 +73,18 @@ export const UndoRedoButton = styled(Button)({
         background: "#D6D6D6",
     }
 });
+export const PricingPlanButton = styled(Button)({
+    backgroundColor: "#F2F2F2",
+    borderColor: "var(--main-green, #53B753)",
+    borderWidth: "2px",
+    borderStyle: "solid",
+    borderRadius: "1.25rem",
+    color: "var(--main-black, #3F3636)",
+    opacity: 1,
+    width: "15rem",
+    height: "25rem",
+    textTransform: "none",
+    overflow: "wrap",
+    overflowWrap: "break-word",
+    alignItems: "flex-start",
+});

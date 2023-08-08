@@ -172,3 +172,28 @@ export const BetaContainer = styled(StackRowBox) ({
     alignItems: "center",
     lineHeight: "1rem",
 });
+// Pricing.js
+export const BannerBox = styled(Box) ({
+    backgroundColor: "#53B753",
+    transform: "rotate(-45deg)",
+    color: "#F2F2F2",
+    width: "fit-content",
+    padding: "0.25rem",
+    position: "absolute",
+    top: "1.7rem",
+    left: "-0.4rem",
+});
+export const BannerLeftTriangle = styled(Box) ({
+    transform: "rotate(-45deg)",
+    width: "fit-content",
+    position: "absolute",
+    top: "4.2rem",
+    left: "-0.65rem",
+});
+export const BannerRightTriangle = styled(Box) ({
+    transform: "rotate(45deg)",
+    width: "fit-content",
+    position: "absolute",
+    top: "-0.89rem",
+    left: "4.1rem",
+});
