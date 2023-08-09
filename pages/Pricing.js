@@ -22,6 +22,35 @@ export default function Pricing() {
                 <BoldText size={"2.5rem"}>Select a plan</BoldText>
                 <HeightSpacer height={"3rem"}/>
                 <StackRowBox>
+                    <a href={"/"}>
+                        <PricingPlanButton>
+                            <StackColumnBox style={{height: "100%"}}>
+                                <BannerBox style={{paddingBottom: "0.28rem"}}><WhiteBoldText>Start FREE</WhiteBoldText></BannerBox>
+                                <BannerLeftTriangle><Image src={"./images/triangle.svg"} alt={"triangle"} height={24} width={24}/></BannerLeftTriangle>
+                                <BannerRightTriangle><Image src={"./images/triangle.svg"} alt={"triangle"} height={24} width={24}/></BannerRightTriangle>
+                                <HeightSpacer height={"4rem"}/>
+                                <BoldText size={"1.75rem"}>Early Access</BoldText>
+                                <HeightSpacer height={"2rem"}/>
+                                <StackRowBox style={{alignItems: "end", width: "100%", justifyContent: "center"}}>
+                                    <Text size={"2rem"}>$0.00</Text>
+                                    <Text size={"1rem"}>/mo</Text>
+                                </StackRowBox>
+                                <HeightSpacer height={"2rem"}/>
+                                <Text>Enjoy 50 free chat requests for signing up early! All we ask for in return is your feedback.</Text>
+                                <HeightSpacer height={"1rem"}/>
+                                <StackRowBox style={{alignItems: "end", width: "100%", justifyContent: "center"}}>
+                                    <Text size={"1.25rem"}>50</Text>
+                                    <WidthSpacer width={"0.25rem"}/>
+                                    <Text size={"1rem"}>requests remaining</Text>
+                                </StackRowBox>
+                                <StackColumnBox style={{marginTop: "auto"}}>
+                                    <BoldText size={"1.125rem"} style={{color: "#53B753"}}>Continue</BoldText>
+                                    <HeightSpacer height={"3rem"}/>
+                                </StackColumnBox>
+                            </StackColumnBox>
+                        </PricingPlanButton>
+                    </a>
+                    <WidthSpacer width={"4rem"}/>
                     <a href={"https://buy.stripe.com/test_6oE9D40G581xfwk5kl"}>
                         <PricingPlanButton>
                             <StackColumnBox style={{height: "100%"}}>
@@ -33,7 +62,7 @@ export default function Pricing() {
                                     <Text size={"1rem"}>/mo</Text>
                                 </StackRowBox>
                                 <HeightSpacer height={"2rem"}/>
-                                <Text>Good for 150 chat requests per month. Unused requests will not be carried over to the next month.</Text>
+                                <Text>Use up to 150 chat requests per month. Unused requests will not be carried over to the next month.</Text>
                                 <StackColumnBox style={{marginTop: "auto"}}>
                                     <BoldText size={"1.125rem"} style={{color: "#53B753"}}>Sign Up Now</BoldText>
                                     <HeightSpacer height={"3rem"}/>
@@ -56,7 +85,7 @@ export default function Pricing() {
                                     <Text size={"1rem"}>/mo</Text>
                                 </StackRowBox>
                                 <HeightSpacer height={"2rem"}/>
-                                <Text>Good for unlimited chat requests each month.</Text>
+                                <Text>Unlock unlimited chat requests each month! Great for anyone with regular data needs.</Text>
                                 <StackColumnBox style={{marginTop: "auto"}}>
                                     <BoldText size={"1.125rem"} style={{color: "#53B753"}}>Sign Up Now</BoldText>
                                     <HeightSpacer height={"3rem"}/>
