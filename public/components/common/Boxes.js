@@ -27,7 +27,7 @@ export const InnerBox = styled(StackColumnBox)({
     alignSelf: "stretch",
     background: "linear-gradient(180deg, #F2F2F2 0%, rgba(242, 242, 242, 0.00) 57.81%, rgba(83, 183, 83, 0.16) 100%)",
 });
-// Product.js
+// product.js
 export const InnerBox2 = styled(StackColumnBox) ({
     margin: "0.75rem 1.5rem",
     height: "100%",
@@ -165,14 +165,14 @@ export const DownloadContainer = styled(StackRowBox) ({
     marginTop: "1rem",
     marginBottom: "1rem",
 });
-// BetaAnnouncement.js
+// beta-announcement.js
 export const BetaContainer = styled(StackRowBox) ({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
     lineHeight: "1rem",
 });
-// Pricing.js
+// Payment.js
 export const BannerBox = styled(Box) ({
     backgroundColor: "#53B753",
     transform: "rotate(-45deg)",

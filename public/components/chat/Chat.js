@@ -2,8 +2,10 @@ import {useEffect, useRef} from "react";
 import {ChatBox} from "../../../public/components/common/Boxes";
 import UpperChat from "../../../public/components/chat/UpperChat";
 import LowerChat from "../../../public/components/chat/LowerChat";
+import {useUser} from "@auth0/nextjs-auth0/client";
 
 export default function Chat(props) {
+    const {user, isLoading, error} = useUser();
     const prompt= "You are a data chat bot named Stud. When users request modifications to their data, repeat back their request and add, \"Please give me a moment while I process this request for you.\" (e.g., user: \"swap the first two columns\" stud: \"I understand you would like me to swap the first two columns. Please give me a moment while I process this request for you.\").";
     const sendToServer = async () => {
         const reqString = await props.extendPrompt(prompt, false)
@@ -26,6 +28,21 @@ export default function Chat(props) {
         }
     }
 
+    const addRequest = async () => {
+        const queryParams = new URLSearchParams({ id: user.sub });
+        const response = await fetch(`/api/user/add-request?${queryParams}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: "",
+        })
+        if (response.status === 200) {
+            const data = await response.json();
+            props.setRequests(data.requests)
+        }
+    }
+
     const readStream = async (response) => {
         const data = response.body
         // console.log(data)
@@ -43,6 +60,7 @@ export default function Chat(props) {
             currentAIMessage += chunkValue
             // console.log("Current AI message: " + currentAIMessage)
         }
+        addRequest()
         props.setConversation([...props.conversation, {"role": "assistant", "content": currentAIMessage}])
     }
 

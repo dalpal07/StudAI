@@ -1,6 +1,6 @@
-import Product from "../../../pages/Product";
-import Intro from "../../../pages/Intro";
-import BetaAnnouncement from "../../../pages/BetaAnnouncement";
+import Product from "../../../pages/product";
+import Welcome from "../../../pages/welcome";
+import BetaAnnouncement from "../../../pages/beta-announcement";
 import {useState} from "react";
 
 async function getIsWhiteListed(user) {
@@ -36,6 +36,6 @@ export default function Page(props) {
         }
     }
     return (
-        <Intro/>
+        <Welcome/>
     )
 }
