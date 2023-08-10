@@ -78,6 +78,34 @@ export default function Payment() {
         }
     }
 
+    const handleStandardClick = async () => {
+        const response = await fetch("/api/stripe/create-checkout-session", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ type: "standard" }),
+        });
+        if (response.status === 200) {
+            const {link} = await response.json();
+            router.push(link)
+        }
+    }
+
+    const handleUnlimitedClick = async () => {
+        const response = await fetch("/api/stripe/create-checkout-session", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ type: "unlimited" }),
+        });
+        if (response.status === 200) {
+            const {link} = await response.json();
+            router.push(link)
+        }
+    }
+
     if (user) {
         return (
             <OuterBox>
@@ -117,52 +145,48 @@ export default function Payment() {
                             </StackColumnBox>
                         </PricingPlanButton>
                         <WidthSpacer width={"4rem"}/>
-                        <a href={"https://buy.stripe.com/test_6oE9D40G581xfwk5kl"}>
-                            <PricingPlanButton>
-                                <StackColumnBox style={{height: "100%"}}>
-                                    <HeightSpacer height={"4rem"}/>
-                                    <BoldText size={"1.75rem"}>Standard</BoldText>
-                                    <HeightSpacer height={"2rem"}/>
-                                    <StackRowBox style={{alignItems: "end", width: "100%", justifyContent: "center"}}>
-                                        <Text size={"2rem"}>$4.99</Text>
-                                        <Text size={"1rem"}>/mo</Text>
-                                    </StackRowBox>
-                                    <HeightSpacer height={"2rem"}/>
-                                    <Text>Use up to 150 chat requests per month. Unused requests will not be carried
-                                        over to the next month.</Text>
-                                    <StackColumnBox style={{marginTop: "auto"}}>
-                                        <BoldText size={"1.125rem"} style={{color: "#53B753"}}>Sign Up Now</BoldText>
-                                        <HeightSpacer height={"3rem"}/>
-                                    </StackColumnBox>
+                        <PricingPlanButton onClick={handleStandardClick} disabled={!isFreeDisabled}>
+                            <StackColumnBox style={{height: "100%"}}>
+                                <HeightSpacer height={"4rem"}/>
+                                <BoldText size={"1.75rem"}>Standard</BoldText>
+                                <HeightSpacer height={"2rem"}/>
+                                <StackRowBox style={{alignItems: "end", width: "100%", justifyContent: "center"}}>
+                                    <Text size={"2rem"}>$4.99</Text>
+                                    <Text size={"1rem"}>/mo</Text>
+                                </StackRowBox>
+                                <HeightSpacer height={"2rem"}/>
+                                <Text>Use up to 150 chat requests per month. Unused requests will not be carried
+                                    over to the next month.</Text>
+                                <StackColumnBox style={{marginTop: "auto"}}>
+                                    <BoldText size={"1.125rem"} style={{color: "#53B753"}}>Sign Up Now</BoldText>
+                                    <HeightSpacer height={"3rem"}/>
                                 </StackColumnBox>
-                            </PricingPlanButton>
-                        </a>
+                            </StackColumnBox>
+                        </PricingPlanButton>
                         <WidthSpacer width={"4rem"}/>
-                        <a href={"https://buy.stripe.com/test_cN28z0ewV4Plac0144"}>
-                            <PricingPlanButton>
-                                <StackColumnBox style={{height: "100%"}}>
-                                    <BannerBox><WhiteBoldText>Best Value</WhiteBoldText></BannerBox>
-                                    <BannerLeftTriangle><Image src={"./images/triangle.svg"} alt={"triangle"}
-                                                               height={24} width={24}/></BannerLeftTriangle>
-                                    <BannerRightTriangle><Image src={"./images/triangle.svg"} alt={"triangle"}
-                                                                height={24} width={24}/></BannerRightTriangle>
-                                    <HeightSpacer height={"4rem"}/>
-                                    <BoldText size={"1.75rem"}>Unlimited</BoldText>
-                                    <HeightSpacer height={"2rem"}/>
-                                    <StackRowBox style={{alignItems: "end", width: "100%", justifyContent: "center"}}>
-                                        <Text size={"2rem"}>$9.99</Text>
-                                        <Text size={"1rem"}>/mo</Text>
-                                    </StackRowBox>
-                                    <HeightSpacer height={"2rem"}/>
-                                    <Text>Unlock unlimited chat requests each month! Great for anyone with regular data
-                                        needs.</Text>
-                                    <StackColumnBox style={{marginTop: "auto"}}>
-                                        <BoldText size={"1.125rem"} style={{color: "#53B753"}}>Sign Up Now</BoldText>
-                                        <HeightSpacer height={"3rem"}/>
-                                    </StackColumnBox>
+                        <PricingPlanButton onClick={handleUnlimitedClick} disabled={!isFreeDisabled}>
+                            <StackColumnBox style={{height: "100%"}}>
+                                <BannerBox><WhiteBoldText>Best Value</WhiteBoldText></BannerBox>
+                                <BannerLeftTriangle><Image src={"./images/triangle.svg"} alt={"triangle"}
+                                                           height={24} width={24}/></BannerLeftTriangle>
+                                <BannerRightTriangle><Image src={"./images/triangle.svg"} alt={"triangle"}
+                                                            height={24} width={24}/></BannerRightTriangle>
+                                <HeightSpacer height={"4rem"}/>
+                                <BoldText size={"1.75rem"}>Unlimited</BoldText>
+                                <HeightSpacer height={"2rem"}/>
+                                <StackRowBox style={{alignItems: "end", width: "100%", justifyContent: "center"}}>
+                                    <Text size={"2rem"}>$9.99</Text>
+                                    <Text size={"1rem"}>/mo</Text>
+                                </StackRowBox>
+                                <HeightSpacer height={"2rem"}/>
+                                <Text>Unlock unlimited chat requests each month! Great for anyone with regular data
+                                    needs.</Text>
+                                <StackColumnBox style={{marginTop: "auto"}}>
+                                    <BoldText size={"1.125rem"} style={{color: "#53B753"}}>Sign Up Now</BoldText>
+                                    <HeightSpacer height={"3rem"}/>
                                 </StackColumnBox>
-                            </PricingPlanButton>
-                        </a>
+                            </StackColumnBox>
+                        </PricingPlanButton>
                     </StackRowBox>
                 </InnerBox>
             </OuterBox>

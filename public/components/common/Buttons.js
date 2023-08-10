@@ -87,4 +87,7 @@ export const PricingPlanButton = styled(Button)({
     overflow: "wrap",
     overflowWrap: "break-word",
     alignItems: "flex-start",
+    "&:disabled": {
+        opacity: 0.5,
+    }
 });
