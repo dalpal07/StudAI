@@ -9,9 +9,11 @@ export default async function handler(req, res) {
         try {
             const user = JSON.parse(req.body);
             if (isWhiteListed(user)) {
+                console.log("User is whitelisted: " + user.email)
                 res.status(200).json({ isWhiteListed: true });
             }
             else {
+                console.log("User is NOT whitelisted: " + user.email)
                 res.status(200).json({ isWhiteListed: false });
             }
         }
