@@ -12,6 +12,7 @@ import Verify from "../public/components/conditionals/Verify";
 import {useRouter} from "next/router";
 import NavBar from "../public/components/NavBar";
 import {useUser} from "@auth0/nextjs-auth0/client";
+import Footer from "../public/components/Footer";
 
 export default function Product() {
     const [conversation, setConversation] = useState([{"role": "assistant", "content": "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, format, or filter your data."}])
@@ -147,6 +148,7 @@ export default function Product() {
                         message={"Are you sure you want to replace this file? This action cannot be undone."}/>
                 <Verify verify={verifyClearFile} setVerified={setClearFileVerified}
                         message={"Are you sure you want to clear this file? This action cannot be undone."}/>
+                <Footer/>
             </OuterBox>
         )
     }

@@ -1,5 +1,6 @@
 import {styled, TableCell} from "@mui/material";
 import Image from "next/image";
+import exp from "constants";
 
 export const Cell = styled(TableCell)(({rowIndex}) => ({
     padding: "0.5rem",
@@ -27,3 +28,7 @@ export const ChatBubbleTailRight = styled(ChatBubbleTail)({
 export const HiddenHref = styled("a")({
     textDecoration: "none",
 })
+
+export const FooterHref = styled("a")({
+    color: "var(--main-black, #3F3636)",
+});
