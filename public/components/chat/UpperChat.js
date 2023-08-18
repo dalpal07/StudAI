@@ -1,11 +1,12 @@
 import {
     AssistantChatLine,
     AssistantChatMessage,
-    UpperBox,
+    UpperBox, UpperBoxContent,
     UserChatLine,
     UserChatMessage
 } from "../../../public/components/common/Boxes";
 import {ChatBubbleTailLeft, ChatBubbleTailRight} from "../../../public/components/common/Miscellaneous";
+import {HeightFlexSpacer} from "../../../public/components/common/Spacers";
 
 export default function UpperChat(props) {
     return (

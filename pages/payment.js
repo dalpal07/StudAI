@@ -2,7 +2,7 @@ import {useUser} from "@auth0/nextjs-auth0/client";
 import {
     BannerBox,
     BannerLeftTriangle, BannerRightTriangle,
-    InnerBox,
+    InnerBox3,
     OuterBox,
     StackColumnBox,
     StackRowBox
@@ -14,6 +14,7 @@ import {PricingPlanButton} from "../public/components/common/Buttons";
 import Image from "next/image";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
+import Footer from "../public/components/Footer";
 
 export default function Payment() {
     const { user, error, isLoading } = useUser();
@@ -110,7 +111,7 @@ export default function Payment() {
         return (
             <OuterBox>
                 <NavBar user={user} error={error} isLoading={isLoading}/>
-                <InnerBox>
+                <InnerBox3>
                     <BoldText size={"2.5rem"}>Select a plan</BoldText>
                     <HeightSpacer height={"3rem"}/>
                     <StackRowBox>
@@ -187,7 +188,8 @@ export default function Payment() {
                             </StackColumnBox>
                         </PricingPlanButton>
                     </StackRowBox>
-                </InnerBox>
+                </InnerBox3>
+                <Footer absolute={true}/>
             </OuterBox>
         )
     } else {

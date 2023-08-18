@@ -3,9 +3,9 @@ import { BoldText } from "/public/components/common/Typographies";
 import {HeightSpacer} from "../public/components/common/Spacers";
 import {GreenButton} from "../public/components/common/Buttons";
 import {InnerBox, OuterBox} from "../public/components/common/Boxes";
-import {HiddenHref} from "../public/components/common/Miscellaneous";
 import NavBar from "../public/components/NavBar";
 import {useRouter} from "next/router";
+import Footer from "../public/components/Footer";
 
 export default function Welcome() {
     const router = useRouter();
@@ -26,6 +26,7 @@ export default function Welcome() {
                     See what Stud can do
                 </GreenButton>
             </InnerBox>
+            <Footer absolute={true}/>
         </OuterBox>
     )
 }

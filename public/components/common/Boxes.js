@@ -13,12 +13,11 @@ export const StackRowBox = styled(BasicBox)({
 export const OuterBox = styled(StackColumnBox) ({
     borderRadius: "0.3125rem",
     background: "#EEE",
-    height: "100vh",
 });
 // intro.js
 export const InnerBox = styled(StackColumnBox)({
     position: "absolute",
-    top: 50,
+    top: 0,
     bottom: 0,
     width: "100%",
     justifyContent: "center",
@@ -27,10 +26,12 @@ export const InnerBox = styled(StackColumnBox)({
     alignSelf: "stretch",
     background: "linear-gradient(180deg, #F2F2F2 0%, rgba(242, 242, 242, 0.00) 57.81%, rgba(83, 183, 83, 0.16) 100%)",
 });
+export const InnerBox3 = styled(InnerBox)({
+    top: -50,
+});
 // product.js
 export const InnerBox2 = styled(StackColumnBox) ({
     margin: "0.75rem 1.5rem",
-    height: "100%",
 });
 export const OverlayContainer = styled(BasicBox) ({
     position: "fixed",
@@ -64,11 +65,9 @@ export const Spinner = styled(Box) ({
 });
 // Chat.js
 export const ChatBox = styled(StackColumnBox)({
-    height: "100%",
     minHeight: "15rem",
-    padding: "1.125rem",
-    paddingLeft: "1.75rem",
-    paddingRight: "1.75rem",
+    maxHeight: "15rem",
+    padding: "1.125rem 1.75rem",
     justifyContent: "flex-end",
     alignItems: "center",
     gap: "0.5rem",
@@ -79,7 +78,9 @@ export const ChatBox = styled(StackColumnBox)({
 });
 export const UpperBox = styled(Box)({
     overflowY: "scroll",
-    width: "100%"
+    width: "100%",
+    height: "fit-content",
+    maxHeight: "100%",
 });
 export const AssistantChatLine = styled(BasicBox)({
     display: "flex",
@@ -127,6 +128,8 @@ export const ChatInputOuterBox = styled(BasicBox)({
     borderRadius: "1.25rem",
     background: "#E3E3E3",
     height: "fit-content",
+    maxHeight: "5rem",
+    overflowY: "scroll",
     width: "100%",
 });
 // FileContent.js
@@ -197,3 +200,10 @@ export const BannerRightTriangle = styled(Box) ({
     top: "-0.89rem",
     left: "4.1rem",
 });
+
+export const Line = styled(Box) (({width, height}) => ({
+    display: "flex",
+    border: "0.5px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+    width: width,
+    height: height,
+}));
