@@ -23,11 +23,11 @@ export default function LowerChat(props) {
             }
         }
     };
-    const handleSendButtonClick = () => {
+    const handleSendButtonClick = async () => {
         if (input === "") {
             return
         }
-        props.setConversation([...props.conversation, {"role": "user", "content": input}])
+        await props.setReq(input)
         setInput("")
     }
     return (

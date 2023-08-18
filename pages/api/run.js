@@ -10,10 +10,22 @@ function refineFunctionString(functionString) {
             // make the first letter lowercase
             const firstLetter = functionString[0].toLowerCase();
             functionString = firstLetter + functionString.slice(1);
-            return functionString;
+            break;
         }
         else {
             functionString = functionString.slice(1);
+        }
+    }
+    while (true) {
+        if (functionString.length === 0) {
+            throw new Error("Wrong format for functionString");
+        }
+        if (functionString.endsWith("}")) {
+            return functionString;
+        }
+        else {
+            // delete the last character
+            functionString = functionString.slice(0, -1);
         }
     }
 }
