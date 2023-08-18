@@ -151,12 +151,11 @@ export default function Payment() {
                                 <BoldText size={"1.75rem"}>Standard</BoldText>
                                 <HeightSpacer height={"2rem"}/>
                                 <StackRowBox style={{alignItems: "end", width: "100%", justifyContent: "center"}}>
-                                    <Text size={"2rem"}>$4.99</Text>
+                                    <Text size={"2rem"}>TBD</Text>
                                     <Text size={"1rem"}>/mo</Text>
                                 </StackRowBox>
                                 <HeightSpacer height={"2rem"}/>
-                                <Text>Use up to 150 chat requests per month. Unused requests will not be carried
-                                    over to the next month.</Text>
+                                <Text>Coming Soon! Use up to a certain amount chat requests per month. Great for anyone with semi-regular data needs.</Text>
                                 <StackColumnBox style={{marginTop: "auto"}}>
                                     <BoldText size={"1.125rem"} style={{color: "#53B753"}}>Sign Up Now</BoldText>
                                     <HeightSpacer height={"3rem"}/>
@@ -166,20 +165,20 @@ export default function Payment() {
                         <WidthSpacer width={"4rem"}/>
                         <PricingPlanButton onClick={handleUnlimitedClick} disabled={!isFreeDisabled}>
                             <StackColumnBox style={{height: "100%"}}>
-                                <BannerBox><WhiteBoldText>Best Value</WhiteBoldText></BannerBox>
-                                <BannerLeftTriangle><Image src={"./images/triangle.svg"} alt={"triangle"}
-                                                           height={24} width={24}/></BannerLeftTriangle>
-                                <BannerRightTriangle><Image src={"./images/triangle.svg"} alt={"triangle"}
-                                                            height={24} width={24}/></BannerRightTriangle>
+                                {/*<BannerBox><WhiteBoldText>Best Value</WhiteBoldText></BannerBox>*/}
+                                {/*<BannerLeftTriangle><Image src={"./images/triangle.svg"} alt={"triangle"}*/}
+                                {/*                           height={24} width={24}/></BannerLeftTriangle>*/}
+                                {/*<BannerRightTriangle><Image src={"./images/triangle.svg"} alt={"triangle"}*/}
+                                {/*                            height={24} width={24}/></BannerRightTriangle>*/}
                                 <HeightSpacer height={"4rem"}/>
                                 <BoldText size={"1.75rem"}>Unlimited</BoldText>
                                 <HeightSpacer height={"2rem"}/>
                                 <StackRowBox style={{alignItems: "end", width: "100%", justifyContent: "center"}}>
-                                    <Text size={"2rem"}>$9.99</Text>
+                                    <Text size={"2rem"}>TBD</Text>
                                     <Text size={"1rem"}>/mo</Text>
                                 </StackRowBox>
                                 <HeightSpacer height={"2rem"}/>
-                                <Text>Unlock unlimited chat requests each month! Great for anyone with regular data
+                                <Text>Coming Soon! Unlock unlimited chat requests each month! Great for anyone with regular data
                                     needs.</Text>
                                 <StackColumnBox style={{marginTop: "auto"}}>
                                     <BoldText size={"1.125rem"} style={{color: "#53B753"}}>Sign Up Now</BoldText>
