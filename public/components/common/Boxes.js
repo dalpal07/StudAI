@@ -17,7 +17,7 @@ export const OuterBox = styled(StackColumnBox) ({
 // intro.js
 export const InnerBox = styled(StackColumnBox)({
     position: "absolute",
-    top: 50,
+    top: 0,
     bottom: 0,
     width: "100%",
     justifyContent: "center",
@@ -25,6 +25,9 @@ export const InnerBox = styled(StackColumnBox)({
     flex: "1 0 0",
     alignSelf: "stretch",
     background: "linear-gradient(180deg, #F2F2F2 0%, rgba(242, 242, 242, 0.00) 57.81%, rgba(83, 183, 83, 0.16) 100%)",
+});
+export const InnerBox3 = styled(InnerBox)({
+    top: -50,
 });
 // product.js
 export const InnerBox2 = styled(StackColumnBox) ({
