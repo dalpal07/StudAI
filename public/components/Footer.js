@@ -6,7 +6,7 @@ import {Text} from "../../public/components/common/Typographies";
 export default function Footer(props) {
     return (
         <StackColumnBox style={{alignItems: "center", position: props.absolute ? "absolute" : "", bottom: props.absolute ? 0 : "", width: "100%"}}>
-            <Line width={"97%"} height={"0"}/>
+            <Line width={props.absolute ? "97%" : "100%"} height={"0"}/>
             <HeightSpacer height={"2rem"}/>
             <StackRowBox style={{width: "100%", justifyContent: "center", alignItems: "center"}}>
                 <WidthSpacer width={"2rem"}/>

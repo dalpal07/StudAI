@@ -13,6 +13,8 @@ export const StackRowBox = styled(BasicBox)({
 export const OuterBox = styled(StackColumnBox) ({
     borderRadius: "0.3125rem",
     background: "#EEE",
+    height: "100vh",
+    width: "100%",
 });
 // intro.js
 export const InnerBox = styled(StackColumnBox)({
@@ -31,7 +33,8 @@ export const InnerBox3 = styled(InnerBox)({
 });
 // product.js
 export const InnerBox2 = styled(StackColumnBox) ({
-    margin: "0.75rem 1.5rem",
+    padding: "1rem 2rem",
+    height: "100%",
 });
 export const OverlayContainer = styled(BasicBox) ({
     position: "fixed",
@@ -165,8 +168,6 @@ export const DownloadContainer = styled(StackRowBox) ({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "1rem",
-    marginBottom: "1rem",
 });
 // beta-announcement.js
 export const BetaContainer = styled(StackRowBox) ({

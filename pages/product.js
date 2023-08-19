@@ -1,9 +1,7 @@
-import Chat from "../public/components/chat/Chat";
 import FileUpload from "../public/components/file-upload/FileUpload";
 import Script from "../public/components/Script";
 import {useEffect, useState} from "react";
 import Run from "../public/components/Run";
-import { BoldText } from "/public/components/common/Typographies"
 import {InnerBox2, OuterBox} from "../public/components/common/Boxes";
 import {HeightSpacer} from "../public/components/common/Spacers";
 import ExtendPrompt from "../public/functions/ExtendPrompt";
@@ -13,10 +11,10 @@ import {useRouter} from "next/router";
 import NavBar from "../public/components/NavBar";
 import {useUser} from "@auth0/nextjs-auth0/client";
 import Footer from "../public/components/Footer";
+import LowerChat from "../public/components/chat/LowerChat";
 
 export default function Product() {
-    const [conversation, setConversation] = useState([{"role": "assistant", "content": "Hello! My name is Stud and I am your personal data maid. Please upload a file and then let me know how I can help you clean, format, or filter your data."}])
-    const [conversationIndex, setConversationIndex] = useState(0)
+    const [req, setReq] = useState(null)
     const [dataHistory, setDataHistory] = useState([{headers: [], entries: [], prev: null, next: null}])
     const [dataIndex, setDataIndex] = useState(0)
     const [fileName, setFileName] = useState("")
@@ -28,7 +26,6 @@ export default function Product() {
     const [clearFileVerified, setClearFileVerified] = useState(null)
     const [disabled, setDisabled] = useState(false)
     const [requestCancelled, setRequestCancelled] = useState(false)
-    const [currentAIMessage, setCurrentAIMessage] = useState("")
 
     const { user, isLoading, error } = useUser();
     const router = useRouter();
@@ -102,37 +99,13 @@ export default function Product() {
             setDisabled(false)
         }
     }, [dataProcessing, verifyReplaceFile, verifyClearFile])
-    const extendPrompt = async (prompt, isScript) => {
-        return await ExtendPrompt({
-            prompt: prompt,
-            isScript: isScript,
-            dataHistory: dataHistory,
-            dataIndex: dataIndex,
-            conversation: conversation,
-            conversationIndex: conversationIndex,
-        })
-    }
+
     if (user && isPaid) {
         return (
             <OuterBox>
                 <NavBar/>
                 <InnerBox2 id={"inner"}>
-                    <BoldText size={"1.5rem"}>Give Stud a Try</BoldText>
                     <HeightSpacer height={"0.75rem"}/>
-                    <Chat conversation={conversation} setConversation={setConversation} extendPrompt={extendPrompt}
-                          disabled={disabled} fileName={fileName} currentAIMessage={currentAIMessage}
-                          setCurrentAIMessage={setCurrentAIMessage} setRequests={setRequests}/>
-                    <FileUpload setFileName={setFileName} fileName={fileName} disabled={disabled}
-                                headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
-                                entries={dataHistory[dataIndex].entries} setDataIndex={setDataIndex}
-                                verify={verifyReplaceFile} setVerify={setVerifyReplaceFile}
-                                replaceFileVerified={replaceFileVerified}
-                                setReplaceFileVerified={setReplaceFileVerified}/>
-                    <Script extendPrompt={extendPrompt} setScript={setScript} conversation={conversation}
-                            setDataProcessing={setDataProcessing}
-                            setConversationIndex={setConversationIndex} conversationIndex={conversationIndex}
-                            dataProcessing={dataProcessing}
-                            requestCancelled={requestCancelled} setRequestCancelled={setRequestCancelled}/>
                     <Run headers={dataHistory[dataIndex].headers} entries={dataHistory[dataIndex].entries}
                          script={script} fileName={fileName} setDataProcessing={setDataProcessing}
                          setDataIndex={setDataIndex} setDataHistory={setDataHistory} disabled={disabled}
@@ -141,6 +114,23 @@ export default function Product() {
                          setClearFileVerified={setClearFileVerified}
                          setScript={setScript} requestCancelled={requestCancelled}
                          setRequestCancelled={setRequestCancelled}/>
+                    <HeightSpacer height={"1rem"}/>
+                    <FileUpload setFileName={setFileName} fileName={fileName} disabled={disabled}
+                                headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
+                                entries={dataHistory[dataIndex].entries} setDataIndex={setDataIndex}
+                                verify={verifyReplaceFile} setVerify={setVerifyReplaceFile}
+                                replaceFileVerified={replaceFileVerified}
+                                setReplaceFileVerified={setReplaceFileVerified}/>
+                    <HeightSpacer height={"1.5rem"}/>
+                    <LowerChat disabled={disabled} fileName={fileName} setRequests={setRequests} setReq={setReq}/>
+                    <HeightSpacer height={"1.5rem"}/>
+                    <Script setScript={setScript} req={req} setReq={setReq}
+                            headers={dataHistory[dataIndex].headers}
+                            setDataProcessing={setDataProcessing}
+                            dataProcessing={dataProcessing}
+                            requestCancelled={requestCancelled} setRequestCancelled={setRequestCancelled}/>
+                    <HeightSpacer height={"1.5rem"}/>
+                    <Footer/>
                 </InnerBox2>
                 <Loading dataProcessing={dataProcessing} setDataProcessing={setDataProcessing}
                          setRequestCancelled={setRequestCancelled}/>
@@ -148,7 +138,6 @@ export default function Product() {
                         message={"Are you sure you want to replace this file? This action cannot be undone."}/>
                 <Verify verify={verifyClearFile} setVerified={setClearFileVerified}
                         message={"Are you sure you want to clear this file? This action cannot be undone."}/>
-                <Footer/>
             </OuterBox>
         )
     }
