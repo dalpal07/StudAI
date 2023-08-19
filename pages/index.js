@@ -31,7 +31,7 @@ export default function Home() {
                 });
                 if (response.status === 200) {
                     const data = await response.json();
-                    if ((subscription.type === "standard" && data.requests < 150) || (subscription.type === "free" && data.requests < 50)) {
+                    if ((subscription.type === "standard" && data.requests < 150) || (subscription.type === "free" && data.requests < 50 && data.requests > 0)) {
                         router.push("/product");
                     }
                     else {
