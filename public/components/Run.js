@@ -5,9 +5,11 @@ import {DefaultButton, GreenButton, UndoRedoButton} from "../../public/component
 import {WidthFlexSpacer, WidthSpacer} from "../../public/components/common/Spacers";
 import {DownloadContainer, BasicBox} from "../../public/components/common/Boxes";
 import {downloadFile} from "../../public/functions/DownloadFile";
+import {Text} from "../../public/components/common/Typographies";
 export default function Run(props) {
     const [localScript, setLocalScript] = useState("")
     const handleFailedScript = async () => {
+        props.setReq(null)
         props.setDataProcessing(false)
         alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
     }
@@ -15,9 +17,10 @@ export default function Run(props) {
         const {headers, entries} = data
         let newHistory = [...props.dataHistory]
         newHistory[props.dataIndex].next = props.dataHistory.length
-        newHistory.push({headers: headers, entries: entries, prev: props.dataIndex, next: null})
+        newHistory.push({headers: headers, entries: entries, prev: props.dataIndex, next: null, request: props.req})
         props.setDataHistory(newHistory)
         props.setDataIndex(props.dataHistory.length)
+        props.setReq(null)
         props.setDataProcessing(false)
     }
     const handleClick = async () => {
@@ -93,7 +96,9 @@ export default function Run(props) {
                     <RedoIcon/>
                 </UndoRedoButton>
             </BasicBox>
-            <WidthFlexSpacer/>
+            <WidthFlexSpacer style={{minWidth: "1rem"}}/>
+            <Text style={{textAlign: "center"}}><b>{props.dataHistory[props.dataIndex].request}</b></Text>
+            <WidthFlexSpacer style={{minWidth: "1rem"}}/>
             <DefaultButton onClick={() => props.setVerify(true)} disabled={props.disabled || props.fileName === ""}>
                 Clear
             </DefaultButton>

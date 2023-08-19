@@ -15,7 +15,7 @@ import LowerChat from "../public/components/chat/LowerChat";
 
 export default function Product() {
     const [req, setReq] = useState(null)
-    const [dataHistory, setDataHistory] = useState([{headers: [], entries: [], prev: null, next: null}])
+    const [dataHistory, setDataHistory] = useState([{headers: [], entries: [], prev: null, next: null, request: null}])
     const [dataIndex, setDataIndex] = useState(0)
     const [fileName, setFileName] = useState("")
     const [script, setScript] = useState("")
@@ -113,7 +113,7 @@ export default function Product() {
                          verify={verifyClearFile} setVerify={setVerifyClearFile} clearFileVerified={clearFileVerified}
                          setClearFileVerified={setClearFileVerified}
                          setScript={setScript} requestCancelled={requestCancelled}
-                         setRequestCancelled={setRequestCancelled}/>
+                         setRequestCancelled={setRequestCancelled} setReq={setReq} req={req}/>
                     <HeightSpacer height={"1rem"}/>
                     <FileUpload setFileName={setFileName} fileName={fileName} disabled={disabled}
                                 headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
@@ -124,7 +124,7 @@ export default function Product() {
                     <HeightSpacer height={"1.5rem"}/>
                     <LowerChat disabled={disabled} fileName={fileName} setRequests={setRequests} setReq={setReq}/>
                     <HeightSpacer height={"1.5rem"}/>
-                    <Script setScript={setScript} req={req} setReq={setReq}
+                    <Script setScript={setScript} req={req}
                             headers={dataHistory[dataIndex].headers}
                             setDataProcessing={setDataProcessing}
                             dataProcessing={dataProcessing}
