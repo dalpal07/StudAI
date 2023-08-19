@@ -122,12 +122,13 @@ export const BottomBox = styled(BasicBox)({
     height: "fit-content",
     alignItems: "top",
     justifyContent: "center",
+    display: "flex",
+    flexDirection: "row",
 });
 
 export const ChatInputOuterBox = styled(BasicBox)({
     padding: "0.5rem 1rem",
-    alignItems: "center",
-    gap: "0.5rem",
+    alignItems: "flex-end",
     borderRadius: "1.25rem",
     background: "#E3E3E3",
     height: "fit-content",

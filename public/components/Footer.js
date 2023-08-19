@@ -9,7 +9,7 @@ export default function Footer(props) {
             <Line width={props.absolute ? "97%" : "100%"} height={"0"}/>
             <HeightSpacer height={"2rem"}/>
             <StackRowBox style={{width: "100%", justifyContent: "center", alignItems: "center"}}>
-                <WidthSpacer width={"2rem"}/>
+                <WidthSpacer width={props.absolute? "2rem" : 0}/>
                 <StackColumnBox style={{width: "15rem"}}>
                     <Text><b>Contact Support:</b></Text>
                     <HeightSpacer height={"0.5rem"}/>
@@ -25,7 +25,7 @@ export default function Footer(props) {
                     <HeightSpacer height={"0.5rem"}/>
                     <FooterHref href={"https://www.linkedin.com/company/studaio/"}><Text>LinkedIn</Text></FooterHref>
                 </StackColumnBox>
-                <WidthSpacer width={"2rem"}/>
+                <WidthSpacer width={props.absolute? "2rem" : 0}/>
             </StackRowBox>
             <HeightSpacer height={"2rem"}/>
         </StackColumnBox>

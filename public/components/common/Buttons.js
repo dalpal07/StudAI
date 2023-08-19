@@ -33,12 +33,13 @@ export const IconButton = styled(Button)({
     width: "fit-content",
     height: "fit-content",
     padding: "0",
+    display: "flex",
 });
 export const UploadBoxButton = styled(Button) (({isDraggingOver}) => ({
     width: "100%",
     display: "flex",
     height: "100%",
-    maxHeight: "25rem",
+    maxHeight: "22rem",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
