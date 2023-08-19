@@ -33,9 +33,7 @@ export default function Script(props) {
     }, [props.req])
     useEffect(() => {
         if (props.dataProcessing) {
-            sendToServer().then(() => {
-                props.setReq(null)
-            });
+            sendToServer()
         }
     }, [props.dataProcessing])
 }
