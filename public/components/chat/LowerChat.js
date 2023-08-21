@@ -14,8 +14,8 @@ export default function LowerChat(props) {
 
     const handleInputChange = async (event) => {
         let temp = event.target.value
-        if (temp.length > 250) {
-            temp = temp.substring(0, 250)
+        if (temp.length > 300) {
+            temp = temp.substring(0, 300)
             await setInput(temp)
             setIsRed(true)
             return
@@ -59,7 +59,7 @@ export default function LowerChat(props) {
                                onChange={handleInputChange}
                                onKeyPress={handleKeyPress}/>
                 </ChatInputOuterBox>
-                <Typography style={{display: "flex", padding: "0.25rem", color: isRed ? "#ff6961" : "#a9a9a9"}}>{input.length} / 250</Typography>
+                <Typography style={{display: "flex", padding: "0.25rem", color: isRed ? "#ff6961" : "#a9a9a9"}}>{input.length} / 300</Typography>
             </StackColumnBox>
             <IconButton onClick={handleSendButtonClick} disableTouchRipple disabled={sendDisabled}
                         onMouseEnter={() => setSendHover(true)} onMouseLeave={() => setSendHover(false)}>

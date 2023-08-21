@@ -36,6 +36,9 @@ export const InnerBox2 = styled(StackColumnBox) ({
     padding: "1rem 2rem",
     height: "100%",
 });
+export const InnerBox4 = styled(InnerBox2) ({
+    height: "auto",
+});
 export const OverlayContainer = styled(BasicBox) ({
     position: "fixed",
     top: "30%",
