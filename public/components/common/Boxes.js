@@ -15,6 +15,7 @@ export const OuterBox = styled(StackColumnBox) ({
     background: "#EEE",
     height: "100vh",
     width: "100%",
+    position: "relative",
 });
 // intro.js
 export const InnerBox = styled(StackColumnBox)({
@@ -33,6 +34,7 @@ export const InnerBox3 = styled(InnerBox)({
 });
 // product.js
 export const InnerBox2 = styled(StackColumnBox) ({
+    marginTop: "5rem",
     padding: "1rem 2rem",
     height: "100%",
 });
@@ -147,7 +149,9 @@ export const TableContainer = styled(Box)({
 });
 // NavBar.js
 export const NavBox = styled(BasicBox) ({
-    position: "sticky",
+    position: "fixed",
+    boxSizing: "border-box",
+    width: "100%",
     top: 0,
     zIndex: 1,
     padding: "1rem 1.5rem",
