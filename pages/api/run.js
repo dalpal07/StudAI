@@ -1,7 +1,11 @@
+import { findBestMatch } from 'string-similarity';
+
+function getStringSimilarityScore(str1, str2) {
+    const strings = [String(str1)];
+    const { bestMatch } = findBestMatch(String(str2), strings);
+    return bestMatch.rating;
+}
 function refineFunctionString(functionString) {
-    // Remove the semicolon at the end if it exists
-    functionString = functionString.trim().replace(/;$/, '');
-    // Make sure start of functionString is "function"
     while (true) {
         if (functionString.length === 0) {
             throw new Error("Wrong format for functionString");
@@ -16,18 +20,21 @@ function refineFunctionString(functionString) {
             functionString = functionString.slice(1);
         }
     }
-    while (true) {
-        if (functionString.length === 0) {
-            throw new Error("Wrong format for functionString");
+    let refinedFunctionString = ""
+    let bracketCount = 0;
+    for (let i = 0; i < functionString.length; i++) {
+        refinedFunctionString += functionString[i];
+        if (functionString[i] === "{") {
+            bracketCount++;
         }
-        if (functionString.endsWith("}")) {
-            return functionString;
-        }
-        else {
-            // delete the last character
-            functionString = functionString.slice(0, -1);
+        else if (functionString[i] === "}") {
+            bracketCount--;
+            if (bracketCount === 0) {
+                break;
+            }
         }
     }
+    return refinedFunctionString;
 }
 
 function verifyReturnHeadersIsArray(object) {
