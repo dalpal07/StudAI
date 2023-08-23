@@ -16,6 +16,7 @@ function getSystemContent(headers) {
             systemContent += ", "
         }
     }
+    systemContent += "\n\nAlso, you may call the following function to get a similarity score (using string-similarity library) between two strings as needed: function getStringSimilarityScore(str1, str2)"
     return systemContent
 }
 
