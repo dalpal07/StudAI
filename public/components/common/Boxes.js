@@ -212,3 +212,13 @@ export const Line = styled(Box) (({width, height}) => ({
     width: width,
     height: height,
 }));
+
+export const MenuBox = styled(StackColumnBox) ({
+    position: "absolute",
+    top: 67.75,
+    right: 0,
+    width: "fit-content",
+    background: "#EDEDED",
+    borderLeft: "2px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+    borderBottom: "2px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+});

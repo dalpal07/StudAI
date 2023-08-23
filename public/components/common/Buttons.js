@@ -51,19 +51,19 @@ export const UploadBoxButton = styled(Button) (({isDraggingOver}) => ({
     boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.10) inset",
     backgroundColor: isDraggingOver ? '#F5F5F5' : 'transparent'
 }))
-export const MenuButton = styled(Button)(({top}) => ({
-    position: "absolute",
-    top: top,
-    right: 0,
-    background: "#F2F2F2",
-    color: "var(--main-black, #3F3636)",
+export const MenuButton = styled(Button)({
     textTransform: "none",
-    fontFamily: "Inter",
-    boxShadow: "0px 1px 1px 0px rgba(0, 0, 0, 0.30), 0px 4px 8px 0px rgba(0, 0, 0, 0.15), 0px 10px 20px 0px rgba(0, 0, 0, 0.05)",
-    borderRadius: 0,
-    width: "7rem",
-    justifyContent: "left",
-}));
+    color: "var(--main-black, #3F3636)",
+    width: "fit-content",
+    minWidth: "7rem",
+    justifyContent: "flex-start",
+    borderBottom: "1px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+    borderRadius: "0",
+    fontWeight: "bold",
+    "&:hover": {
+        background: "#D6D6D6",
+    }
+});
 export const UndoRedoButton = styled(Button)({
     padding: "0.5rem 1.5rem",
     backgroundColor: "var(--main-gray, #E5E5E5)",
