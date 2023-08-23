@@ -8,10 +8,12 @@ import {downloadFile} from "../../public/functions/DownloadFile";
 import {Text} from "../../public/components/common/Typographies";
 export default function Run(props) {
     const [localScript, setLocalScript] = useState("")
-    const handleFailedScript = async () => {
+    const handleFailedScript = async (statusText) => {
         props.setReq(null)
         props.setDataProcessing(false)
-        alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
+        if (statusText !== 'Abort') {
+            alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
+        }
     }
     const handleSuccessScript = async (data) => {
         const {headers, entries} = data
@@ -26,6 +28,7 @@ export default function Run(props) {
     const handleClick = async () => {
         const response = await fetch("/api/run", {
             method: "POST",
+            signal: props.controller.signal,
             body: JSON.stringify({
                 generatedFunction: props.script,
                 headers: props.headers,
@@ -33,16 +36,11 @@ export default function Run(props) {
             })
         })
         if (response.status === 200) {
-            if (!props.requestCancelled) {
-                const data = await response.json()
-                await handleSuccessScript(data)
-            }
-            else {
-                props.setRequestCancelled(false)
-            }
+            const data = await response.json()
+            await handleSuccessScript(data)
         }
         else {
-            await handleFailedScript()
+            await handleFailedScript(response.statusText)
         }
     }
     const handleButton = () => {

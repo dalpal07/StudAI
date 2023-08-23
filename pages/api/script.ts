@@ -24,7 +24,6 @@ export const config = {
 };
 
 const handler = async (req: Request): Promise<Response> => {
-    console.log("Request received")
     const { headers, request } = (await req.json()) as {
         headers?: [];
         request?: string;
@@ -33,7 +32,6 @@ const handler = async (req: Request): Promise<Response> => {
         console.log("Headers or request not provided")
         return new Response("Bad request", { status: 400 });
     }
-    console.log("Headers and request provided")
     const systemContent = getSystemContent(headers);
     const payload: OpenAIScriptStreamPayload = {
         model: "gpt-3.5-turbo",
@@ -55,9 +53,7 @@ const handler = async (req: Request): Promise<Response> => {
         stop: "[DONE]",
         stream: true,
     };
-    console.log("Payload created and stream starting")
     const stream = await OpenAIScriptStream(payload);
-    console.log("Stream started")
     return new Response(stream)
 };
 
