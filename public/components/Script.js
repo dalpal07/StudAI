@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {useUser} from "@auth0/nextjs-auth0/client";
 
 export default function Script(props) {
@@ -6,6 +6,7 @@ export default function Script(props) {
     const sendToServer = async () => {
         const response = await fetch("/api/script", {
             method: "POST",
+            signal: props.controller.signal,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -15,7 +16,20 @@ export default function Script(props) {
             }),
         })
         if (response.status === 200) {
-            readStream(response)
+            try {
+                await readStream(response)
+            } catch (e) {
+                props.setDataProcessing(false)
+                if (e.name !== 'AbortError') {
+                    alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
+                }
+            }
+        } else {
+            console.log("Here")
+            props.setDataProcessing(false)
+            if (response.statusText !== 'Abort') {
+                alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
+            }
         }
     }
 
@@ -51,13 +65,8 @@ export default function Script(props) {
             currentAIMessage += chunkValue
             // console.log("Current AI message: " + currentAIMessage)
         }
-        if (!props.requestCancelled) {
-            // addRequest()
-            props.setScript(currentAIMessage)
-        }
-        else {
-            props.setRequestCancelled(false)
-        }
+        // addRequest()
+        props.setScript(currentAIMessage)
     }
 
     useEffect(() => {

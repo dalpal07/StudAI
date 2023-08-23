@@ -59,6 +59,7 @@ export default async function handler(req, res) {
             const response = await performRequest(headers, entries)
             verifyReturnHeadersIsArray(response.headers)
             verifyReturnEntriesIsDoubleArray(response.entries)
+            console.log("Returning from run.js")
             res.status(200).json({ headers: response.headers, entries: response.entries });
         }
         catch (err) {

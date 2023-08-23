@@ -13,7 +13,6 @@ export interface OpenAIScriptStreamPayload {
 }
 
 export async function OpenAIScriptStream(payload: OpenAIScriptStreamPayload) {
-    console.log("OpenAIScriptStream called")
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
 
@@ -27,7 +26,6 @@ export async function OpenAIScriptStream(payload: OpenAIScriptStreamPayload) {
         method: "POST",
         body: JSON.stringify(payload),
     });
-    console.log("Response received from openAI")
     return new ReadableStream({
         async start(controller) {
             function onParse(event: ParsedEvent | ReconnectInterval) {
@@ -39,7 +37,6 @@ export async function OpenAIScriptStream(payload: OpenAIScriptStreamPayload) {
                     }
                     try {
                         const json = JSON.parse(data);
-                        console.log(json)
                         const text = json.choices[0].delta.content;
                         if (counter < 2 && (text.match(/\n/) || []).length) {
                             return;
