@@ -1,10 +1,11 @@
-import {BottomBox, ChatInputOuterBox, StackColumnBox, StackRowBox} from "../../../public/components/common/Boxes";
+import {BottomBox, ChatInputOuterBox, StackColumnBox} from "../../../public/components/common/Boxes";
 import {ChatInput} from "../../../public/components/common/Inputs";
 import {IconButton} from "../../../public/components/common/Buttons";
 import Image from "next/image";
 import {useEffect, useState} from "react";
-import {Text} from "../../../public/components/common/Typographies";
 import {Typography} from "@mui/material";
+
+const limit = 500
 
 export default function LowerChat(props) {
     const [input, setInput] = useState("");
@@ -14,8 +15,8 @@ export default function LowerChat(props) {
 
     const handleInputChange = async (event) => {
         let temp = event.target.value
-        if (temp.length > 300) {
-            temp = temp.substring(0, 300)
+        if (temp.length > limit) {
+            temp = temp.substring(0, limit)
             await setInput(temp)
             setIsRed(true)
             return
@@ -59,7 +60,7 @@ export default function LowerChat(props) {
                                onChange={handleInputChange}
                                onKeyPress={handleKeyPress}/>
                 </ChatInputOuterBox>
-                <Typography style={{display: "flex", padding: "0.25rem", color: isRed ? "#ff6961" : "#a9a9a9"}}>{input.length} / 300</Typography>
+                <Typography style={{display: "flex", padding: "0.25rem", color: isRed ? "#ff6961" : "#a9a9a9"}}>{input.length} / {limit}</Typography>
             </StackColumnBox>
             <IconButton onClick={handleSendButtonClick} disableTouchRipple disabled={sendDisabled}
                         onMouseEnter={() => setSendHover(true)} onMouseLeave={() => setSendHover(false)}>
