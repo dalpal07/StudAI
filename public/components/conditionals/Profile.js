@@ -2,7 +2,7 @@ import {BoldText} from "../../../public/components/common/Typographies";
 import {ProfileBox} from "../../../public/components/common/Boxes";
 import {WidthSpacer} from "../../../public/components/common/Spacers";
 import {Button} from "@mui/material";
-import SignOutButton from "../../../public/components/conditionals/SignOutButton";
+import Menu from "./Menu";
 import {DefaultButton} from "../../../public/components/common/Buttons";
 import Image from "next/image";
 import React, {useEffect, useRef, useState} from "react";
@@ -42,7 +42,7 @@ export default function Profile(props) {
             <BoldText size={"1.125rem"}>{user.name}</BoldText>
             <WidthSpacer width={"1.75rem"}/>
             <Button class={"profile-button svg-button"} onClick={handleProfileClick} ref={profileRef} disableTouchRipple></Button>
-            <SignOutButton forwardRef={signOutRef} clicked={clicked}/>
+            <Menu forwardRef={signOutRef} clicked={clicked}/>
         </ProfileBox>
     )
     return (
