@@ -6,11 +6,18 @@ import {InnerBox, OuterBox} from "../public/components/common/Boxes";
 import NavBar from "../public/components/NavBar";
 import {useRouter} from "next/router";
 import Footer from "../public/components/Footer";
+import {useUser} from "@auth0/nextjs-auth0/client";
 
 export default function Welcome() {
     const router = useRouter();
+    const {user} = useUser();
     const handleClick = async () => {
-        router.push("/api/auth/login");
+        if (user) {
+            router.push("/product");
+        }
+        else {
+            router.push("/api/auth/login");
+        }
     }
     return (
         <OuterBox>
