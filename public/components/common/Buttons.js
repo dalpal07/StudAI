@@ -64,6 +64,9 @@ export const MenuButton = styled(Button)({
         background: "#D6D6D6",
     }
 });
+export const HelpMenuButton = styled(MenuButton)({
+    width: "100%",
+});
 export const UndoRedoButton = styled(Button)({
     padding: "0.5rem 1.5rem",
     backgroundColor: "var(--main-gray, #E5E5E5)",

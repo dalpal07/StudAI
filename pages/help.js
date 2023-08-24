@@ -1,8 +1,17 @@
-import {InnerBox4, OuterBox, StackRowBox} from "/public/components/common/Boxes";
+import {
+    HelpBox,
+    InnerBox4,
+    InsideHelpBox,
+    OuterBox,
+    StackColumnBox,
+    StackRowBox
+} from "/public/components/common/Boxes";
 import NavBar from "/public/components/NavBar";
 import Footer from "/public/components/Footer";
 import {BoldText, Text} from "/public/components/common/Typographies";
 import {HeightSpacer, WidthSpacer} from "/public/components/common/Spacers";
+import {HelpMenuButton} from "/public/components/common/Buttons";
+import {useEffect} from "react";
 
 const info = [
     {
@@ -126,29 +135,57 @@ const info = [
 ]
 
 export default function Help() {
-  return (
-    <OuterBox>
-        <NavBar/>
-        <InnerBox4>
-            {info.map((section, i) => {
-                return (
-                    <>
-                        <BoldText size={"2rem"}>{section.title}</BoldText>
-                        <HeightSpacer height={"1.5rem"}/>
-                        {section.subs.map((sub, j) => {
+    const handleScrollClick = (id) => {
+        const scrollable = document.documentElement;
+        const element = document.getElementById(id);
+        const scrollOffset = 90; // Adjust this value as needed
+        const newScrollPosition = element.offsetTop - scrollOffset;
+        scrollable.scrollTo({
+            top: newScrollPosition,
+            behavior: 'smooth'
+        });
+    }
+
+    return (
+        <OuterBox>
+            <NavBar/>
+            <InnerBox4>
+                <StackRowBox>
+                    <HelpBox>
+                        <InsideHelpBox>
+                            <HeightSpacer height={"1rem"}/>
+                            <BoldText size={"1.25rem"}>Jump to...</BoldText>
+                            <HeightSpacer height={"1rem"}/>
+                            {info.map((section, i) => {
+                                return (
+                                    <HelpMenuButton onClick={() => handleScrollClick(section.title)}>{section.title}</HelpMenuButton>
+                                )})}
+                        </InsideHelpBox>
+                    </HelpBox>
+                    <WidthSpacer width={"5rem"}/>
+                    <StackColumnBox>
+                        <HeightSpacer height={"1rem"}/>
+                        {info.map((section, i) => {
                             return (
                                 <>
-                                    <BoldText size={"1.25rem"}>{sub.title}</BoldText>
-                                    <HeightSpacer height={"1rem"}/>
-                                    <Text style={{lineHeight: "1.5rem"}}>{sub.description}</Text>
+                                    <BoldText size={"2rem"} id={section.title}>{section.title}</BoldText>
+                                    <HeightSpacer height={"1.5rem"}/>
+                                    {section.subs.map((sub, j) => {
+                                        return (
+                                            <>
+                                                <BoldText size={"1.25rem"}>{sub.title}</BoldText>
+                                                <HeightSpacer height={"1rem"}/>
+                                                <Text style={{lineHeight: "1.5rem"}}>{sub.description}</Text>
+                                                <HeightSpacer height={"1rem"}/>
+                                            </>
+                                        )})}
                                     <HeightSpacer height={"1rem"}/>
                                 </>
                             )})}
-                        <HeightSpacer height={"1rem"}/>
-                    </>
-                )})}
-            <Footer/>
-        </InnerBox4>
-    </OuterBox>
-  )
+                    </StackColumnBox>
+                </StackRowBox>
+                <Footer/>
+            </InnerBox4>
+        </OuterBox>
+    )
 }
