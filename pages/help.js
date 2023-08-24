@@ -25,14 +25,16 @@ const info = [
                 right: [
                     "Hey Stud, please dedupe my data by the \'Name\' column",
                     "Hey Stud, please sort my data by the \'Age\' column"
-                ]
+                ],
+                sample: "sample1.csv"
             },
             {
                 title: "Be Specific",
                 description: "While Stud is pretty smart, it's not a mind reader. Be specific with your commands. Let Stud know what data cleansing task you want to perform, which columns you want to perform it on, what format you have your data in, and what format you want your data in. For example, Hey Stud, please reformat my date column from \'MM/DD/YYYY\' to \'YYYY-MM-DD\'",
                 right: [
                     "Hey Stud, please reformat my date column from \'MM/DD/YYYY\' to \'YYYY-MM-DD\'"
-                ]
+                ],
+                sample: "sample1.csv"
             },
         ]
     },
@@ -44,7 +46,8 @@ const info = [
                 description: "Specify the column(s) that indicate what a duplicate is. Try, Hey Stud, please dedupe my data by the \'Name\' column",
                 right: [
                     "Hey Stud, please dedupe my data by the \'Name\' column"
-                ]
+                ],
+                sample: "sample1.csv"
             },
         ]
     },
@@ -56,21 +59,24 @@ const info = [
                 description: "Specify the column(s) that you want to sort by. Try, Hey Stud, please sort my data by the \'Age\' column",
                 right: [
                     "Hey Stud, please sort my data by the \'Age\' column"
-                ]
+                ],
+                sample: "sample1.csv"
             },
             {
                 title: "Specify Order",
                 description: "Specify the order that you want to sort by. Try, Hey Stud, please sort my data by the \'Age\' column in descending order",
                 right: [
                     "Hey Stud, please sort my data by the \'Age\' column in descending order"
-                ]
+                ],
+                sample: "sample1.csv"
             },
             {
                 title: "Specify Sort Type",
                 description: "In some cases, you may need to specify whether you want to sort by text or by number. Try, Hey Stud, please sort my data by the \'Age\' column as a number",
                 right: [
                     "Hey Stud, please sort my data by the \'Age\' column as a number"
-                ]
+                ],
+                sample: "sample1.csv"
             }
         ]
     },
@@ -82,14 +88,16 @@ const info = [
                 description: "By default, Stud is case sensitive. If you want to ignore case, try, Hey Stud, please find and replace \'Stud\' with \'StudAI\' in the \'Name\' column ignoring case Otherwise, Stud will only replace \'Stud\' with \'StudAI\' if the word is capitalized as \'Stud\' (ignoring \'STUD\', \'stud\', etc.).",
                 right: [
                     "Hey Stud, please find and replace \'Stud\' with \'StudAI\' in the \'Name\' column ignoring case"
-                ]
+                ],
+                sample: "sample2.csv"
             },
             {
                 title: "Value vs. Contains",
                 description: "By default, Stud will only replace cell values that match exactly. If you want to replace values that are contained within a cell, try, Hey Stud, please find all cells that contain \'Stud\' and replace it with \'StudAI\'",
                 right: [
                     "Hey Stud, please find all cells that contain \'Stud\' and replace it with \'StudAI\'"
-                ]
+                ],
+                sample: "sample2.csv"
             }
         ]
     },
@@ -101,7 +109,8 @@ const info = [
                 description: "Specify whether you want to discard or keep the rows that match your filter. Try, Hey Stud, please discard all rows that contain \'Stud\' in the \'Name\' column",
                 right: [
                     "Hey Stud, please discard all rows that contain \'Stud\' in the \'Name\' column"
-                ]
+                ],
+                sample: "sample2.csv"
             }
         ]
     },
@@ -113,7 +122,8 @@ const info = [
                 description: "Specify the old and new formats of the column that you want to reformat. Try, Hey Stud, please reformat my date column from \'MM/DD/YYYY\' to \'YYYY-MM-DD\'",
                 right: [
                     "Hey Stud, please reformat my date column from \'MM/DD/YYYY\' to \'YYYY-MM-DD\'"
-                ]
+                ],
+                sample: "sample1.csv"
             }
         ]
     },
@@ -128,21 +138,24 @@ const info = [
                 ],
                 right: [
                     "Hey Stud, please split my values in the \'Name\' column by a space (\' \')"
-                ]
+                ],
+                sample: "sample3.csv"
             },
             {
                 title: "Specify Split Index",
-                description: "Rather than specifying a character sequence to split by, you can also specify the index of the string that you want to split by. Try, Hey Stud, please split my values in the \'Name\' column by the 2nd character",
+                description: "Rather than specifying a character sequence to split by, you can also specify the index of the string that you want to split by. Try, Hey Stud, please split my values in the \'Name\' column after the 2nd character",
                 right: [
-                    "Hey Stud, please split my values in the \'Name\' column by the 2nd character"
-                ]
+                    "Hey Stud, please split my values in the \'Name\' column after the 2nd character"
+                ],
+                sample: "sample3.csv"
             },
             {
                 title: "Specify Action After Split",
                 description: "Specify what you want to do after splitting. Do you want a new column formed? Do you want 2 columns to replace the first? Do you want to keep part of the split value to replace the original value? Try, Hey Stud, please split my values in the \'Name\' column by a space (\' \') and keep the first part of the split value",
                 right: [
                     "Hey Stud, please split my values in the \'Name\' column by a space (\' \') and keep the first part of the split value"
-                ]
+                ],
+                sample: "sample3.csv"
             }
         ]
     },
@@ -154,7 +167,8 @@ const info = [
                 description: "Specify how you want to merge your columns or rows. What column/row stays? What does the new column/row look like? Try, Hey Stud, please merge my \'First Name\' and \'Last Name\' columns into a single \'Name\' column. Values in the new \'Name\' column will follow the pattern \'[First Name] [Last Name]\'",
                 right: [
                     "Hey Stud, please merge my \'First Name\' and \'Last Name\' columns into a single \'Name\' column. Values in the new \'Name\' column will follow the pattern \'[First Name] [Last Name]\'"
-                ]
+                ],
+                sample: "sample4.csv"
             }
         ]
     },
@@ -166,14 +180,16 @@ const info = [
                 description: "In CSV files, null or empty values are represented by an empty string (\"\"). You may need to clarify this to Stud if you are referencing a column that contains null or empty values. Try, Hey Stud, please delete all rows that have an empty value (\"\") in the \'Name\' column",
                 right: [
                     "Hey Stud, please delete all rows that have an empty value (\"\") in the \'Name\' column"
-                ]
+                ],
+                sample: "sample5.csv"
             },
             {
                 title: "Merging with Null Values",
-                description: "Specify how to merge with null values. Try, Hey Stud, please merge my \'First Name\' and \'Last Name\' columns into a single \'Name\' column. Values in the new \'Name\' column will follow the pattern \'[First Name] [Last Name]\'. If either \'First Name\' or \'Last Name\' is null (\"\"), then the new \'Name\' column will be the non-null value",
+                description: "Specify how to merge with null values. Try, Hey Stud, please merge my \'First Name\' and \'Last Name\' columns into a single \'Name\' column. Values in the new \'Name\' column will follow the pattern \'[First Name] [Last Name]\'. For each entry, if either \'First Name\' or \'Last Name\' is null (\"\"), then the new \'Name\' column will be the non-null value",
                 right: [
-                    "Hey Stud, please merge my \'First Name\' and \'Last Name\' columns into a single \'Name\' column. Values in the new \'Name\' column will follow the pattern \'[First Name] [Last Name]\'. If either \'First Name\' or \'Last Name\' is null (\"\"), then the new \'Name\' column will be the non-null value"
-                ]
+                    "Hey Stud, please merge my \'First Name\' and \'Last Name\' columns into a single \'Name\' column. Values in the new \'Name\' column will follow the pattern \'[First Name] [Last Name]\'. For each entry, if either \'First Name\' or \'Last Name\' is null (\"\"), then the new \'Name\' column will be the non-null value"
+                ],
+                sample: "sample6.csv"
             }
         ]
     },
@@ -182,13 +198,14 @@ const info = [
         subs: [
             {
                 title: "Leniency",
-                description: "The only info Stud receives are your header fields. Because of this, you can actually be less specific when referring to header fields. For example, instead of Hey Stud, please swap the \'First Name\' and \'Last Name\' columns, you can just say Hey Stud, please swap the first and last name columns",
+                description: "The only info Stud receives are your header fields. Because of this, you can actually be less specific when referring to header fields. For example, instead of Hey Stud, please swap the \'First Name\' and \'Last Name\' headers and columns, you can just say Hey Stud, please swap the first and last name headers and columns",
                 wrong: [
-                    "Hey Stud, please swap the \'First Name\' and \'Last Name\' columns"
+                    "Hey Stud, please swap the \'First Name\' and \'Last Name\' headers and columns"
                 ],
                 right: [
-                    "Hey Stud, please swap the first and last name columns"
-                ]
+                    "Hey Stud, please swap the first and last name headers and columns"
+                ],
+                sample: "sample4.csv"
             }
         ]
     }
@@ -209,12 +226,13 @@ export default function Help() {
     const formatDescription = (sub) => {
         // Replace quotes with <strong> tags
         let description = sub.description
+        const fileName = sub.sample
         const right = sub.right
         const styleRight = "color: #53B753;"
         const styleRef = "text-decoration: none;"
         if (right) {
             right.forEach((right) => {
-                description = description.replace(right, `<a href="/product?input=${right}" style="${styleRef}"><strong style="${styleRight}">${right}</strong></a>`)
+                description = description.replace(right, `<a href="/product?input=${right.replaceAll(/"/g, "%22")}&fileName=${fileName}" style="${styleRef}"><strong style="${styleRight}">${right}</strong></a>`)
             })
         }
         const wrong = sub.wrong
