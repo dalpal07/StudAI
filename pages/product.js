@@ -35,52 +35,30 @@ export default function Product() {
     const [controller, setController] = useState(new AbortController());
 
     useEffect(() => {
-        if (user) {
-            const apiUrl = `/api/user/`;
-            const queryParams = new URLSearchParams({ id: user.sub });
-            fetch(`${apiUrl}get-subscription-type?${queryParams}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }).then((response) => response.json()).then((subscription) => {
-                setType(subscription.type);
-                if (subscription.type === "owner" || subscription.type === "unlimited") {
-                    setIsPaid(true);
-                }
-                else if (subscription.type === "standard" || subscription.type === "free") {
-                    fetch(`${apiUrl}get-subscription-requests?${queryParams}`, {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    }).then((response) => response.json()).then((data) => {
-                        if ((subscription.type === "standard" && data.requests < 150) || (subscription.type === "free" && data.requests < 50)) {
-                            setIsPaid(true);
-                        }
-                        else {
-                            router.push("/payment");
-                        }
-                    });
-                }
-                else {
-                    router.push("/payment");
-                }
-            });
-            fetch(`${apiUrl}get-subscription-requests?${queryParams}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }).then((response) => response.json()).then((data) => {
-                setRequests(data.requests);
-            });
-        }
-        else {
-            router.push("/api/auth/login");
+        if (!isLoading && !isPaid) {
+            if (user) {
+                const apiUrl = `/api/user/`;
+                const queryParams = new URLSearchParams({id: user.sub});
+                fetch(`${apiUrl}get-product-access?${queryParams}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }).then((response) => response.json()).then((data) => {
+                    if (data.access) {
+                        setIsPaid(true);
+                        setRequests(data.requests);
+                        setType(data.type);
+                    } else {
+                        router.push("/payment");
+                    }
+                })
+                // setIsPaid(true);
+            } else {
+                router.push("/api/auth/login");
+            }
         }
     }, [user])
-
     useEffect(() => {
         if (isPaid) {
             if (disabled) {
@@ -100,8 +78,7 @@ export default function Product() {
             setDisabled(false)
         }
     }, [dataProcessing, verifyReplaceFile, verifyClearFile])
-
-    if (user && isPaid) {
+    if (isPaid) {
         return (
             <OuterBox>
                 <NavBar/>
@@ -131,15 +108,13 @@ export default function Product() {
                     <HeightSpacer height={"1.5rem"}/>
                     <Footer/>
                 </InnerBox2>
-                <Loading dataProcessing={dataProcessing} setDataProcessing={setDataProcessing} controller={controller} setController={setController} setReq={setReq}/>
+                <Loading dataProcessing={dataProcessing} setDataProcessing={setDataProcessing} controller={controller}
+                         setController={setController} setReq={setReq}/>
                 <Verify verify={verifyReplaceFile} setVerified={setReplaceFileVerified}
                         message={"Are you sure you want to replace this file? This action cannot be undone."}/>
                 <Verify verify={verifyClearFile} setVerified={setClearFileVerified}
                         message={"Are you sure you want to clear this file? This action cannot be undone."}/>
             </OuterBox>
         )
-    }
-    else if (user && isPaid === false) {
-        router.push("/pricing");
     }
 }

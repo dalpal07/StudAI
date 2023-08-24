@@ -9,10 +9,29 @@ import {
     readCsvFile,
     readXlsxFile
 } from "../../../public/functions/ExtractFileData";
+import {useRouter} from "next/router";
+
+async function fetchFileContent(fileName) {
+    const response = await fetch(`/sample-data/${fileName}`);
+    return await response.text();
+}
 
 export default function FileUpload(props) {
     const [isDraggingOver, setIsDraggingOver] = useState(false);
     const [tempFile, setTempFile] = useState(null);
+    const router = useRouter();
+    const {query} = router;
+
+    if (query && query.fileName) {
+        if (props.fileName === "") {
+            fetchFileContent(query.fileName).then((content) => {
+                const simulatedFile = new File([content], query.fileName, {type: "text/plain"});
+                setNewFile(simulatedFile);
+            });
+        }
+        router.replace(router.pathname, undefined, { shallow: true });
+    }
+
     const handleFileChange = (file) => {
         props.setFileName(file.name)
         const fileExtension = getFileExtension(file.name);
@@ -21,7 +40,7 @@ export default function FileUpload(props) {
                 const headers = getFileHeaders(content)
                 const entries = getFileEntries(content)
                 props.setDataIndex(0)
-                props.setDataHistory([{headers: headers, entries: entries, prev: null, next: null}])
+                props.setDataHistory([{headers: headers, entries: entries, prev: null, next: null, request: "Original Dataset: " + file.name}])
             });
         }
         else if (fileExtension === "xlsx") {
@@ -30,15 +49,15 @@ export default function FileUpload(props) {
                 const headers = getFileHeaders(content)
                 const entries = getFileEntries(content)
                 props.setDataIndex(0)
-                props.setDataHistory([{headers: headers, entries: entries, prev: null, next: null, request: "Original Dataset"}])
+                props.setDataHistory([{headers: headers, entries: entries, prev: null, next: null, request: "Original Dataset: " + file.name}])
             });
         }
         else {
             alert("Invalid file type. Please upload a .csv or .xlsx file.")
+            setTempFile(null)
         }
     }
     const setNewFile = (file) => {
-
         handleFileChange(file)
         setIsDraggingOver(false);
     }

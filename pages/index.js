@@ -11,37 +11,18 @@ export default function Home() {
     const getUserStatus = async (user) => {
         const apiUrl = `/api/user/`;
         const queryParams = new URLSearchParams({ id: user.sub });
-        const response = await fetch(`${apiUrl}get-subscription-type?${queryParams}`, {
+        const response = await fetch(`${apiUrl}get-product-access?${queryParams}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
         });
-        if (response.status === 200) {
-            const subscription = await response.json();
-            if (subscription.type === "owner" || subscription.type === "unlimited") {
-                router.push("/product");
-            }
-            else if (subscription.type === "standard" || subscription.type === "free") {
-                const response = await fetch(`${apiUrl}get-subscription-requests?${queryParams}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-                if (response.status === 200) {
-                    const data = await response.json();
-                    if ((subscription.type === "standard" && data.requests < 150) || (subscription.type === "free" && data.requests < 50 && data.requests > 0)) {
-                        router.push("/product");
-                    }
-                    else {
-                        router.push("/payment");
-                    }
-                }
-            }
-            else {
-                router.push("/payment");
-            }
+        const data = await response.json();
+        if (data.access) {
+            router.push("/product");
+        }
+        else {
+            router.push("/payment");
         }
     }
 

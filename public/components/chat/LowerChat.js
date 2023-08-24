@@ -4,6 +4,7 @@ import {IconButton} from "../../../public/components/common/Buttons";
 import Image from "next/image";
 import {useEffect, useState} from "react";
 import {Typography} from "@mui/material";
+import {useRouter} from "next/router";
 
 const limit = 500
 
@@ -12,6 +13,15 @@ export default function LowerChat(props) {
     const [sendHover, setSendHover] = useState(false);
     const [isRed, setIsRed] = useState(false);
     const sendDisabled = props.disabled || props.fileName === "" || input === "";
+    const router = useRouter();
+    const {query} = router;
+
+    if (query && query.input) {
+        if (input === "") {
+            setInput(query.input);
+        }
+        router.replace(router.pathname, undefined, { shallow: true });
+    }
 
     const handleInputChange = async (event) => {
         let temp = event.target.value
