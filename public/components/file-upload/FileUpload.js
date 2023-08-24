@@ -21,7 +21,7 @@ export default function FileUpload(props) {
                 const headers = getFileHeaders(content)
                 const entries = getFileEntries(content)
                 props.setDataIndex(0)
-                props.setDataHistory([{headers: headers, entries: entries, prev: null, next: null}])
+                props.setDataHistory([{headers: headers, entries: entries, prev: null, next: null, request: "Original Dataset: " + file.name}])
             });
         }
         else if (fileExtension === "xlsx") {
@@ -30,7 +30,7 @@ export default function FileUpload(props) {
                 const headers = getFileHeaders(content)
                 const entries = getFileEntries(content)
                 props.setDataIndex(0)
-                props.setDataHistory([{headers: headers, entries: entries, prev: null, next: null, request: "Original Dataset"}])
+                props.setDataHistory([{headers: headers, entries: entries, prev: null, next: null, request: "Original Dataset: " + file.name}])
             });
         }
         else {

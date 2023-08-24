@@ -211,9 +211,10 @@ export default function Help() {
         let description = sub.description
         const right = sub.right
         const styleRight = "color: #53B753;"
+        const styleRef = "text-decoration: none;"
         if (right) {
             right.forEach((right) => {
-                description = description.replace(right, `<strong style="${styleRight}">${right}</strong>`)
+                description = description.replace(right, `<a href="/product?input=${right}" style="${styleRef}"><strong style="${styleRight}">${right}</strong></a>`)
             })
         }
         const wrong = sub.wrong
