@@ -37,23 +37,23 @@ export default function Product() {
     useEffect(() => {
         if (!isLoading && !isPaid) {
             if (user) {
-                const apiUrl = `/api/user/`;
-                const queryParams = new URLSearchParams({id: user.sub});
-                fetch(`${apiUrl}get-product-access?${queryParams}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }).then((response) => response.json()).then((data) => {
-                    if (data.access) {
-                        setIsPaid(true);
-                        setRequests(data.requests);
-                        setType(data.type);
-                    } else {
-                        router.push("/payment");
-                    }
-                })
-                // setIsPaid(true);
+                // const apiUrl = `/api/user/`;
+                // const queryParams = new URLSearchParams({id: user.sub});
+                // fetch(`${apiUrl}get-product-access?${queryParams}`, {
+                //     method: "GET",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                // }).then((response) => response.json()).then((data) => {
+                //     if (data.access) {
+                //         setIsPaid(true);
+                //         setRequests(data.requests);
+                //         setType(data.type);
+                //     } else {
+                //         router.push("/payment");
+                //     }
+                // })
+                setIsPaid(true);
             } else {
                 router.push("/api/auth/login");
             }
