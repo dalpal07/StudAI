@@ -12,9 +12,10 @@ export const StackRowBox = styled(BasicBox)({
 // index.js
 export const OuterBox = styled(StackColumnBox) ({
     borderRadius: "0.3125rem",
-    background: "#EEE",
+    background: "#F2F2F2",
     height: "100vh",
     width: "100%",
+    position: "relative",
 });
 // intro.js
 export const InnerBox = styled(StackColumnBox)({
@@ -33,6 +34,7 @@ export const InnerBox3 = styled(InnerBox)({
 });
 // product.js
 export const InnerBox2 = styled(StackColumnBox) ({
+    marginTop: "3rem",
     padding: "1rem 2rem",
     height: "100%",
 });
@@ -147,7 +149,9 @@ export const TableContainer = styled(Box)({
 });
 // NavBar.js
 export const NavBox = styled(BasicBox) ({
-    position: "sticky",
+    position: "fixed",
+    boxSizing: "border-box",
+    width: "100%",
     top: 0,
     zIndex: 1,
     padding: "1rem 1.5rem",
@@ -221,4 +225,16 @@ export const MenuBox = styled(StackColumnBox) ({
     background: "#EDEDED",
     borderLeft: "2px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
     borderBottom: "2px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+});
+export const HelpBox = styled(StackColumnBox) ({
+    width: "25rem",
+    minWidth: "fit-content",
+    height: "100%",
+    borderRight: "2px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+    position: "relative",
+});
+
+export const InsideHelpBox = styled(StackColumnBox) ({
+    position: "sticky",
+    top: 68,
 });
