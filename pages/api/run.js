@@ -1,4 +1,4 @@
-const maxFileSizeBytes = 250 * 1024 * 1.25;
+const maxFileSizeBytes = 200 * 1024 * 1.25;
 
 function getStringSimilarityScore(str1, str2) {
     const findBestMatch = require('string-similarity').findBestMatch;
