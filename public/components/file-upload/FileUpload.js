@@ -11,6 +11,8 @@ import {
 } from "../../../public/functions/ExtractFileData";
 import {useRouter} from "next/router";
 
+const maxFileSizeBytes = 250 * 1024;
+
 async function fetchFileContent(fileName) {
     const response = await fetch(`/sample-data/${fileName}`);
     return await response.text();
@@ -33,6 +35,10 @@ export default function FileUpload(props) {
     }
 
     const handleFileChange = (file) => {
+        if (file.size > maxFileSizeBytes) {
+            alert("File is too large. Please upload a file less than 250KB.")
+            return
+        }
         const fileExtension = getFileExtension(file.name);
         if (fileExtension === "csv") {
             props.setFileName(file.name)
