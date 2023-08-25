@@ -33,9 +33,9 @@ export default function FileUpload(props) {
     }
 
     const handleFileChange = (file) => {
-        props.setFileName(file.name)
         const fileExtension = getFileExtension(file.name);
         if (fileExtension === "csv") {
+            props.setFileName(file.name)
             readCsvFile(file).then((content) => {
                 const headers = getFileHeaders(content)
                 const entries = getFileEntries(content)
@@ -44,6 +44,7 @@ export default function FileUpload(props) {
             });
         }
         else if (fileExtension === "xlsx") {
+            props.setFileName(file.name)
             console.log("xlsx")
             readXlsxFile(file).then((content) => {
                 const headers = getFileHeaders(content)
@@ -54,7 +55,6 @@ export default function FileUpload(props) {
         }
         else {
             alert("Invalid file type. Please upload a .csv or .xlsx file.")
-            setTempFile(null)
         }
     }
     const setNewFile = (file) => {
