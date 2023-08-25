@@ -6,8 +6,10 @@ import {WidthFlexSpacer, WidthSpacer} from "../../public/components/common/Space
 import {DownloadContainer, BasicBox} from "../../public/components/common/Boxes";
 import {downloadFile} from "../../public/functions/DownloadFile";
 import {Text} from "../../public/components/common/Typographies";
+import {useUser} from "@auth0/nextjs-auth0/client";
 export default function Run(props) {
     const [localScript, setLocalScript] = useState("")
+    const {user} = useUser();
     const handleFailedScript = async (statusText) => {
         props.setReq(null)
         props.setDataProcessing(false)
@@ -66,6 +68,27 @@ export default function Run(props) {
         props.setDataIndex(0)
         props.setFileName("")
     }
+    const handleSave = async () => {
+        const response = await fetch("/api/user/files/save-file-content", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: user.sub,
+                headers: props.dataHistory[props.dataIndex].headers,
+                entries: props.dataHistory[props.dataIndex].entries,
+                fileName: props.fileName
+            })
+        })
+        if (response.status === 200) {
+            alert("File saved successfully")
+            props.setLoadFiles(true)
+        }
+        else {
+            alert("An error occurred while saving your file. Please try again. Contact Stud if the problem persists.")
+        }
+    }
     useEffect(() => {
         if (props.script !== "" && props.script !== localScript) {
             setLocalScript(props.script)
@@ -99,6 +122,10 @@ export default function Run(props) {
             <WidthFlexSpacer style={{minWidth: "1rem"}}/>
             <DefaultButton onClick={() => props.setVerify(true)} disabled={props.disabled || props.fileName === ""}>
                 Clear
+            </DefaultButton>
+            <WidthSpacer width={"0.5rem"}/>
+            <DefaultButton onClick={handleSave} disabled={props.disabled || props.fileName === ""}>
+                Save
             </DefaultButton>
             <WidthSpacer width={"0.5rem"}/>
             <GreenButton onClick={handleButton} disabled={props.disabled || props.fileName === ""}>

@@ -30,10 +30,9 @@ class S3ReadableStream extends Readable {
 }
 
 export default async function handler(req, res) {
-    if (req.method === 'GET') {
+    if (req.method === 'POST') {
         try {
-            const { id } = req.query;
-            const { fileName } = req.query;
+            const { id, fileName } = req.body;
             const path = id + '-data/' + fileName;
             const params = {
                 Bucket: process.env.AWS_BUCKET_NAME,
