@@ -14,8 +14,16 @@ import {useRouter} from "next/router";
 const maxFileSizeBytes = 200 * 1024;
 
 async function fetchFileContent(fileName) {
-    const response = await fetch(`/sample-data/${fileName}`);
-    return await response.text();
+    const response = await fetch(`/api/user/files/get-file-content?id=sample&fileName=${fileName}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
+    if (response.status === 200) {
+        const data = await response.json();
+        return data.headers.join(",") + "\n" + data.entries.map((entry) => entry.join(",")).join("\n");
+    }
 }
 
 export default function FileUpload(props) {
