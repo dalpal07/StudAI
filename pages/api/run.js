@@ -1,6 +1,5 @@
-import { findBestMatch } from 'string-similarity';
-
 function getStringSimilarityScore(str1, str2) {
+    const findBestMatch = require('string-similarity').findBestMatch;
     const strings = [String(str1)];
     const { bestMatch } = findBestMatch(String(str2), strings);
     return bestMatch.rating;
