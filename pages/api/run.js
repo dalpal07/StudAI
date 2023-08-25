@@ -1,6 +1,7 @@
-import { findBestMatch } from 'string-similarity';
+const maxFileSizeBytes = 200 * 1024 * 1.25;
 
 function getStringSimilarityScore(str1, str2) {
+    const findBestMatch = require('string-similarity').findBestMatch;
     const strings = [String(str1)];
     const { bestMatch } = findBestMatch(String(str2), strings);
     return bestMatch.rating;
@@ -54,6 +55,13 @@ function verifyReturnEntriesIsDoubleArray(object) {
     }
 }
 
+function verifyNotExceedingMaxFileSize(object) {
+    // console.log("Content length: " + (JSON.stringify(object).length / 1024 / 1.25) + "KB")
+    if (JSON.stringify(object).length > maxFileSizeBytes) {
+        throw new Error("File size exceeds maximum file size of " + maxFileSizeBytes / 1024 / 1.25 + "KB.")
+    }
+}
+
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
@@ -66,6 +74,7 @@ export default async function handler(req, res) {
             const response = await performRequest(headers, entries)
             verifyReturnHeadersIsArray(response.headers)
             verifyReturnEntriesIsDoubleArray(response.entries)
+            verifyNotExceedingMaxFileSize(response)
             console.log("Returning from run.js")
             res.status(200).json({ headers: response.headers, entries: response.entries });
         }
