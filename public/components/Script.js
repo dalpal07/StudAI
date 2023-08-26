@@ -20,13 +20,14 @@ export default function Script(props) {
                 await readStream(response)
             } catch (e) {
                 props.setDataProcessing(false)
+                props.setReq(null)
                 if (e.name !== 'AbortError') {
                     alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
                 }
             }
         } else {
-            console.log("Here")
             props.setDataProcessing(false)
+            props.setReq(null)
             if (response.statusText !== 'Abort') {
                 alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
             }
