@@ -48,7 +48,22 @@ async function fetchFileContent(fileName, id) {
     });
     if (response.status === 200) {
         const data = await response.json();
-        return data.headers.join(",") + "\n" + data.entries.map((entry) => entry.join(",")).join("\n");
+        let headers = data.headers;
+        let entries = data.entries;
+        let content = "";
+        for (let i = 0; i < data.headers.length; i++) {
+            if (headers[i].includes(",") && headers[i][0] !== "\"") {
+                headers[i] = "\"" + headers[i] + "\"";
+            }
+        }
+        for (let i = 0; i < entries.length; i++) {
+            for (let j = 0; j < entries[i].length; j++) {
+                if (entries[i][j].includes(",") && entries[i][j][0] !== "\"") {
+                    entries[i][j] = "\"" + entries[i][j] + "\"";
+                }
+            }
+        }
+        return headers.join(",") + "\n" + entries.map((entry) => entry.join(",")).join("\n");
     }
     else {
         alert("Failed to fetch file content")
