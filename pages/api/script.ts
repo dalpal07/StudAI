@@ -16,7 +16,8 @@ function getSystemContent(headers) {
             systemContent += ", "
         }
     }
-    systemContent += "\n\nAlso, you may call the following function to get a similarity score (using string-similarity library) between two strings as needed: function getStringSimilarityScore(str1, str2)"
+    systemContent += "\n\nAlso, you may call the following function to get a similarity score (using string-similarity library) between two strings as needed: function getStringSimilarityScore(str1, str2)" + "" +
+        "\n\nFinally, if a user refers to another file, you may get the file headers or entries by calling the following functions: function getFileHeaders(fileName) and function getFileEntries(fileName)"
     return systemContent
 }
 

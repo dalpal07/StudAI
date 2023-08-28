@@ -5,8 +5,30 @@ import Image from "next/image";
 import {useEffect, useState} from "react";
 import {Typography} from "@mui/material";
 import {useRouter} from "next/router";
+import {useUser} from "@auth0/nextjs-auth0/client";
 
 const limit = 500
+
+async function handleFileMatch(id, fileName, setExtraFiles) {
+    const response = await fetch(`/api/user/files/get-file-content`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+            fileName: fileName
+        })
+    });
+    if (response.status !== 200) {
+        return
+    }
+    const data = await response.json();
+    const headers = data.headers;
+    const entries = data.entries;
+    const extraFiles = [{fileName: fileName, headers: headers, entries: entries}];
+    await setExtraFiles(extraFiles);
+}
 
 export default function LowerChat(props) {
     const [input, setInput] = useState("");
@@ -15,6 +37,7 @@ export default function LowerChat(props) {
     const sendDisabled = props.disabled || props.fileName === "" || input === "";
     const router = useRouter();
     const {query} = router;
+    const {user} = useUser();
 
     if (query && query.input) {
         if (input === "") {
@@ -46,6 +69,18 @@ export default function LowerChat(props) {
     const handleSendButtonClick = async () => {
         if (input === "") {
             return
+        }
+        const matchResult = input.match(/`(.+)`/g)
+        if (matchResult) {
+            let match = matchResult[0]
+            if (match.length > 1) {
+                match = match.substring(1, match.length - 1)
+                for (let i = 0; i < props.files.length; i++) {
+                    if (props.files[i] === match) {
+                        await handleFileMatch(user.sub, match, props.setExtraFiles)
+                    }
+                }
+            }
         }
         await props.setReq(input)
         setInput("")

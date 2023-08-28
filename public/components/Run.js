@@ -34,7 +34,8 @@ export default function Run(props) {
             body: JSON.stringify({
                 generatedFunction: props.script,
                 headers: props.headers,
-                entries: props.entries
+                entries: props.entries,
+                extraFiles: props.extraFiles,
             })
         })
         if (response.status === 200) {

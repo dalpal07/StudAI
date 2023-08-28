@@ -76,6 +76,7 @@ export default function Product() {
 
     const [loadFiles, setLoadFiles] = useState(true);
     const [files, setFiles] = useState([]);
+    const [extraFiles, setExtraFiles] = useState([]);
 
     const [controller, setController] = useState(new AbortController());
 
@@ -204,7 +205,7 @@ export default function Product() {
                                  dataIndex={dataIndex} dataHistory={dataHistory} setFileName={setFileName}
                                  verify={verifyClearFile} setVerify={setVerifyClearFile} clearFileVerified={clearFileVerified}
                                  setClearFileVerified={setClearFileVerified} setLoadFiles={setLoadFiles}
-                                 setScript={setScript} setReq={setReq} req={req} controller={controller}/>
+                                 setScript={setScript} setReq={setReq} req={req} controller={controller} extraFiles={extraFiles}/>
                             <HeightSpacer height={"1rem"}/>
                             <FileUpload setFileName={setFileName} fileName={fileName} disabled={disabled}
                                         headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
@@ -213,7 +214,7 @@ export default function Product() {
                                         replaceFileVerified={replaceFileVerified}
                                         setReplaceFileVerified={setReplaceFileVerified} handleFileChange={handleFileChange}/>
                             <HeightSpacer height={"1.5rem"}/>
-                            <LowerChat disabled={disabled} fileName={fileName} setRequests={setRequests} setReq={setReq}/>
+                            <LowerChat disabled={disabled} fileName={fileName} setRequests={setRequests} setReq={setReq} files={files} setExtraFiles={setExtraFiles}/>
                             <HeightSpacer height={"1.5rem"}/>
                             <Script setScript={setScript} req={req} setRequests={setRequests} setReq={setReq}
                                     headers={dataHistory[dataIndex].headers}

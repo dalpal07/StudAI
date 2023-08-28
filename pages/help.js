@@ -192,22 +192,6 @@ const info = [
                 sample: "sample6.csv"
             }
         ]
-    },
-    {
-        title: "Headers",
-        subs: [
-            {
-                title: "Leniency",
-                description: "The only info Stud receives are your header fields. Because of this, you can actually be less specific when referring to header fields. For example, instead of Hey Stud, please swap the \'First Name\' and \'Last Name\' headers and columns, you can just say Hey Stud, please swap the first and last name headers and columns",
-                wrong: [
-                    "Hey Stud, please swap the \'First Name\' and \'Last Name\' headers and columns"
-                ],
-                right: [
-                    "Hey Stud, please swap the first and last name headers and columns"
-                ],
-                sample: "sample4.csv"
-            }
-        ]
     }
 ]
 

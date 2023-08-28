@@ -70,6 +70,23 @@ export default async function handler(req, res) {
             console.log("Script:\n" + generatedFunction)
             const headers = body.headers;
             const entries = body.entries;
+            const extraFiles = body.extraFiles;
+            function getFileHeaders(fileName) {
+                for (let i = 0; i < extraFiles.length; i++) {
+                    if (extraFiles[i].fileName === fileName) {
+                        return extraFiles[i].headers;
+                    }
+                }
+                return [];
+            }
+            function getFileEntries(fileName) {
+                for (let i = 0; i < extraFiles.length; i++) {
+                    if (extraFiles[i].fileName === fileName) {
+                        return extraFiles[i].entries;
+                    }
+                }
+                return [];
+            }
             const performRequest = await eval(`(${generatedFunction})`)
             const response = await performRequest(headers, entries)
             verifyReturnHeadersIsArray(response.headers)
