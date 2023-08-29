@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { BoldText } from "/public/components/common/Typographies";
-import {HeightSpacer} from "../public/components/common/Spacers";
-import {GreenButton} from "../public/components/common/Buttons";
-import {InnerBox, OuterBox} from "../public/components/common/Boxes";
-import NavBar from "../public/components/NavBar";
+import { BoldText } from "@/public/components/common/Typographies";
+import {HeightSpacer} from "@/public/components/common/Spacers";
+import {GreenButton} from "@/public/components/common/Buttons";
+import {InnerBox, OuterBox} from "@/public/components/common/Boxes";
+import NavBar from "@/public/components/NavBar";
 import {useRouter} from "next/router";
-import Footer from "../public/components/Footer";
+import Footer from "@/public/components/Footer";
 import {useUser} from "@auth0/nextjs-auth0/client";
 
 export default function Welcome() {

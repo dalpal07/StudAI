@@ -1,5 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document'
-import AppHead from "../public/components/AppHead";
+import AppHead from "@/public/components/AppHead";
 
 export default function Document() {
   return (

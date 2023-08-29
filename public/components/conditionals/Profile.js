@@ -1,9 +1,9 @@
-import {BoldText} from "../../../public/components/common/Typographies";
-import {ProfileBox} from "../../../public/components/common/Boxes";
-import {WidthSpacer} from "../../../public/components/common/Spacers";
+import {BoldText} from "@/public/components/common/Typographies";
+import {ProfileBox} from "@/public/components/common/Boxes";
+import {WidthSpacer} from "@/public/components/common/Spacers";
 import {Button} from "@mui/material";
 import Menu from "./Menu";
-import {DefaultButton} from "../../../public/components/common/Buttons";
+import {DefaultButton} from "@/public/components/common/Buttons";
 import Image from "next/image";
 import React, {useEffect, useRef, useState} from "react";
 import {useUser} from "@auth0/nextjs-auth0/client";

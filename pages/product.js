@@ -1,26 +1,26 @@
-import FileUpload from "../public/components/file-upload/FileUpload";
-import Script from "../public/components/Script";
+import FileUpload from "@/public/components/file-upload/FileUpload";
+import Script from "@/public/components/Script";
 import {useEffect, useState} from "react";
-import Run from "../public/components/Run";
-import {HelpBox, InnerBox2, OuterBox, StackColumnBox, StackRowBox} from "../public/components/common/Boxes";
-import {HeightSpacer, WidthFlexSpacer, WidthSpacer} from "../public/components/common/Spacers";
-import Loading from "../public/components/conditionals/Loading";
-import Verify from "../public/components/conditionals/Verify";
+import Run from "@/public/components/Run";
+import {HelpBox, InnerBox2, OuterBox, StackColumnBox, StackRowBox} from "@/public/components/common/Boxes";
+import {HeightSpacer, WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
+import Loading from "@/public/components/conditionals/Loading";
+import Verify from "@/public/components/conditionals/Verify";
 import {useRouter} from "next/router";
-import NavBar from "../public/components/NavBar";
+import NavBar from "@/public/components/NavBar";
 import {useUser} from "@auth0/nextjs-auth0/client";
-import Footer from "../public/components/Footer";
-import LowerChat from "../public/components/chat/LowerChat";
+import Footer from "@/public/components/Footer";
+import LowerChat from "@/public/components/chat/LowerChat";
 import AbortController from 'abort-controller';
-import {BoldText} from "../public/components/common/Typographies";
-import {DefaultButton} from "public/components/common/Buttons";
+import {BoldText} from "@/public/components/common/Typographies";
+import {DefaultButton} from "@/public/components/common/Buttons";
 import {
     getFileEntries,
     getFileExtension,
     getFileHeaders,
     readCsvFile,
     readXlsxFile
-} from "public/functions/ExtractFileData";
+} from "@/public/functions/ExtractFileData";
 
 async function getFiles(user) {
     const response = await fetch("/api/user/files/get-file-names", {

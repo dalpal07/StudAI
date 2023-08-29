@@ -1,6 +1,6 @@
 import {Table, TableBody, TableHead, TableRow} from "@mui/material";
-import {TableContainer} from "../../../public/components/common/Boxes";
-import {Cell} from "../../../public/components/common/Miscellaneous";
+import {TableContainer} from "@/public/components/common/Boxes";
+import {Cell} from "@/public/components/common/Miscellaneous";
 
 export default function FileContent(props) {
     return (

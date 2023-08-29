@@ -5,12 +5,12 @@ import {
     OuterBox,
     StackColumnBox,
     StackRowBox
-} from "/public/components/common/Boxes";
-import NavBar from "/public/components/NavBar";
-import Footer from "/public/components/Footer";
-import {BoldText, Text} from "/public/components/common/Typographies";
-import {HeightSpacer, WidthSpacer} from "/public/components/common/Spacers";
-import {HelpMenuButton} from "/public/components/common/Buttons";
+} from "@/public/components/common/Boxes";
+import NavBar from "@/public/components/NavBar";
+import Footer from "@/public/components/Footer";
+import {BoldText, Text} from "@/public/components/common/Typographies";
+import {HeightSpacer, WidthSpacer} from "@/public/components/common/Spacers";
+import {HelpMenuButton} from "@/public/components/common/Buttons";
 
 const info = [
     {

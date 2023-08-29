@@ -1,6 +1,5 @@
 import {styled, TableCell} from "@mui/material";
 import Image from "next/image";
-import exp from "constants";
 
 export const Cell = styled(TableCell)(({rowIndex}) => ({
     padding: "0.5rem",

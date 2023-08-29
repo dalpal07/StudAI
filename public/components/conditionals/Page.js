@@ -1,6 +1,6 @@
-import Product from "../../../pages/product";
-import Welcome from "../../../pages/welcome";
-import BetaAnnouncement from "../../../pages/beta-announcement";
+import Product from "@/pages/product";
+import Welcome from "@/pages/welcome";
+import BetaAnnouncement from "@/pages/beta-announcement";
 import {useState} from "react";
 
 async function getIsWhiteListed(user) {

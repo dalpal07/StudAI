@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
-import NoFileContent from "../../../public/components/file-upload/NoFileContent";
-import FileContent from "../../../public/components/file-upload/FileContent";
-import {UploadBoxButton} from "../../../public/components/common/Buttons";
+import NoFileContent from "@/public/components/file-upload/NoFileContent";
+import FileContent from "@/public/components/file-upload/FileContent";
+import {UploadBoxButton} from "@/public/components/common/Buttons";
 import {useRouter} from "next/router";
 
 async function fetchFileContent(fileName) {

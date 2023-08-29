@@ -6,15 +6,15 @@ import {
     OuterBox,
     StackColumnBox,
     StackRowBox
-} from "../public/components/common/Boxes";
-import NavBar from "../public/components/NavBar";
-import {BoldText, Text, WhiteBoldText} from "../public/components/common/Typographies";
-import {HeightSpacer, WidthSpacer} from "../public/components/common/Spacers";
-import {PricingPlanButton} from "../public/components/common/Buttons";
+} from "@/public/components/common/Boxes";
+import NavBar from "@/public/components/NavBar";
+import {BoldText, Text, WhiteBoldText} from "@/public/components/common/Typographies";
+import {HeightSpacer, WidthSpacer} from "@/public/components/common/Spacers";
+import {PricingPlanButton} from "@/public/components/common/Buttons";
 import Image from "next/image";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import Footer from "../public/components/Footer";
+import Footer from "@/public/components/Footer";
 
 export default function Payment() {
     const { user, error, isLoading } = useUser();

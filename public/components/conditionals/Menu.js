@@ -1,6 +1,6 @@
-import {MenuButton} from "../../components/common/Buttons";
+import {MenuButton} from "@/public/components/common/Buttons";
 import React from "react";
-import {MenuBox} from "../../components/common/Boxes";
+import {MenuBox} from "@/public/components/common/Boxes";
 import {useRouter} from "next/router";
 
 export default function Menu({clicked, forwardRef}) {

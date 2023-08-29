@@ -1,7 +1,7 @@
-import {OverlayContainer, StackRowBox, VerifyOverlayBox} from "../../../public/components/common/Boxes";
-import {BoldText} from "../../../public/components/common/Typographies";
-import {DefaultButton, GreenButton} from "../../../public/components/common/Buttons";
-import {HeightFlexSpacer, WidthSpacer} from "../../../public/components/common/Spacers";
+import {OverlayContainer, StackRowBox, VerifyOverlayBox} from "@/public/components/common/Boxes";
+import {BoldText} from "@/public/components/common/Typographies";
+import {DefaultButton, GreenButton} from "@/public/components/common/Buttons";
+import {HeightFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 
 export default function Verify(props) {
     if (props.verify) {
