@@ -1,5 +1,7 @@
 import {useEffect} from "react";
 import {useUser} from "@auth0/nextjs-auth0/client";
+import {useDispatch} from "react-redux";
+import {addRequest} from "@/slices/subscriptionSlice";
 
 export default function Script(props) {
     const {user} = useUser();
@@ -34,7 +36,7 @@ export default function Script(props) {
         }
     }
 
-    const addRequest = async () => {
+    const handleRequestComplete = async () => {
         const queryParams = new URLSearchParams({ id: user.sub });
         const response = await fetch(`/api/user/add-request?${queryParams}`, {
             method: "POST",
@@ -44,8 +46,8 @@ export default function Script(props) {
             body: "",
         })
         if (response.status === 200) {
-            const data = await response.json();
-            props.setRequests(data.requests)
+            const dispatch = useDispatch();
+            dispatch(addRequest())
         }
     }
 
@@ -66,7 +68,7 @@ export default function Script(props) {
             currentAIMessage += chunkValue
             // console.log("Current AI message: " + currentAIMessage)
         }
-        // addRequest()
+        // handleRequestComplete()
         props.setScript(currentAIMessage)
     }
 

@@ -15,8 +15,8 @@ import Image from "next/image";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import Footer from "@/public/components/Footer";
-
-export default function Payment() {
+import PageWrapper from "@/public/components/Wrappers/PageWrapper";
+function Payment() {
     const { user, error, isLoading } = useUser();
     const router = useRouter();
     const [requests, setRequests] = useState(0);
@@ -198,3 +198,5 @@ export default function Payment() {
         }
     }
 }
+
+export default PageWrapper(Payment);

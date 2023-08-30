@@ -11,6 +11,7 @@ import Footer from "@/public/components/Footer";
 import {BoldText, Text} from "@/public/components/common/Typographies";
 import {HeightSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 import {HelpMenuButton} from "@/public/components/common/Buttons";
+import PageWrapper from "@/public/components/Wrappers/PageWrapper";
 
 const info = [
     {
@@ -195,7 +196,7 @@ const info = [
     }
 ]
 
-export default function Help() {
+function Help() {
     const handleScrollClick = (id) => {
         const scrollable = document.documentElement;
         const element = document.getElementById(id);
@@ -272,3 +273,5 @@ export default function Help() {
         </OuterBox>
     )
 }
+
+export default PageWrapper(Help);

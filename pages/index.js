@@ -1,45 +1,41 @@
-import NavBar from "../public/components/NavBar";
-import {useUser} from "@auth0/nextjs-auth0/client";
-import {InnerBox, OuterBox} from "../public/components/common/Boxes";
-import {useEffect} from "react";
-import {useRouter} from "next/router";
+import Image from "next/image";
+import { BoldText } from "@/public/components/common/Typographies";
+import {HeightSpacer} from "@/public/components/common/Spacers";
+import {GreenButton} from "@/public/components/common/Buttons";
+import {InnerBox, OuterBox} from "@/public/components/common/Boxes";
+import NavBar from "@/public/components/NavBar";
+import Footer from "@/public/components/Footer";
+import PageWrapper from "@/public/components/Wrappers/PageWrapper";
+import {selectSub} from "@/slices/userSlice";
+import {useSelector} from "react-redux";
 
-export default function Home() {
-    const { user, isLoading, error } = useUser();
-    const router = useRouter();
-
-    const getUserStatus = async (user) => {
-        const apiUrl = `/api/user/`;
-        const queryParams = new URLSearchParams({ id: user.sub });
-        const response = await fetch(`${apiUrl}get-product-access?${queryParams}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const data = await response.json();
-        if (data.access) {
-            router.push("/product");
+function Home() {
+    const sub = useSelector(selectSub);
+    const handleClick = async () => {
+        if (sub) {
+            window.location.href = "/product";
         }
         else {
-            router.push("/payment");
+            window.location.href = "/api/auth/login";
         }
     }
-
-    useEffect(() => {
-        if (!isLoading && !error) {
-            if (user) {
-                getUserStatus(user)
-            } else {
-                router.push("/welcome");
-            }
-        }
-    }, [user, isLoading, error]);
-
     return (
         <OuterBox>
             <NavBar/>
-            <InnerBox/>
+            <InnerBox>
+                <BoldText size={"1.125rem"}>Welcome to</BoldText>
+                <HeightSpacer height={"0.85rem"}/>
+                <Image src={"./images/FullLogo.svg"} alt={"StudAI Logo"} width={361.9} height={77}/>
+                <HeightSpacer height={"1.35rem"}/>
+                <BoldText size={"1.75rem"}>Your Personal Data Maid</BoldText>
+                <HeightSpacer height={"4.125rem"}/>
+                <GreenButton size={"1.125rem"} padding={"0.25rem 1.5rem"} onClick={handleClick}>
+                    See what Stud can do
+                </GreenButton>
+            </InnerBox>
+            <Footer absolute={true}/>
         </OuterBox>
     )
 }
+
+export default PageWrapper(Home);

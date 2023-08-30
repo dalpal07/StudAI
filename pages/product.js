@@ -6,9 +6,7 @@ import {HelpBox, InnerBox2, OuterBox, StackColumnBox, StackRowBox} from "@/publi
 import {HeightSpacer, WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 import Loading from "@/public/components/conditionals/Loading";
 import Verify from "@/public/components/conditionals/Verify";
-import {useRouter} from "next/router";
 import NavBar from "@/public/components/NavBar";
-import {useUser} from "@auth0/nextjs-auth0/client";
 import Footer from "@/public/components/Footer";
 import LowerChat from "@/public/components/chat/LowerChat";
 import AbortController from 'abort-controller';
@@ -21,14 +19,17 @@ import {
     readCsvFile,
     readXlsxFile
 } from "@/public/functions/ExtractFileData";
-
-async function getFiles(user) {
+import PageWrapper from "@/public/components/Wrappers/PageWrapper";
+import {useSelector} from "react-redux";
+import {selectProductAccess} from "@/slices/subscriptionSlice";
+import {selectSub} from "@/slices/userSlice";
+async function getFiles(sub) {
     const response = await fetch("/api/user/files/get-file-names", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({id: user.sub}),
+        body: JSON.stringify({id: sub}),
     });
     if (response.status === 200) {
         const data = await response.json();
@@ -70,7 +71,9 @@ async function fetchFileContent(fileName, id) {
     }
 }
 
-export default function Product() {
+function Product() {
+    const productAccess = useSelector(selectProductAccess);
+    const sub = useSelector(selectSub);
     const [req, setReq] = useState(null)
     const [dataHistory, setDataHistory] = useState([{headers: [], entries: [], prev: null, next: null, request: null}])
     const [dataIndex, setDataIndex] = useState(0)
@@ -83,12 +86,6 @@ export default function Product() {
     const [clearFileVerified, setClearFileVerified] = useState(null)
     const [disabled, setDisabled] = useState(false)
 
-    const { user, isLoading, error } = useUser();
-    const router = useRouter();
-    const [isPaid, setIsPaid] = useState(null);
-    const [requests, setRequests] = useState(0);
-    const [type, setType] = useState("");
-
     const [loadFiles, setLoadFiles] = useState(true);
     const [files, setFiles] = useState([]);
     const [extraFiles, setExtraFiles] = useState([]);
@@ -96,7 +93,7 @@ export default function Product() {
     const [controller, setController] = useState(new AbortController());
 
     function openFile(fileName) {
-        fetchFileContent(fileName, user.sub).then((content) => {
+        fetchFileContent(fileName, sub).then((content) => {
             const simulatedFile = new File([content], fileName, {type: "text/plain"});
             handleFileChange(simulatedFile);
         });
@@ -134,43 +131,17 @@ export default function Product() {
     }
 
     useEffect(() => {
-        if (loadFiles && user) {
-            getFiles(user).then((data) => {
+        if (loadFiles && sub) {
+            getFiles(sub).then((data) => {
                 if (data) {
                     setFiles(data);
                 }
                 setLoadFiles(false);
             });
         }
-    }, [loadFiles, user]);
-
+    }, [loadFiles, sub]);
     useEffect(() => {
-        if (!isLoading && !isPaid) {
-            if (user) {
-                const apiUrl = `/api/user/`;
-                const queryParams = new URLSearchParams({id: user.sub});
-                fetch(`${apiUrl}get-product-access?${queryParams}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }).then((response) => response.json()).then((data) => {
-                    if (data.access) {
-                        setIsPaid(true);
-                        setRequests(data.requests);
-                        setType(data.type);
-                    } else {
-                        router.push("/payment");
-                    }
-                })
-                // setIsPaid(true);
-            } else {
-                router.push("/api/auth/login");
-            }
-        }
-    }, [user, isLoading, isPaid]);
-    useEffect(() => {
-        if (isPaid) {
+        if (document.getElementById("inner")) {
             if (disabled) {
                 document.getElementById("inner").style.setProperty("opacity", "0.5")
                 document.body.style.setProperty("overflow", "hidden")
@@ -188,7 +159,7 @@ export default function Product() {
             setDisabled(false)
         }
     }, [dataProcessing, verifyReplaceFile, verifyClearFile])
-    if (isPaid) {
+    if (productAccess) {
         return (
             <OuterBox>
                 <NavBar/>
@@ -204,7 +175,8 @@ export default function Product() {
                                         <StackRowBox style={{alignItems: "center"}}>
                                             <BoldText>{file}</BoldText>
                                             <WidthFlexSpacer/>
-                                            <DefaultButton onClick={() => openFile(file)} style={{padding: "0"}}>Open</DefaultButton>
+                                            <DefaultButton onClick={() => openFile(file)}
+                                                           style={{padding: "0"}}>Open</DefaultButton>
                                             <WidthSpacer width={"1rem"}/>
                                         </StackRowBox>
                                         <HeightSpacer height={"1rem"}/>
@@ -218,20 +190,24 @@ export default function Product() {
                                  script={script} fileName={fileName} setDataProcessing={setDataProcessing}
                                  setDataIndex={setDataIndex} setDataHistory={setDataHistory} disabled={disabled}
                                  dataIndex={dataIndex} dataHistory={dataHistory} setFileName={setFileName}
-                                 verify={verifyClearFile} setVerify={setVerifyClearFile} clearFileVerified={clearFileVerified}
+                                 verify={verifyClearFile} setVerify={setVerifyClearFile}
+                                 clearFileVerified={clearFileVerified}
                                  setClearFileVerified={setClearFileVerified} setLoadFiles={setLoadFiles}
-                                 setScript={setScript} setReq={setReq} req={req} controller={controller} extraFiles={extraFiles}/>
+                                 setScript={setScript} setReq={setReq} req={req} controller={controller}
+                                 extraFiles={extraFiles}/>
                             <HeightSpacer height={"1rem"}/>
                             <FileUpload setFileName={setFileName} fileName={fileName} disabled={disabled}
                                         headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
                                         entries={dataHistory[dataIndex].entries} setDataIndex={setDataIndex}
                                         verify={verifyReplaceFile} setVerify={setVerifyReplaceFile}
                                         replaceFileVerified={replaceFileVerified}
-                                        setReplaceFileVerified={setReplaceFileVerified} handleFileChange={handleFileChange}/>
+                                        setReplaceFileVerified={setReplaceFileVerified}
+                                        handleFileChange={handleFileChange}/>
                             <HeightSpacer height={"1.5rem"}/>
-                            <LowerChat disabled={disabled} fileName={fileName} setRequests={setRequests} setReq={setReq} files={files} setExtraFiles={setExtraFiles}/>
+                            <LowerChat disabled={disabled} fileName={fileName} setReq={setReq}
+                                       files={files} setExtraFiles={setExtraFiles}/>
                             <HeightSpacer height={"1.5rem"}/>
-                            <Script setScript={setScript} req={req} setRequests={setRequests} setReq={setReq}
+                            <Script setScript={setScript} req={req} setReq={setReq}
                                     headers={dataHistory[dataIndex].headers}
                                     setDataProcessing={setDataProcessing}
                                     dataProcessing={dataProcessing} controller={controller}/>
@@ -250,3 +226,5 @@ export default function Product() {
         )
     }
 }
+
+export default PageWrapper(Product, true, true);
