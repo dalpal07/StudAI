@@ -6,8 +6,14 @@ import {useEffect, useState} from "react";
 import {Typography} from "@mui/material";
 import {useRouter} from "next/router";
 import {useUser} from "@auth0/nextjs-auth0/client";
-import {useSelector} from "react-redux";
-import {selectSaved} from "@/slices/fileSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    selectCurrentFileEntries,
+    selectCurrentFileHeaders,
+    selectCurrentFileName,
+    selectSaved
+} from "@/slices/fileSlice";
+import {sendRequest} from "@/slices/dataSlice";
 
 const limit = 500
 
@@ -33,10 +39,14 @@ async function handleFileMatch(id, fileName, setExtraFiles) {
 }
 
 export default function LowerChat(props) {
+    const dispatch = useDispatch();
+    const currentFileName = useSelector(selectCurrentFileName);
+    const currentFileHeaders = useSelector(selectCurrentFileHeaders);
+    const currentFileEntries = useSelector(selectCurrentFileEntries);
     const [input, setInput] = useState("");
     const [sendHover, setSendHover] = useState(false);
     const [isRed, setIsRed] = useState(false);
-    const sendDisabled = props.disabled || props.fileName === "" || input === "";
+    const sendDisabled = props.disabled || !currentFileName || input === "";
     const router = useRouter();
     const {query} = router;
     const {user} = useUser();
@@ -64,7 +74,7 @@ export default function LowerChat(props) {
     }
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
-            if (props.fileName !== "") {
+            if (!currentFileName) {
                 handleSendButtonClick()
             }
         }
@@ -85,7 +95,13 @@ export default function LowerChat(props) {
                 }
             }
         }
-        await props.setReq(input)
+        dispatch(sendRequest({
+            request: input,
+            headers: currentFileHeaders,
+            entries: currentFileEntries,
+            extraFiles: props.extraFiles,
+            fileName: currentFileName
+        }))
         setInput("")
     }
     useEffect(() => {

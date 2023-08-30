@@ -3,6 +3,8 @@ import NoFileContent from "@/public/components/file-upload/NoFileContent";
 import FileContent from "@/public/components/file-upload/FileContent";
 import {UploadBoxButton} from "@/public/components/common/Buttons";
 import {useRouter} from "next/router";
+import {useSelector} from "react-redux";
+import {selectCurrentFileName} from "@/slices/fileSlice";
 
 async function fetchFileContent(fileName) {
     const response = await fetch(`/api/user/files/get-file-content`, {
@@ -23,12 +25,12 @@ async function fetchFileContent(fileName) {
 
 export default function FileUpload(props) {
     const [isDraggingOver, setIsDraggingOver] = useState(false);
-    const [tempFile, setTempFile] = useState(null);
     const router = useRouter();
     const {query} = router;
+    const currentFileName = useSelector(selectCurrentFileName);
 
     if (query && query.fileName) {
-        if (props.fileName === "") {
+        if (!currentFileName) {
             fetchFileContent(query.fileName).then((content) => {
                 const simulatedFile = new File([content], query.fileName, {type: "text/plain"});
                 props.handleFileChange(simulatedFile);
@@ -44,26 +46,9 @@ export default function FileUpload(props) {
         if (!props.disabled) {
             event.preventDefault();
             const file = event.dataTransfer.files[0];
-            if (props.fileName === "") {
-                setNewFile(file);
-            }
-            else {
-                setTempFile(file)
-                props.setVerify(true)
-            }
+            setNewFile(file);
         }
     };
-    useEffect(() => {
-        if (props.replaceFileVerified) {
-            props.setVerify(false)
-            props.setReplaceFileVerified(null)
-            setNewFile(tempFile)
-        }
-        else if (props.replaceFileVerified === false) {
-            props.setVerify(false)
-            props.setReplaceFileVerified(null)
-        }
-    }, [props.replaceFileVerified])
     return (
         <UploadBoxButton
             isDraggingOver={isDraggingOver}
@@ -76,7 +61,7 @@ export default function FileUpload(props) {
             }}
             onDragLeave={() => setIsDraggingOver(false)}
         >
-            {props.fileName === "" ?
+            {!currentFileName ?
                 <NoFileContent handleFileChange={props.handleFileChange} isDraggingOver={isDraggingOver} disabled={props.disabled}/>
                 :
                 <FileContent/>

@@ -65,7 +65,7 @@ function verifyNotExceedingMaxFileSize(object) {
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
-            const body = JSON.parse(req.body);
+            const body = req.body;
             const generatedFunction = refineFunctionString(body.generatedFunction);
             console.log("Script:\n" + generatedFunction)
             const headers = body.headers;

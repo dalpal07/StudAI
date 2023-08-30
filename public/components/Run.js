@@ -7,23 +7,19 @@ import {DownloadContainer, BasicBox} from "@/public/components/common/Boxes";
 import {downloadFile} from "@/public/functions/DownloadFile";
 import {Text} from "@/public/components/common/Typographies";
 import {
-    addHistory,
     clearHistory,
     nextHistoryIndex,
     prevHistoryIndex,
     save,
     selectCurrentFileEntries,
-    selectCurrentFileHeaders,
+    selectCurrentFileHeaders, selectCurrentFileName,
     selectCurrentFileRequest,
     selectDisabledNext,
     selectDisabledPrev,
-    selectHasNext,
-    selectHasPrev
 } from "@/slices/fileSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {selectSub} from "@/slices/userSlice";
 export default function Run(props) {
-    const [localScript, setLocalScript] = useState("")
     const dispatch = useDispatch();
     const sub = useSelector(selectSub);
     const currentFileHeaders = useSelector(selectCurrentFileHeaders);
@@ -31,60 +27,13 @@ export default function Run(props) {
     const disabledPrev = useSelector(selectDisabledPrev);
     const disabledNext = useSelector(selectDisabledNext);
     const currentFileRequest = useSelector(selectCurrentFileRequest);
-    const handleFailedScript = async (statusText) => {
-        props.setReq(null)
-        props.setDataProcessing(false)
-        if (statusText !== 'Abort') {
-            alert("An error occurred while processing your request. Please try again. Contact Stud if the problem persists.")
-        }
-    }
-    const handleSuccessScript = async (data) => {
-        const {headers, entries} = data
-        dispatch(addHistory({headers: headers, entries: entries, request: props.req, name: props.fileName}))
-        props.setReq(null)
-        props.setDataProcessing(false)
-    }
-    const handleClick = async () => {
-        const response = await fetch("/api/run", {
-            method: "POST",
-            signal: props.controller.signal,
-            body: JSON.stringify({
-                generatedFunction: props.script,
-                headers: currentFileHeaders,
-                entries: currentFileEntries,
-                extraFiles: props.extraFiles,
-            })
-        })
-        if (response.status === 200) {
-            const data = await response.json()
-            await handleSuccessScript(data)
-        }
-        else {
-            await handleFailedScript(response.statusText)
-        }
-    }
-    const handleButton = () => {
+    const currentFileName = useSelector(selectCurrentFileName);
+
+    const handleDownload = () => {
         const csvContent = currentFileHeaders.join(",") + "\n" + currentFileEntries.map(e => e.join(",")).join("\n")
-        downloadFile(csvContent, props.fileName)
+        downloadFile(csvContent, currentFileName)
     }
 
-    useEffect(() => {
-        if (props.script !== "" && props.script !== localScript) {
-            setLocalScript(props.script)
-            handleClick()
-        }
-    }, [props.script])
-    useEffect(() => {
-        if (props.clearFileVerified) {
-            props.setVerify(false)
-            props.setClearFileVerified(null)
-            dispatch(clearHistory())
-        }
-        else if (props.clearFileVerified === false) {
-            props.setVerify(false)
-            props.setClearFileVerified(null)
-        }
-    }, [props.clearFileVerified])
     return (
         <DownloadContainer>
             <BasicBox>
@@ -99,15 +48,15 @@ export default function Run(props) {
             <WidthFlexSpacer style={{minWidth: "1rem"}}/>
             <Text style={{textAlign: "center"}}><b>{currentFileRequest}</b></Text>
             <WidthFlexSpacer style={{minWidth: "1rem"}}/>
-            <DefaultButton onClick={() => props.setVerify(true)} disabled={props.disabled || props.fileName === ""}>
+            <DefaultButton onClick={() => dispatch(clearHistory())} disabled={props.disabled || !currentFileName}>
                 Clear
             </DefaultButton>
             <WidthSpacer width={"0.5rem"}/>
-            <DefaultButton onClick={() => dispatch(save({id: sub, headers: currentFileHeaders, entries: currentFileEntries, fileName: props.fileName}))} disabled={props.disabled || props.fileName === ""}>
+            <DefaultButton onClick={() => dispatch(save({id: sub, headers: currentFileHeaders, entries: currentFileEntries, fileName: currentFileName}))} disabled={props.disabled || !currentFileName}>
                 Save
             </DefaultButton>
             <WidthSpacer width={"0.5rem"}/>
-            <GreenButton onClick={handleButton} disabled={props.disabled || props.fileName === ""}>
+            <GreenButton onClick={handleDownload} disabled={props.disabled || !currentFileName}>
                 Download
             </GreenButton>
         </DownloadContainer>

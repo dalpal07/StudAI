@@ -5,11 +5,9 @@ import Run from "@/public/components/Run";
 import {HelpBox, InnerBox2, OuterBox, StackColumnBox, StackRowBox} from "@/public/components/common/Boxes";
 import {HeightSpacer, WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 import Loading from "@/public/components/conditionals/Loading";
-import Verify from "@/public/components/conditionals/Verify";
 import NavBar from "@/public/components/NavBar";
 import Footer from "@/public/components/Footer";
 import LowerChat from "@/public/components/chat/LowerChat";
-import AbortController from 'abort-controller';
 import {BoldText} from "@/public/components/common/Typographies";
 import {DefaultButton} from "@/public/components/common/Buttons";
 import {
@@ -24,21 +22,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectProductAccess} from "@/slices/subscriptionSlice";
 import {selectSub} from "@/slices/userSlice";
 import {selectSaved, setHistory} from "@/slices/fileSlice";
-async function getFiles(sub) {
-    const response = await fetch("/api/user/files/get-file-names", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({id: sub}),
-    });
-    if (response.status === 200) {
-        const data = await response.json();
-        return data.fileNames;
-    } else {
-        return null;
-    }
-}
+import {selectDataProcessing} from "@/slices/dataSlice";
 
 async function fetchFileContent(fileName, id) {
     const response = await fetch(`/api/user/files/get-file-content`, {
@@ -52,7 +36,6 @@ async function fetchFileContent(fileName, id) {
         const data = await response.json();
         let headers = data.headers;
         let entries = data.entries;
-        let content = "";
         for (let i = 0; i < data.headers.length; i++) {
             if (headers[i].includes(",") && headers[i][0] !== "\"") {
                 headers[i] = "\"" + headers[i] + "\"";
@@ -77,20 +60,10 @@ function Product() {
     const productAccess = useSelector(selectProductAccess);
     const sub = useSelector(selectSub);
     const saved = useSelector(selectSaved);
-    const [req, setReq] = useState(null)
-    const [dataIndex, setDataIndex] = useState(0)
-    const [fileName, setFileName] = useState("")
-    const [script, setScript] = useState("")
-    const [dataProcessing, setDataProcessing] = useState(false)
-    const [verifyReplaceFile, setVerifyReplaceFile] = useState(false)
-    const [verifyClearFile, setVerifyClearFile] = useState(false)
-    const [replaceFileVerified, setReplaceFileVerified] = useState(null)
-    const [clearFileVerified, setClearFileVerified] = useState(null)
+    const dataProcessing = useSelector(selectDataProcessing);
     const [disabled, setDisabled] = useState(false)
 
     const [extraFiles, setExtraFiles] = useState([]);
-
-    const [controller, setController] = useState(new AbortController());
 
     function openFile(fileName) {
         fetchFileContent(fileName, sub).then((content) => {
@@ -107,7 +80,6 @@ function Product() {
         }
         const fileExtension = getFileExtension(file.name);
         if (fileExtension === "csv") {
-            setFileName(file.name)
             readCsvFile(file).then((content) => {
                 const headers = getFileHeaders(content)
                 const entries = getFileEntries(content)
@@ -115,7 +87,6 @@ function Product() {
             });
         }
         else if (fileExtension === "xlsx") {
-            setFileName(file.name)
             console.log("xlsx")
             readXlsxFile(file).then((content) => {
                 const headers = getFileHeaders(content)
@@ -140,13 +111,13 @@ function Product() {
         }
     }, [disabled])
     useEffect(() => {
-        if (dataProcessing || verifyReplaceFile || verifyClearFile) {
+        if (dataProcessing) {
             setDisabled(true)
         }
         else {
             setDisabled(false)
         }
-    }, [dataProcessing, verifyReplaceFile, verifyClearFile])
+    }, [dataProcessing])
     if (productAccess) {
         return (
             <OuterBox>
@@ -174,39 +145,22 @@ function Product() {
                         </HelpBox>
                         <WidthSpacer width={"2rem"}/>
                         <StackColumnBox style={{width: "100%", height: "100%"}}>
-                            <Run script={script} fileName={fileName} setDataProcessing={setDataProcessing}
-                                 setDataIndex={setDataIndex} disabled={disabled}
-                                 dataIndex={dataIndex} setFileName={setFileName}
-                                 verify={verifyClearFile} setVerify={setVerifyClearFile}
-                                 clearFileVerified={clearFileVerified}
-                                 setClearFileVerified={setClearFileVerified}
-                                 setScript={setScript} setReq={setReq} req={req} controller={controller}
+                            <Run disabled={disabled}
                                  extraFiles={extraFiles}/>
                             <HeightSpacer height={"1rem"}/>
-                            <FileUpload setFileName={setFileName} fileName={fileName} disabled={disabled}
-                                        setDataIndex={setDataIndex}
-                                        verify={verifyReplaceFile} setVerify={setVerifyReplaceFile}
-                                        replaceFileVerified={replaceFileVerified}
-                                        setReplaceFileVerified={setReplaceFileVerified}
+                            <FileUpload disabled={disabled}
                                         handleFileChange={handleFileChange}/>
                             <HeightSpacer height={"1.5rem"}/>
-                            <LowerChat disabled={disabled} fileName={fileName} setReq={setReq}
+                            <LowerChat disabled={disabled} extraFiles={extraFiles}
                                        setExtraFiles={setExtraFiles}/>
                             <HeightSpacer height={"1.5rem"}/>
-                            <Script setScript={setScript} req={req} setReq={setReq}
-                                    setDataProcessing={setDataProcessing}
-                                    dataProcessing={dataProcessing} controller={controller}/>
+                            <Script/>
                         </StackColumnBox>
                     </StackRowBox>
                     <HeightSpacer height={"1.5rem"}/>
                     <Footer/>
                 </InnerBox2>
-                <Loading dataProcessing={dataProcessing} setDataProcessing={setDataProcessing} controller={controller}
-                         setController={setController} setReq={setReq}/>
-                <Verify verify={verifyReplaceFile} setVerified={setReplaceFileVerified}
-                        message={"Are you sure you want to replace this file? This action cannot be undone."}/>
-                <Verify verify={verifyClearFile} setVerified={setClearFileVerified}
-                        message={"Are you sure you want to clear this file? This action cannot be undone."}/>
+                <Loading/>
             </OuterBox>
         )
     }
