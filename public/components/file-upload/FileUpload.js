@@ -79,7 +79,7 @@ export default function FileUpload(props) {
             {props.fileName === "" ?
                 <NoFileContent handleFileChange={props.handleFileChange} isDraggingOver={isDraggingOver} disabled={props.disabled}/>
                 :
-                <FileContent headers={props.headers} entries={props.entries}/>
+                <FileContent/>
             }
         </UploadBoxButton>
     )

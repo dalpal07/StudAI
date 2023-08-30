@@ -1,10 +1,12 @@
 import {useEffect} from "react";
 import {useUser} from "@auth0/nextjs-auth0/client";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {addRequest} from "@/slices/subscriptionSlice";
+import {selectCurrentFileHeaders} from "@/slices/fileSlice";
 
 export default function Script(props) {
     const {user} = useUser();
+    const currentFileHeaders = useSelector(selectCurrentFileHeaders);
     const sendToServer = async () => {
         const response = await fetch("/api/script", {
             method: "POST",
@@ -14,7 +16,7 @@ export default function Script(props) {
             },
             body: JSON.stringify({
                 request: props.req,
-                headers: props.headers,
+                headers: currentFileHeaders,
             }),
         })
         if (response.status === 200) {

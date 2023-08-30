@@ -2,6 +2,7 @@ import {useUser} from "@auth0/nextjs-auth0/client";
 import {useDispatch, useSelector} from "react-redux";
 import {getUser, selectSub} from "@/slices/userSlice";
 import {getSubscription, selectProductAccess} from "@/slices/subscriptionSlice";
+import {getSaved} from "@/slices/fileSlice";
 import {useEffect} from "react";
 
 export default function PageWrapper(WrappedPage, RequireAuth = false, RequireProductAccess = false) {
@@ -15,6 +16,7 @@ export default function PageWrapper(WrappedPage, RequireAuth = false, RequirePro
                 if (user && !sub) {
                     dispatch(getUser({sub: user.sub, name: user.name}));
                     dispatch(getSubscription({id: user.sub}));
+                    dispatch(getSaved({id: user.sub}));
                 }
                 if (!user && sub) {
                     dispatch(getUser({sub: null, name: null}));

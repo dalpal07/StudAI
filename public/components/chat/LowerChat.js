@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 import {Typography} from "@mui/material";
 import {useRouter} from "next/router";
 import {useUser} from "@auth0/nextjs-auth0/client";
+import {useSelector} from "react-redux";
+import {selectSaved} from "@/slices/fileSlice";
 
 const limit = 500
 
@@ -38,6 +40,7 @@ export default function LowerChat(props) {
     const router = useRouter();
     const {query} = router;
     const {user} = useUser();
+    const saved = useSelector(selectSaved);
 
     if (query && query.input) {
         if (input === "") {
@@ -75,8 +78,8 @@ export default function LowerChat(props) {
             let match = matchResult[0]
             if (match.length > 1) {
                 match = match.substring(1, match.length - 1)
-                for (let i = 0; i < props.files.length; i++) {
-                    if (props.files[i] === match) {
+                for (let i = 0; i < saved.length; i++) {
+                    if (saved[i] === match) {
                         await handleFileMatch(user.sub, match, props.setExtraFiles)
                     }
                 }

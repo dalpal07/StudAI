@@ -20,9 +20,10 @@ import {
     readXlsxFile
 } from "@/public/functions/ExtractFileData";
 import PageWrapper from "@/public/components/Wrappers/PageWrapper";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {selectProductAccess} from "@/slices/subscriptionSlice";
 import {selectSub} from "@/slices/userSlice";
+import {selectSaved, setHistory} from "@/slices/fileSlice";
 async function getFiles(sub) {
     const response = await fetch("/api/user/files/get-file-names", {
         method: "POST",
@@ -72,10 +73,11 @@ async function fetchFileContent(fileName, id) {
 }
 
 function Product() {
+    const dispatch = useDispatch();
     const productAccess = useSelector(selectProductAccess);
     const sub = useSelector(selectSub);
+    const saved = useSelector(selectSaved);
     const [req, setReq] = useState(null)
-    const [dataHistory, setDataHistory] = useState([{headers: [], entries: [], prev: null, next: null, request: null}])
     const [dataIndex, setDataIndex] = useState(0)
     const [fileName, setFileName] = useState("")
     const [script, setScript] = useState("")
@@ -86,8 +88,6 @@ function Product() {
     const [clearFileVerified, setClearFileVerified] = useState(null)
     const [disabled, setDisabled] = useState(false)
 
-    const [loadFiles, setLoadFiles] = useState(true);
-    const [files, setFiles] = useState([]);
     const [extraFiles, setExtraFiles] = useState([]);
 
     const [controller, setController] = useState(new AbortController());
@@ -111,8 +111,7 @@ function Product() {
             readCsvFile(file).then((content) => {
                 const headers = getFileHeaders(content)
                 const entries = getFileEntries(content)
-                setDataIndex(0)
-                setDataHistory([{headers: headers, entries: entries, prev: null, next: null, request: "Original Dataset: " + file.name}])
+                dispatch(setHistory({headers: headers, entries: entries, name: file.name}));
             });
         }
         else if (fileExtension === "xlsx") {
@@ -121,8 +120,7 @@ function Product() {
             readXlsxFile(file).then((content) => {
                 const headers = getFileHeaders(content)
                 const entries = getFileEntries(content)
-                setDataIndex(0)
-                setDataHistory([{headers: headers, entries: entries, prev: null, next: null, request: "Original Dataset: " + file.name}])
+                dispatch(setHistory({headers: headers, entries: entries, name: file.name}));
             });
         }
         else {
@@ -130,16 +128,6 @@ function Product() {
         }
     }
 
-    useEffect(() => {
-        if (loadFiles && sub) {
-            getFiles(sub).then((data) => {
-                if (data) {
-                    setFiles(data);
-                }
-                setLoadFiles(false);
-            });
-        }
-    }, [loadFiles, sub]);
     useEffect(() => {
         if (document.getElementById("inner")) {
             if (disabled) {
@@ -169,7 +157,7 @@ function Product() {
                         <HelpBox style={{width: "15rem"}}>
                             <BoldText size={"1.25rem"}>Saved Files:</BoldText>
                             <HeightSpacer height={"1.5rem"}/>
-                            {files.length > 0 ? files.map((file, index) => {
+                            {saved && saved.length > 0 ? saved.map((file, index) => {
                                 return (
                                     <StackColumnBox key={index}>
                                         <StackRowBox style={{alignItems: "center"}}>
@@ -186,29 +174,26 @@ function Product() {
                         </HelpBox>
                         <WidthSpacer width={"2rem"}/>
                         <StackColumnBox style={{width: "100%", height: "100%"}}>
-                            <Run headers={dataHistory[dataIndex].headers} entries={dataHistory[dataIndex].entries}
-                                 script={script} fileName={fileName} setDataProcessing={setDataProcessing}
-                                 setDataIndex={setDataIndex} setDataHistory={setDataHistory} disabled={disabled}
-                                 dataIndex={dataIndex} dataHistory={dataHistory} setFileName={setFileName}
+                            <Run script={script} fileName={fileName} setDataProcessing={setDataProcessing}
+                                 setDataIndex={setDataIndex} disabled={disabled}
+                                 dataIndex={dataIndex} setFileName={setFileName}
                                  verify={verifyClearFile} setVerify={setVerifyClearFile}
                                  clearFileVerified={clearFileVerified}
-                                 setClearFileVerified={setClearFileVerified} setLoadFiles={setLoadFiles}
+                                 setClearFileVerified={setClearFileVerified}
                                  setScript={setScript} setReq={setReq} req={req} controller={controller}
                                  extraFiles={extraFiles}/>
                             <HeightSpacer height={"1rem"}/>
                             <FileUpload setFileName={setFileName} fileName={fileName} disabled={disabled}
-                                        headers={dataHistory[dataIndex].headers} setDataHistory={setDataHistory}
-                                        entries={dataHistory[dataIndex].entries} setDataIndex={setDataIndex}
+                                        setDataIndex={setDataIndex}
                                         verify={verifyReplaceFile} setVerify={setVerifyReplaceFile}
                                         replaceFileVerified={replaceFileVerified}
                                         setReplaceFileVerified={setReplaceFileVerified}
                                         handleFileChange={handleFileChange}/>
                             <HeightSpacer height={"1.5rem"}/>
                             <LowerChat disabled={disabled} fileName={fileName} setReq={setReq}
-                                       files={files} setExtraFiles={setExtraFiles}/>
+                                       setExtraFiles={setExtraFiles}/>
                             <HeightSpacer height={"1.5rem"}/>
                             <Script setScript={setScript} req={req} setReq={setReq}
-                                    headers={dataHistory[dataIndex].headers}
                                     setDataProcessing={setDataProcessing}
                                     dataProcessing={dataProcessing} controller={controller}/>
                         </StackColumnBox>

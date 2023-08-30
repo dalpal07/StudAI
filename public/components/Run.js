@@ -6,10 +6,31 @@ import {WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 import {DownloadContainer, BasicBox} from "@/public/components/common/Boxes";
 import {downloadFile} from "@/public/functions/DownloadFile";
 import {Text} from "@/public/components/common/Typographies";
-import {useUser} from "@auth0/nextjs-auth0/client";
+import {
+    addHistory,
+    clearHistory,
+    nextHistoryIndex,
+    prevHistoryIndex,
+    save,
+    selectCurrentFileEntries,
+    selectCurrentFileHeaders,
+    selectCurrentFileRequest,
+    selectDisabledNext,
+    selectDisabledPrev,
+    selectHasNext,
+    selectHasPrev
+} from "@/slices/fileSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {selectSub} from "@/slices/userSlice";
 export default function Run(props) {
     const [localScript, setLocalScript] = useState("")
-    const {user} = useUser();
+    const dispatch = useDispatch();
+    const sub = useSelector(selectSub);
+    const currentFileHeaders = useSelector(selectCurrentFileHeaders);
+    const currentFileEntries = useSelector(selectCurrentFileEntries);
+    const disabledPrev = useSelector(selectDisabledPrev);
+    const disabledNext = useSelector(selectDisabledNext);
+    const currentFileRequest = useSelector(selectCurrentFileRequest);
     const handleFailedScript = async (statusText) => {
         props.setReq(null)
         props.setDataProcessing(false)
@@ -19,11 +40,7 @@ export default function Run(props) {
     }
     const handleSuccessScript = async (data) => {
         const {headers, entries} = data
-        let newHistory = [...props.dataHistory]
-        newHistory[props.dataIndex].next = props.dataHistory.length
-        newHistory.push({headers: headers, entries: entries, prev: props.dataIndex, next: null, request: props.req})
-        props.setDataHistory(newHistory)
-        props.setDataIndex(props.dataHistory.length)
+        dispatch(addHistory({headers: headers, entries: entries, request: props.req, name: props.fileName}))
         props.setReq(null)
         props.setDataProcessing(false)
     }
@@ -33,8 +50,8 @@ export default function Run(props) {
             signal: props.controller.signal,
             body: JSON.stringify({
                 generatedFunction: props.script,
-                headers: props.headers,
-                entries: props.entries,
+                headers: currentFileHeaders,
+                entries: currentFileEntries,
                 extraFiles: props.extraFiles,
             })
         })
@@ -47,49 +64,10 @@ export default function Run(props) {
         }
     }
     const handleButton = () => {
-        const csvContent = props.headers.join(",") + "\n" + props.entries.map(e => e.join(",")).join("\n")
+        const csvContent = currentFileHeaders.join(",") + "\n" + currentFileEntries.map(e => e.join(",")).join("\n")
         downloadFile(csvContent, props.fileName)
     }
-    const handleUndo = () => {
-        const indexToGo = props.dataHistory[props.dataIndex].prev
-        if (indexToGo === null) {
-            return
-        }
-        props.setDataIndex(indexToGo)
-    }
-    const handleRedo = () => {
-        const indexToGo = props.dataHistory[props.dataIndex].next
-        if (indexToGo === null) {
-            return
-        }
-        props.setDataIndex(indexToGo)
-    }
-    const clearData = () => {
-        props.setDataHistory([{headers: [], entries: [], prev: null, next: null}])
-        props.setDataIndex(0)
-        props.setFileName("")
-    }
-    const handleSave = async () => {
-        const response = await fetch("/api/user/files/save-file-content", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                id: user.sub,
-                headers: props.dataHistory[props.dataIndex].headers,
-                entries: props.dataHistory[props.dataIndex].entries,
-                fileName: props.fileName
-            })
-        })
-        if (response.status === 200) {
-            alert("File saved successfully")
-            props.setLoadFiles(true)
-        }
-        else {
-            alert("An error occurred while saving your file. Please try again. Contact Stud if the problem persists.")
-        }
-    }
+
     useEffect(() => {
         if (props.script !== "" && props.script !== localScript) {
             setLocalScript(props.script)
@@ -100,7 +78,7 @@ export default function Run(props) {
         if (props.clearFileVerified) {
             props.setVerify(false)
             props.setClearFileVerified(null)
-            clearData()
+            dispatch(clearHistory())
         }
         else if (props.clearFileVerified === false) {
             props.setVerify(false)
@@ -110,22 +88,22 @@ export default function Run(props) {
     return (
         <DownloadContainer>
             <BasicBox>
-                <UndoRedoButton onClick={handleUndo} disabled={props.dataHistory[props.dataIndex].prev === null || props.disabled}>
+                <UndoRedoButton onClick={() => dispatch(prevHistoryIndex())} disabled={disabledPrev || props.disabled}>
                     <UndoIcon/>
                 </UndoRedoButton>
                 <WidthSpacer width={"0.5rem"}/>
-                <UndoRedoButton onClick={handleRedo} disabled={props.dataHistory[props.dataIndex].next === null || props.disabled}>
+                <UndoRedoButton onClick={() => dispatch(nextHistoryIndex())} disabled={disabledNext || props.disabled}>
                     <RedoIcon/>
                 </UndoRedoButton>
             </BasicBox>
             <WidthFlexSpacer style={{minWidth: "1rem"}}/>
-            <Text style={{textAlign: "center"}}><b>{props.dataHistory[props.dataIndex].request}</b></Text>
+            <Text style={{textAlign: "center"}}><b>{currentFileRequest}</b></Text>
             <WidthFlexSpacer style={{minWidth: "1rem"}}/>
             <DefaultButton onClick={() => props.setVerify(true)} disabled={props.disabled || props.fileName === ""}>
                 Clear
             </DefaultButton>
             <WidthSpacer width={"0.5rem"}/>
-            <DefaultButton onClick={handleSave} disabled={props.disabled || props.fileName === ""}>
+            <DefaultButton onClick={() => dispatch(save({id: sub, headers: currentFileHeaders, entries: currentFileEntries, fileName: props.fileName}))} disabled={props.disabled || props.fileName === ""}>
                 Save
             </DefaultButton>
             <WidthSpacer width={"0.5rem"}/>
