@@ -13,6 +13,9 @@ export const dataSlice = createSlice({
             return {...state, dataProcessing: action.payload.dataProcessing}
         },
         setCancelled: (state, action) => {
+            if (action.payload.cancelled) {
+                return {...state, cancelled: action.payload.cancelled, dataProcessing: false}
+            }
             return {...state, cancelled: action.payload.cancelled}
         },
         sendRequest: (state, action) => {},

@@ -121,7 +121,6 @@ function Product() {
     if (productAccess) {
         return (
             <OuterBox>
-                <NavBar/>
                 <InnerBox2 id={"inner"}>
                     <HeightSpacer height={"1rem"}/>
                     <StackRowBox style={{width: "100%", height: "100%"}}>

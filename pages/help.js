@@ -232,7 +232,6 @@ function Help() {
 
     return (
         <OuterBox>
-            <NavBar/>
             <InnerBox4>
                 <StackRowBox>
                     <HelpBox>

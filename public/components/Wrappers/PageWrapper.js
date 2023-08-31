@@ -4,6 +4,7 @@ import {getUser, selectSub} from "@/slices/userSlice";
 import {getSubscription, selectProductAccess} from "@/slices/subscriptionSlice";
 import {getSaved} from "@/slices/fileSlice";
 import {useEffect} from "react";
+import NavBar from "@/public/components/NavBar";
 
 export default function PageWrapper(WrappedPage, RequireAuth = false, RequireProductAccess = false) {
     return function Page(props) {
@@ -32,6 +33,11 @@ export default function PageWrapper(WrappedPage, RequireAuth = false, RequirePro
                 window.location.href = "/payment";
             }
         }, [productAccess])
-        return <WrappedPage {...props} />
+        return (
+            <>
+                <NavBar/>
+                <WrappedPage {...props} />
+            </>
+        )
     }
 }

@@ -44,7 +44,6 @@ function* checkCancelled() {
     const cancelled = yield select(selectCancelled);
     if (cancelled) {
         yield put(setCancelled({cancelled: false}));
-        yield put(setDataProcessing({dataProcessing: false}));
         return true;
     }
     return false;

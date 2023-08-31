@@ -62,11 +62,10 @@ a {
 .profile-button {
   background-size: contain;
   background-repeat: no-repeat;
-  width: 35px;
-  height: 35px;
+  background-color: #F9F9F9;
+  border: none;
+  width: 33px;
+  height: 33px;
   background-image: url('../public/images/Profile.svg');
-}
-
-.profile-button:hover {
-  background-image: url('../public/images/Profile-Hover.svg');
+  cursor: pointer;
 }

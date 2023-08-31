@@ -110,7 +110,6 @@ function Payment() {
     if (user) {
         return (
             <OuterBox>
-                <NavBar user={user} error={error} isLoading={isLoading}/>
                 <InnerBox3>
                     <BoldText size={"2.5rem"}>Select a plan</BoldText>
                     <HeightSpacer height={"3rem"}/>

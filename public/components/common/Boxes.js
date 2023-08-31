@@ -148,18 +148,53 @@ export const TableContainer = styled(Box)({
     overflow: "scroll",
 });
 // NavBar.js
-export const NavBox = styled(BasicBox) ({
+export const NavBox = styled(StackRowBox) ({
     position: "fixed",
-    boxSizing: "border-box",
-    width: "100%",
     top: 0,
     zIndex: 1,
-    padding: "1rem 1.5rem",
+    width: "100%",
+    boxSizing: "border-box",
+    padding: "0.75rem 1.75rem",
     alignItems: "center",
-    gap: "1.75rem",
     alignSelf: "stretch",
-    backgroundColor: "#F2F2F2",
-    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.30), 0px 0px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.05)"
+    background: "var(--ui-white, #F9F9F9)",
+    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.20), 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 12px 0px rgba(0, 0, 0, 0.05)",
+});
+
+export const HomeBox = styled(StackColumnBox) ({
+    alignItems: "center",
+    borderRadius: "0.3125rem",
+    background: "linear-gradient(180deg, #F9F9F9 0%, rgba(242, 242, 242, 0.00) 57.81%, rgba(83, 183, 83, 0.16) 100%)",
+    flexShrink: 0,
+    alignSelf: "stretch",
+    height: "100vh",
+});
+
+export const HomeTopBox = styled(StackColumnBox) ({
+    height: "33%",
+});
+
+export const HomeMiddleBox = styled(StackColumnBox) ({
+    alignItems: "center",
+    justifyContent: "center",
+    height: "34%",
+});
+
+export const HomeBottomBox = styled(HomeTopBox) ({
+    alignItems: "center",
+    justifyContent: "flex-end",
+});
+
+export const LeftNavBox = styled(StackRowBox) ({
+    alignItems: "center",
+    justifyContent: "left",
+    width: isMobile ? "33%" : "50%",
+});
+
+export const RightNavBox = styled(StackRowBox) ({
+    alignItems: "center",
+    justifyContent: "right",
+    width: isMobile ? "67%" : "50%",
 });
 
 export const ProfileBox = styled(BasicBox)({
@@ -218,13 +253,15 @@ export const Line = styled(Box) (({width, height}) => ({
 }));
 
 export const MenuBox = styled(StackColumnBox) ({
+    padding: "1.75rem",
+    justifyContent: "center",
+    alignItems: "center",
     position: "absolute",
-    top: 67.75,
-    right: 0,
-    width: "fit-content",
-    background: "#EDEDED",
-    borderLeft: "2px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
-    borderBottom: "2px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+    right: "1.75rem",
+    top: "4.5rem",
+    borderRadius: "0.3125rem",
+    background: "var(--ui-white, #F9F9F9)",
+    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.20), 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 12px 0px rgba(0, 0, 0, 0.05)",
 });
 export const HelpBox = styled(StackColumnBox) ({
     width: "25rem",
