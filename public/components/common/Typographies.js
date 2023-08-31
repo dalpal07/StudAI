@@ -9,6 +9,10 @@ export const Text = styled(Typography)(({size}) => ({
     textTransform: "none",
 }));
 
+export const ItalicText = styled(Text)({
+    fontStyle: "italic",
+});
+
 export const GrayText = styled(Text)({
     color: "var(--50-black, rgba(28, 26, 26, 0.50))",
 });
@@ -19,6 +23,11 @@ export const GrayBoldText = styled(GrayText)({
 
 export const BoldText = styled(Text)({
     fontWeight: "bold",
+});
+export const BoldTextNoWrap = styled(BoldText)({
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
 });
 
 export const GreenBoldText = styled(BoldText)({

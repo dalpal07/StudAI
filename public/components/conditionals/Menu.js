@@ -39,7 +39,9 @@ export default function Menu({clicked, forwardRef}) {
                                 </BoldText>
                         </DefaultButton>
                         <HeightSpacer height={"1.12rem"}/>
-                        <BoldText size={"1.125rem"}>My Data</BoldText>
+                        <HiddenHref href={'/product'}>
+                            <BoldText size={"1.125rem"}>My Data</BoldText>
+                        </HiddenHref>
                         <HeightSpacer height={"0.5rem"}/>
                         <BoldText size={"1.125rem"}>Home</BoldText>
                         <HeightSpacer height={"0.5rem"}/>

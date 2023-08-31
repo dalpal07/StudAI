@@ -7,3 +7,7 @@ export function* requestGetSaved(id) {
 export function* requestSave(payload) {
     return yield axios.post(`/api/user/files/save-file-content`, payload);
 }
+
+export function* requestGetFile(fileName, id) {
+    return yield axios.post(`/api/user/files/get-file-content`, {fileName: fileName, id: id});
+}

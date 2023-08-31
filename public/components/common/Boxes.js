@@ -160,7 +160,17 @@ export const NavBox = styled(StackRowBox) ({
     background: "var(--ui-white, #F9F9F9)",
     boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.20), 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 12px 0px rgba(0, 0, 0, 0.05)",
 });
+export const LeftNavBox = styled(StackRowBox) (({isMobile}) => ({
+    alignItems: "center",
+    justifyContent: "left",
+    width: isMobile ? "33%" : "50%",
+}));
 
+export const RightNavBox = styled(StackRowBox) (({isMobile}) => ({
+    alignItems: "center",
+    justifyContent: "right",
+    width: isMobile ? "67%" : "50%",
+}));
 export const HomeBox = styled(StackColumnBox) ({
     alignItems: "center",
     borderRadius: "0.3125rem",
@@ -185,18 +195,74 @@ export const HomeBottomBox = styled(HomeTopBox) ({
     justifyContent: "flex-end",
 });
 
-export const LeftNavBox = styled(StackRowBox) (({isMobile}) => ({
+export const ProductBox = styled(StackColumnBox) ({
+    width: "100%",
+    height: "100vh",
+    borderRadius: "0.3125rem",
+    background: "var(--ui-white, #F9F9F9)",
+});
+export const ProductInnerBox = styled(StackRowBox) ({
+    width: "100%",
+    height: "100%",
+});
+export const DataSetsBox = styled(StackColumnBox) ({
+    width: "18rem",
+    height: "100%",
+    boxSizing: "border-box",
+    padding: "1.75rem",
     alignItems: "center",
+    alignSelf: "stretch",
+    borderRadius: "0rem 0.3125rem 0.3125rem 0rem",
+    background: "var(--ui-white, #F9F9F9)",
+    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.20), 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 12px 0px rgba(0, 0, 0, 0.05)",
+});
+export const DataSetsListBox = styled(StackColumnBox) ({
+    width: "100%",
+    height: "100%",
+    boxSizing: "border-box",
+    overflowY: "auto",
+    paddingRight: "1rem",
+    flex: "1 0 0",
+});
+export const ContextMenuBox = styled(StackColumnBox) ({
+    position: "absolute",
+    zIndex: "1",
+    padding: "0.75rem",
     justifyContent: "left",
-    width: isMobile ? "33%" : "50%",
-}));
-
-export const RightNavBox = styled(StackRowBox) (({isMobile}) => ({
     alignItems: "center",
-    justifyContent: "right",
-    width: isMobile ? "67%" : "50%",
-}));
-
+    display: "none",
+    borderRadius: "0.3125rem",
+    background: "var(--UI-white, #F9F9F9)",
+    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.35), 0px 0px 4px 0px rgba(0, 0, 0, 0.25), 0px 0px 10px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.10)",
+});
+export const DataBox = styled(StackColumnBox) ({
+    width: "100%",
+    height: "fit-content",
+    boxSizing: "border-box",
+    padding: "0.75rem 1.125rem",
+    borderRadius: "0.3125rem",
+    border: "1px solid var(--25-black, rgba(28, 26, 26, 0.25))",
+});
+export const DataBottomBox = styled(StackRowBox) ({
+    width: "100%",
+    alignItems: "center",
+});
+export const DataBoxBottomLeft = styled(StackRowBox) ({
+    width: "50%",
+    height: "1.5rem",
+    justifyContent: "flex-start",
+});
+export const DataBoxBottomRight = styled(StackRowBox) ({
+    width: "50%",
+    justifyContent: "flex-end",
+});
+export const DataSetEditedBox = styled(StackRowBox) ({
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "0.25rem 0.5rem",
+    borderRadius: "0.3125rem",
+    background: "var(--Main-green, #53B753)"
+});
 export const ProfileBox = styled(BasicBox)({
     alignItems: "center",
 });

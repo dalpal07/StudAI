@@ -78,27 +78,54 @@ export const fileSlice = createSlice({
             return state;
         },
         setSaved: (state, action) => {
+            const fileNames = action.payload.fileNames;
+            const daysAgo = action.payload.daysAgo;
+            if (fileNames.length !== daysAgo.length) {
+                return state;
+            }
+            const saved = [];
+            for (let i = 0; i < fileNames.length; i++) {
+                saved.push({
+                    name: fileNames[i],
+                    lastUpdated: daysAgo[i] === 0 ? "Today" : daysAgo[i] === 1 ? "Yesterday" : daysAgo[i] + " days ago",
+                });
+            }
             return {
                 ...state,
-                saved: action.payload.fileNames,
+                saved: saved,
             };
         },
         getSaved: (state, action) => {},
         addSaved: (state, action) => {
-            if (state.saved.includes(action.payload.fileName)) {
-                return state;
+            const matchingIndex = state.saved.indexOf(action.payload.fileName);
+            if (matchingIndex !== -1) {
+                const updatedSave = {
+                    ...state.saved[matchingIndex],
+                    lastUpdated: "Today",
+                }
+                let copySaved = [...state.saved];
+                const updatedSaved = [...copySaved.slice(0, matchingIndex), updatedSave, ...copySaved.slice(matchingIndex + 1)];
+                return {
+                    ...state,
+                    saved: updatedSaved,
+                };
+            }
+            const newSave = {
+                name: action.payload.fileName,
+                lastUpdated: "Today",
             }
             return {
                 ...state,
-                saved: [...state.saved, action.payload.fileName],
+                saved: [...state.saved, newSave],
             };
         },
         save: (state, action) => {},
+        openFile: (state, action) => {},
     },
 })
 
 // Action creators are generated for each case reducer function
-export const {setHistory, updateCurrentHistoryIndexNext, updateHistory, addHistory, clearHistory, nextHistoryIndex, prevHistoryIndex, setSaved, getSaved, addSaved, save} = fileSlice.actions
+export const {setHistory, updateCurrentHistoryIndexNext, updateHistory, addHistory, clearHistory, nextHistoryIndex, prevHistoryIndex, setSaved, getSaved, addSaved, save, openFile} = fileSlice.actions
 export const selectCurrentFileName = state => state.file.history[state.file.historyIndex].name
 export const selectCurrentFileHeaders = state => state.file.history[state.file.historyIndex].headers
 export const selectCurrentFileEntries = state => state.file.history[state.file.historyIndex].entries

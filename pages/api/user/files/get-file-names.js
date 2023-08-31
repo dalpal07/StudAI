@@ -22,7 +22,12 @@ export default async function handler(req, res) {
                     res.status(500).json({ error: err.message });
                 } else {
                     const fileNames = data.Contents.map(item => item.Key.replace(prefix, ''));
-                    res.status(200).json({ fileNames });
+                    const latestModifications = data.Contents.map(item => item.LastModified);
+                    const daysAgo = latestModifications.map(item => {
+                        const diff = Math.abs(new Date() - item);
+                        return Math.floor(diff / (1000 * 60 * 60 * 24));
+                    });
+                    res.status(200).json({ fileNames: fileNames, daysAgo: daysAgo });
                 }
             });
         } catch (e) {
