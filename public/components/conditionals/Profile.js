@@ -1,17 +1,17 @@
 import {BoldText, GreenBoldText} from "@/public/components/common/Typographies";
 import {RightNavBox} from "@/public/components/common/Boxes";
 import {WidthSpacer} from "@/public/components/common/Spacers";
-import {Button} from "@mui/material";
+import {Button, useMediaQuery} from "@mui/material";
 import Menu from "./Menu";
 import {DefaultButton} from "@/public/components/common/Buttons";
 import React, {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import {selectName} from "@/slices/userSlice";
-import {handleLogin} from "@auth0/nextjs-auth0";
 import {HiddenHref} from "@/public/components/common/Miscellaneous";
 
 export default function Profile() {
+    const isMobile = useMediaQuery('(max-width:600px)');
     const name = useSelector(selectName);
     const [clicked, setClicked] = useState(false);
     const profileRef = useRef(null);
@@ -38,7 +38,7 @@ export default function Profile() {
         router.push("/api/auth/login");
     }
     if (name) return (
-        <RightNavBox>
+        <RightNavBox isMobile={isMobile}>
             <BoldText size={"0.875rem"}>{name}</BoldText>
             <WidthSpacer width={"0.5rem"}/>
             <Button class={"profile-button"} disableRipple onClick={handleProfileClick} ref={profileRef}/>
@@ -46,7 +46,7 @@ export default function Profile() {
         </RightNavBox>
     )
     return (
-        <RightNavBox>
+        <RightNavBox isMobile={isMobile}>
             <HiddenHref href={'/api/auth/login'}>
                 <GreenBoldText size={"0.875rem"}>
                     Login

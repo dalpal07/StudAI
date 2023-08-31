@@ -185,17 +185,17 @@ export const HomeBottomBox = styled(HomeTopBox) ({
     justifyContent: "flex-end",
 });
 
-export const LeftNavBox = styled(StackRowBox) ({
+export const LeftNavBox = styled(StackRowBox) (({isMobile}) => ({
     alignItems: "center",
     justifyContent: "left",
     width: isMobile ? "33%" : "50%",
-});
+}));
 
-export const RightNavBox = styled(StackRowBox) ({
+export const RightNavBox = styled(StackRowBox) (({isMobile}) => ({
     alignItems: "center",
     justifyContent: "right",
     width: isMobile ? "67%" : "50%",
-});
+}));
 
 export const ProfileBox = styled(BasicBox)({
     alignItems: "center",
