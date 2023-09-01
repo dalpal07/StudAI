@@ -21,12 +21,31 @@ export default async function handler(req, res) {
                 if (err) {
                     res.status(500).json({ error: err.message });
                 } else {
-                    const fileNames = data.Contents.map(item => item.Key.replace(prefix, ''));
-                    const latestModifications = data.Contents.map(item => item.LastModified);
-                    const daysAgo = latestModifications.map(item => {
-                        const diff = Math.abs(new Date() - item);
-                        return Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const fileData = data.Contents.map(item => ({
+                        fileName: item.Key.replace(prefix, ''),
+                        lastModified: item.LastModified,
+                    }));
+
+                    // Sort the file data by the most recent lastModified date
+                    fileData.sort((a, b) => b.lastModified - a.lastModified);
+
+                    const daysAgo = fileData.map(item => {
+                        const now = new Date();
+                        const modifiedDate = new Date(item.lastModified);
+
+                        // Set both dates to the same time (midnight)
+                        now.setHours(0, 0, 0, 0);
+                        modifiedDate.setHours(0, 0, 0, 0);
+
+                        // Calculate the time difference in milliseconds
+                        const timeDiff = now - modifiedDate;
+
+                        // Convert milliseconds to days
+                        return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
                     });
+
+                    const fileNames = fileData.map(item => item.fileName);
+
                     res.status(200).json({ fileNames: fileNames, daysAgo: daysAgo });
                 }
             });

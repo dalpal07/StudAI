@@ -97,17 +97,23 @@ export const fileSlice = createSlice({
         },
         getSaved: (state, action) => {},
         addSaved: (state, action) => {
-            const matchingIndex = state.saved.indexOf(action.payload.fileName);
+            let matchingIndex = -1;
+            for (let i = 0; i < state.saved.length; i++) {
+                if (state.saved[i].name === action.payload.fileName) {
+                    matchingIndex = i;
+                    break;
+                }
+            }
             if (matchingIndex !== -1) {
                 const updatedSave = {
                     ...state.saved[matchingIndex],
                     lastUpdated: "Today",
                 }
                 let copySaved = [...state.saved];
-                const updatedSaved = [...copySaved.slice(0, matchingIndex), updatedSave, ...copySaved.slice(matchingIndex + 1)];
+                const updatedSaved = [...copySaved.slice(0, matchingIndex), ...copySaved.slice(matchingIndex + 1)];
                 return {
                     ...state,
-                    saved: updatedSaved,
+                    saved: [updatedSave, ...updatedSaved],
                 };
             }
             const newSave = {
@@ -116,7 +122,7 @@ export const fileSlice = createSlice({
             }
             return {
                 ...state,
-                saved: [...state.saved, newSave],
+                saved: [newSave, ...state.saved],
             };
         },
         save: (state, action) => {},

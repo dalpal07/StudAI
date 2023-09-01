@@ -263,6 +263,41 @@ export const DataSetEditedBox = styled(StackRowBox) ({
     borderRadius: "0.3125rem",
     background: "var(--Main-green, #53B753)"
 });
+export const DataEditorBox = styled(StackColumnBox) ({
+    padding: "0rem 1.125rem",
+    width: "100%",
+    height: "100%",
+    boxSizing: "border-box",
+    alignItems: "center",
+    flex: "1 0 0",
+    alignSelf: "stretch",
+});
+export const RequestUtilitiesBox = styled(StackRowBox) ({
+    width: "100%",
+    boxSizing: "border-box",
+});
+export const UndoRedoBox = styled(StackRowBox) ({
+    width: "100%",
+    boxSizing: "border-box",
+    justifyContent: "flex-end",
+});
+export const ViewDataBox = styled(StackColumnBox) ({
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    boxSizing: "border-box",
+    flex: "1 0 0",
+    alignSelf: "stretch",
+    borderRadius: "0.3125rem",
+    border: "1px solid var(--25-black, rgba(28, 26, 26, 0.25))",
+    background: "#F0F0F0",
+});
+export const ViewDataUtilitiesBox = styled(StackRowBox) ({
+    width: "100%",
+    boxSizing: "border-box",
+    justifyContent: "flex-end",
+});
 export const ProfileBox = styled(BasicBox)({
     alignItems: "center",
 });
