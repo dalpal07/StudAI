@@ -7,8 +7,8 @@ export default function NavBar() {
     const isMobile = useMediaQuery('(max-width:600px)');
     return (
         <NavBox>
-            <LeftNavBox isMobile={isMobile}>
-                <Image src={"./images/Logo.svg"} alt={"logo"} width={isMobile ? 100 : 155} height={isMobile? 20 : 33}/>
+            <LeftNavBox ismobile={isMobile.toString()}>
+                <Image priority={true} src={"./images/Logo.svg"} alt={"logo"} width={isMobile ? 100 : 155} height={isMobile? 20 : 33}/>
             </LeftNavBox>
             <Profile/>
         </NavBox>

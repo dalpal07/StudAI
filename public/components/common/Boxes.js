@@ -160,16 +160,16 @@ export const NavBox = styled(StackRowBox) ({
     background: "var(--ui-white, #F9F9F9)",
     boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.20), 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 12px 0px rgba(0, 0, 0, 0.05)",
 });
-export const LeftNavBox = styled(StackRowBox) (({isMobile}) => ({
+export const LeftNavBox = styled(StackRowBox) (({ismobile}) => ({
     alignItems: "center",
     justifyContent: "left",
-    width: isMobile ? "33%" : "50%",
+    width: ismobile ? "33%" : "50%",
 }));
 
-export const RightNavBox = styled(StackRowBox) (({isMobile}) => ({
+export const RightNavBox = styled(StackRowBox) (({ismobile}) => ({
     alignItems: "center",
     justifyContent: "right",
-    width: isMobile ? "67%" : "50%",
+    width: ismobile ? "67%" : "50%",
 }));
 export const HomeBox = styled(StackColumnBox) ({
     alignItems: "center",

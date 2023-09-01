@@ -10,7 +10,7 @@ export default function RequestArea() {
     return (
         <>
             <RequestInput
-                noInput={noInput}
+                noinput={noInput.toString()}
                 placeholder={"Make a request to stud..."}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}

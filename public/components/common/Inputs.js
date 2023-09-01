@@ -12,7 +12,7 @@ export const ChatInput = styled(Input)(({ hasvalue }) => ({
 export const HiddenInput = styled(Input) ({
     display: 'none'
 });
-export const RequestInput = styled(TextareaAutosize)(({noInput}) => ({
+export const RequestInput = styled(TextareaAutosize)(({noinput}) => ({
     width: "100%",
     minHeight: "4.25rem",
     boxSizing: "border-box",
@@ -23,9 +23,9 @@ export const RequestInput = styled(TextareaAutosize)(({noInput}) => ({
     resize: "none",
     fontFamily: "Inter",
     fontSize: "0.875rem",
-    fontStyle: noInput ? "italic" : "normal",
+    fontStyle: noinput ? "italic" : "normal",
     fontWeight: "500",
     lineHeight: "normal",
-    color: noInput ? "rgba(28, 26, 26, 0.5)" : "var(--main-black, #1C1A1A)",
+    color: noinput ? "rgba(28, 26, 26, 0.5)" : "var(--main-black, #1C1A1A)",
     overflowY: "auto",
 }));

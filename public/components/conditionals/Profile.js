@@ -38,15 +38,15 @@ export default function Profile() {
         router.push("/api/auth/login");
     }
     if (name) return (
-        <RightNavBox isMobile={isMobile}>
+        <RightNavBox ismobile={isMobile.toString()}>
             <BoldText size={"0.875rem"}>{name}</BoldText>
             <WidthSpacer width={"0.5rem"}/>
-            <Button class={"profile-button"} disableRipple onClick={handleProfileClick} ref={profileRef}/>
+            <Button className={"profile-button"} disableRipple onClick={handleProfileClick} ref={profileRef}/>
             <Menu forwardRef={signOutRef} clicked={clicked}/>
         </RightNavBox>
     )
     return (
-        <RightNavBox isMobile={isMobile}>
+        <RightNavBox ismobile={isMobile.toString()}>
             <HiddenHref href={'/api/auth/login'}>
                 <GreenBoldText size={"0.875rem"}>
                     Login
