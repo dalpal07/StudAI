@@ -16,7 +16,7 @@ export default function RequestArea() {
                 onChange={(e) => setInput(e.target.value)}
             />
             <HeightSpacer height={"0.75rem"}/>
-            <RequestUtilities input={input}/>
+            <RequestUtilities input={input} setInput={setInput}/>
         </>
     )
 }

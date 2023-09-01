@@ -163,13 +163,13 @@ export const NavBox = styled(StackRowBox) ({
 export const LeftNavBox = styled(StackRowBox) (({ismobile}) => ({
     alignItems: "center",
     justifyContent: "left",
-    width: ismobile ? "33%" : "50%",
+    width: ismobile === true.toString() ? "33%" : "50%",
 }));
 
 export const RightNavBox = styled(StackRowBox) (({ismobile}) => ({
     alignItems: "center",
     justifyContent: "right",
-    width: ismobile ? "67%" : "50%",
+    width: ismobile === true.toString() ? "67%" : "50%",
 }));
 export const HomeBox = styled(StackColumnBox) ({
     alignItems: "center",

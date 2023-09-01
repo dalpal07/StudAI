@@ -5,8 +5,10 @@ import {RequestUtilitiesBox} from "@/public/components/common/Boxes";
 import {sendRequest} from "@/slices/dataSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {selectCurrentFileEntries, selectCurrentFileHeaders, selectCurrentFileName} from "@/slices/fileSlice";
+import {selectSub} from "@/slices/userSlice";
 
 export default function RequestUtilities(props) {
+    const sub = useSelector(selectSub);
     const currentFileName = useSelector(selectCurrentFileName);
     const currentFileHeaders = useSelector(selectCurrentFileHeaders);
     const currentFileEntries = useSelector(selectCurrentFileEntries);
@@ -19,9 +21,10 @@ export default function RequestUtilities(props) {
             request: props.input,
             headers: currentFileHeaders,
             entries: currentFileEntries,
-            fileName: currentFileName
+            fileName: currentFileName,
+            id: sub,
         }))
-        setInput("")
+        props.setInput("")
     }
     return (
         <RequestUtilitiesBox>

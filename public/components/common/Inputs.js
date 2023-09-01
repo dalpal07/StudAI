@@ -23,9 +23,9 @@ export const RequestInput = styled(TextareaAutosize)(({noinput}) => ({
     resize: "none",
     fontFamily: "Inter",
     fontSize: "0.875rem",
-    fontStyle: noinput ? "italic" : "normal",
+    fontStyle: noinput === true.toString() ? "italic" : "normal",
     fontWeight: "500",
     lineHeight: "normal",
-    color: noinput ? "rgba(28, 26, 26, 0.5)" : "var(--main-black, #1C1A1A)",
+    color: noinput === true.toString() ? "rgba(28, 26, 26, 0.5)" : "var(--main-black, #1C1A1A)",
     overflowY: "auto",
 }));
