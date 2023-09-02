@@ -2,15 +2,21 @@ import {ArrowButton} from "@/public/components/common/Buttons";
 import Image from "next/image";
 import {WidthSpacer} from "@/public/components/common/Spacers";
 import {UndoRedoBox} from "@/public/components/common/Boxes";
-import {useSelector} from "react-redux";
-import {selectDisabledNext, selectDisabledPrev} from "@/slices/fileSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    nextHistoryIndex,
+    prevHistoryIndex,
+    selectDisabledNext,
+    selectDisabledPrev,
+} from "@/slices/fileSlice";
 
 export default function UndoRedo() {
     const disabledPrev = useSelector(selectDisabledPrev);
     const disabledNext = useSelector(selectDisabledNext);
+    const dispatch = useDispatch();
     return (
         <UndoRedoBox>
-            <ArrowButton>
+            <ArrowButton onClick={() => dispatch(prevHistoryIndex())} disabled={disabledPrev}>
                 {
                     disabledPrev ?
                         <Image src={"./images/LeftArrowDisabled.svg"} alt={"LeftArrowDisabled"} width={17} height={21}/>
@@ -19,7 +25,7 @@ export default function UndoRedo() {
                 }
             </ArrowButton>
             <WidthSpacer width={"0.5rem"}/>
-            <ArrowButton>
+            <ArrowButton onClick={() => dispatch(nextHistoryIndex())} disabled={disabledNext}>
                 {
                     disabledNext ?
                         <Image src={"./images/RightArrowDisabled.svg"} alt={"LeftArrowDisabled"} width={17} height={21}/>

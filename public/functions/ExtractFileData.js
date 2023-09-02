@@ -28,7 +28,6 @@ export function getFileHeaders(csvData) {
             headers[i] = headers[i].trim()
         }
     }
-    console.log(headers)
     return headers
 }
 export function getFileEntries(csvData) {
@@ -42,7 +41,6 @@ export function getFileEntries(csvData) {
         }
         entries.push(entry)
     }
-    console.log(entries)
     return entries
 }
 export const getFileExtension = (filename) => {
@@ -67,7 +65,6 @@ export function readXlsxFile(file) {
             const workbook = read(data, { type: 'array' });
             const worksheet = workbook.Sheets[workbook.SheetNames[0]];
             const csv = utils.sheet_to_csv(worksheet);
-            console.log(csv)
             resolve(csv);
         };
         reader.onerror = reject;

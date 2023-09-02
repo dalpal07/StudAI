@@ -21,15 +21,15 @@ export default function ViewData() {
                                 <TableHead>
                                     <TableRow>
                                         {currentFileHeaders.map((header, index) => (
-                                            <Cell key={index} rowIndex={0}>
+                                            <Cell key={index} rowindex={0}>
                                                 {header}
                                             </Cell>
                                         ))}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {currentFileEntries.map((entry, rowIndex) => (
-                                        <TableRow key={rowIndex}>
+                                    {currentFileEntries.map((entry, rowindex) => (
+                                        <TableRow key={rowindex}>
                                             {entry.map((cell, cellIndex) => (
                                                 <Cell key={cellIndex}>
                                                     {cell}

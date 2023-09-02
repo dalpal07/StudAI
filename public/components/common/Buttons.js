@@ -51,6 +51,10 @@ export const ArrowButton = styled("button")({
     borderRadius: "0.3125rem",
     background: "#E9E9E9",
     border: "none",
+    cursor: "pointer",
+    "&:disabled": {
+        cursor: "default",
+    }
 });
 export const IconButton = styled(Button)({
     border: "none",

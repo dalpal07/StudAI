@@ -1,6 +1,13 @@
-import {call, put} from 'redux-saga/effects';
+import {call, put, select} from 'redux-saga/effects';
 import {requestGetFile, requestGetSaved, requestSave} from "@/sagas/requests/file";
-import {addSaved, setHistory, setSaved, updateCurrentHistoryIndexNext, updateHistory} from "@/slices/fileSlice";
+import {
+    addFileToHistories,
+    addSaved, setHistoriesIndex,
+    setSaved,
+    updateCurrentHistoryIndexNext,
+    updateEdited,
+    updateHistory
+} from "@/slices/fileSlice";
 import {
     getFileEntries,
     getFileExtension,
@@ -24,6 +31,7 @@ export function* handleSave(action) {
         const response = yield call(requestSave, action.payload);
         const { data } = response;
         yield put(addSaved(data));
+        yield put(updateEdited({indexSaved: action.payload.indexSaved}));
     } catch (error) {
         console.log(error);
     }
@@ -70,14 +78,13 @@ function* handleFileChange(file) {
         const content = yield readCsvFile(file)
         const headers = getFileHeaders(content)
         const entries = getFileEntries(content)
-        yield put(setHistory({headers: headers, entries: entries, name: file.name}));
+        yield put(addFileToHistories({headers: headers, entries: entries, name: file.name}));
     }
     else if (fileExtension === "xlsx") {
-        console.log("xlsx")
         const content = yield readXlsxFile(file)
         const headers = getFileHeaders(content)
         const entries = getFileEntries(content)
-        yield put(setHistory({headers: headers, entries: entries, name: file.name}));
+        yield put(addFileToHistories({headers: headers, entries: entries, name: file.name}));
     }
     else {
         alert("Invalid file type. Please upload a .csv or .xlsx file.")
@@ -86,11 +93,19 @@ function* handleFileChange(file) {
 
 export function* handleOpenFile(action) {
     try {
-        let file = action.payload.file
-        if (!file) {
-            file = yield call(getFile, action.payload.fileName, action.payload.id);
+        const histories = yield select((state) => state.file.histories);
+        let found = false;
+        for (let i = 0; i < histories.length; i++) {
+            if (histories[i].name === action.payload.fileName) {
+                found = true;
+                break;
+            }
         }
-        yield call(handleFileChange, file)
+        if (!found) {
+            const file = yield call(getFile, action.payload.fileName, action.payload.id);
+            yield call(handleFileChange, file);
+        }
+        yield put(setHistoriesIndex({name: action.payload.fileName}));
     } catch (error) {
         console.log(error);
     }

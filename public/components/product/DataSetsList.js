@@ -8,7 +8,7 @@ import {BoldTextNoWrap, ItalicText, Text} from "@/public/components/common/Typog
 import {HeightSpacer} from "@/public/components/common/Spacers";
 import DataBottom from "@/public/components/product/DataBottom";
 import {useDispatch, useSelector} from "react-redux";
-import {openFile, selectSaved} from "@/slices/fileSlice";
+import {openFile, selectCurrentFileEdited, selectSaved} from "@/slices/fileSlice";
 import {HiddenButton} from "@/public/components/common/Buttons";
 import {useRef, useState} from "react";
 import {selectSub} from "@/slices/userSlice";
@@ -16,6 +16,7 @@ import {selectSub} from "@/slices/userSlice";
 export default function DataSetsList() {
     const saved = useSelector(selectSaved);
     const sub = useSelector(selectSub);
+    const edited = useSelector(selectCurrentFileEdited);
     const dispatch = useDispatch();
     const contextMenuRef = useRef(null);
     const [contextMenuFileIndex, setContextMenuFileIndex] = useState(-1);
@@ -62,7 +63,7 @@ export default function DataSetsList() {
                                 <HeightSpacer height={"0.25rem"}/>
                                 <ItalicText size={"0.75rem"}>Last updated: {dataSet.lastUpdated}</ItalicText>
                                 <HeightSpacer height={"0.25rem"}/>
-                                <DataBottom edited={dataSet.edited}/>
+                                <DataBottom edited={edited}/>
                             </DataBox>
                             <HeightSpacer height={"0.25rem"}/>
                         </StackColumnBox>

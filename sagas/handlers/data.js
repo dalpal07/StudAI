@@ -1,7 +1,7 @@
 import {put, select, call} from "redux-saga/effects";
 import {selectCancelled, setCancelled, setDataProcessing} from "@/slices/dataSlice";
 import {requestGetScript, requestRunScript, requestSetUUID} from "@/sagas/requests/data";
-import {addHistory} from "@/slices/fileSlice";
+import {updateHistory} from "@/slices/fileSlice";
 
 export function* handleSendRequest(action) {
     yield put(setDataProcessing({dataProcessing: true}));
@@ -43,7 +43,7 @@ export function* handleSendRequest(action) {
         }
         if (yield checkCancelled()) return;
         const {headers, entries} = runResponse.data;
-        yield put(addHistory({headers: headers, entries: entries, request: action.payload.request, name: action.payload.fileName}))
+        yield put(updateHistory({headers: headers, entries: entries, name: action.payload.fileName}))
         yield put(setDataProcessing({dataProcessing: false}));
     }
     catch (error) {
