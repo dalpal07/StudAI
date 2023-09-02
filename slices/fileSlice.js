@@ -77,7 +77,8 @@ export const fileSlice = createSlice({
             const historyInstance = {
                 headers: action.payload.headers,
                 entries: action.payload.entries,
-                prev: prev, next: null,
+                prev: prev,
+                next: null,
                 edited: true
             }
             const updatedHistory = [...state.histories[i].history, historyInstance];
