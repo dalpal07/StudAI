@@ -287,12 +287,13 @@ export const selectDisabledNext = createSelector([historiesIndex, histories], (i
     return arr[ind].history[arr[ind].historyIndex].next === null;
 });
 export const selectSaved = state => state.file.saved
-export const selectFileEdited = (state, fileName) => {
-    for (let i = 0; i < state.file.histories.length; i++) {
-        if (state.file.histories[i].name === fileName) {
-            return state.file.histories[i].history[state.file.histories[i].historyIndex].edited;
-        }
+export const selectFileEdited = (fileName) => (state) => {
+    const history = state.file.histories.find((entry) => entry.name === fileName);
+    if (history) {
+        const { historyIndex } = history;
+        return history.history[historyIndex].edited;
     }
     return false;
-}
+};
+
 export default fileSlice.reducer
