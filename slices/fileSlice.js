@@ -66,6 +66,47 @@ export const fileSlice = createSlice({
                 histories: [...state.histories, historiesEntry],
             }
         },
+        discardChanges: (state, action) => {
+            const i = state.historiesIndex;
+            const currentIndex = state.histories[i].historyIndex;
+            const prev = state.histories[i].history[currentIndex].prev;
+            const next = state.histories[i].history[currentIndex].next;
+            const newHistoryIndex = prev !== null ? prev : next;
+            const updatedHistory = [];
+            for (let k = 0; k < state.histories[i].history.length; k++) {
+                if (k === prev) {
+                    updatedHistory.push({
+                        ...state.histories[i].history[k],
+                        next: next,
+                    });
+                    continue
+                }
+                if (k === next) {
+                    updatedHistory.push({
+                        ...state.histories[i].history[k],
+                        prev: prev,
+                    });
+                    continue
+                }
+                updatedHistory.push(state.histories[i].history[k]);
+            }
+            const updatedHistories = [];
+            for (let k = 0; k < state.histories.length; k++) {
+                if (k === i) {
+                    updatedHistories.push({
+                        ...state.histories[k],
+                        history: updatedHistory,
+                        historyIndex: newHistoryIndex,
+                    });
+                } else {
+                    updatedHistories.push(state.histories[k]);
+                }
+            }
+            return {
+                ...state,
+                histories: updatedHistories,
+            }
+        },
         updateCurrentHistoryIndexNext: (state) => {
             const i = state.historiesIndex;
             const j = state.histories[i].historyIndex;
@@ -231,7 +272,8 @@ export const fileSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-    openFile, setHistoriesIndex,
+    openFile,
+    setHistoriesIndex,
     nextHistoryIndex,
     updateCurrentHistoryIndexNext,
     updateEdited,
@@ -239,7 +281,9 @@ export const {
     prevHistoryIndex,
     addSaved,
     getSaved,
-    setSaved, addFileToHistories,
+    setSaved,
+    addFileToHistories,
+    discardChanges,
     save
 } = fileSlice.actions
 const historiesIndex = state => state.file.historiesIndex;
