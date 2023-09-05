@@ -22,26 +22,12 @@ const initialState = {
     histories: [],
     historiesIndex: -1,
     saved: [],
-    pendingFiles: [],
 }
 
 export const fileSlice = createSlice({
     name: 'file',
     initialState,
     reducers: {
-        uploadFile(state, action) {},
-        addToPendingFiles(state, action) {
-            return {
-                ...state,
-                pendingFiles: [...state.pendingFiles, action.payload],
-            }
-        },
-        clearPendingFiles(state) {
-            return {
-                ...state,
-                pendingFiles: [],
-            }
-        },
         openFile(state, action) {},
         downloadFile(state, action) {},
         deleteFile(state, action) {},
@@ -264,20 +250,27 @@ export const fileSlice = createSlice({
                 }
             }
             if (matchingIndex === -1) {
+                const newSave = {
+                    name: action.payload.fileName,
+                    lastUpdated: "Today",
+                }
                 return {
-                    ...state
+                    ...state,
+                    saved: [newSave, ...state.saved],
                 }
             }
-            const updatedSave = {
-                ...state.saved[matchingIndex],
-                lastUpdated: "Today",
+            else {
+                const updatedSave = {
+                    ...state.saved[matchingIndex],
+                    lastUpdated: "Today",
+                }
+                let copySaved = [...state.saved];
+                const updatedSaved = [...copySaved.slice(0, matchingIndex), ...copySaved.slice(matchingIndex + 1)];
+                return {
+                    ...state,
+                    saved: [updatedSave, ...updatedSaved],
+                };
             }
-            let copySaved = [...state.saved];
-            const updatedSaved = [...copySaved.slice(0, matchingIndex), ...copySaved.slice(matchingIndex + 1)];
-            return {
-                ...state,
-                saved: [updatedSave, ...updatedSaved],
-            };
         },
         save: (state, action) => {},
         updateEdited: (state, action) => {
@@ -320,9 +313,6 @@ export const fileSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-    uploadFile,
-    addToPendingFiles,
-    clearPendingFiles,
     openFile,
     downloadFile,
     deleteFile,

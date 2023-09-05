@@ -24,11 +24,9 @@ export default function DisabledWrapper(WrappedPage) {
         }, [disabled])
         useEffect(() => {
             if (dataProcessing || dataUpload) {
-                console.log("disabled")
                 setDisabled(true)
             }
             else {
-                console.log("enabled")
                 setDisabled(false)
             }
         }, [dataProcessing, dataUpload])

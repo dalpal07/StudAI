@@ -16,7 +16,6 @@ export const dataSlice = createSlice({
         setDataUpload: (state, action) => {
             return {...state, dataUpload: action.payload.dataUpload}
         },
-        cancelDataUpload: () => {},
         setCancelled: (state, action) => {
             if (action.payload.cancelled) {
                 return {...state, cancelled: action.payload.cancelled, dataProcessing: false, dataUpload: false}
@@ -31,7 +30,6 @@ export const dataSlice = createSlice({
 export const {
     setDataProcessing,
     setDataUpload,
-    cancelDataUpload,
     setCancelled,
     sendRequest
 } = dataSlice.actions

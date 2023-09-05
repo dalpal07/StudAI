@@ -1,7 +1,7 @@
 import {put, select, call} from "redux-saga/effects";
 import {selectCancelled, setCancelled, setDataProcessing} from "@/slices/dataSlice";
 import {requestGetScript, requestRunScript, requestSetUUID} from "@/sagas/requests/data";
-import {clearPendingFiles, updateCurrentHistoryIndexNext, updateHistory} from "@/slices/fileSlice";
+import {updateCurrentHistoryIndexNext, updateHistory} from "@/slices/fileSlice";
 
 export function* handleSendRequest(action) {
     yield put(setDataProcessing({dataProcessing: true}));
@@ -60,13 +60,4 @@ function* checkCancelled() {
         return true;
     }
     return false;
-}
-
-export function* handleCancelDataUpload() {
-    try {
-        yield put(setCancelled({cancelled: true}));
-        yield put(clearPendingFiles());
-    } catch (error) {
-        console.log(error);
-    }
 }
