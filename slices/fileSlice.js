@@ -22,12 +22,26 @@ const initialState = {
     histories: [],
     historiesIndex: -1,
     saved: [],
+    pendingFiles: [],
 }
 
 export const fileSlice = createSlice({
     name: 'file',
     initialState,
     reducers: {
+        uploadFile(state, action) {},
+        addToPendingFiles(state, action) {
+            return {
+                ...state,
+                pendingFiles: [...state.pendingFiles, action.payload],
+            }
+        },
+        clearPendingFiles(state) {
+            return {
+                ...state,
+                pendingFiles: [],
+            }
+        },
         openFile(state, action) {},
         downloadFile(state, action) {},
         deleteFile(state, action) {},
@@ -306,6 +320,9 @@ export const fileSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
+    uploadFile,
+    addToPendingFiles,
+    clearPendingFiles,
     openFile,
     downloadFile,
     deleteFile,
@@ -386,5 +403,6 @@ export const selectFileHistoriesIndex = (fileName) => (state) => {
     }
     return historiesIndex;
 }
+export const selectPendingFiles = state => state.file.pendingFiles
 
 export default fileSlice.reducer

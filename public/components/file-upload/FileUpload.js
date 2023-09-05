@@ -54,8 +54,9 @@ export default function FileUpload(props) {
             isDraggingOver={isDraggingOver}
             onDrop={handleDrop}
             onDragOver={(event) => {
-                if (!props.disabled) {
-                    event.preventDefault()
+                event.preventDefault()
+                if (!isDraggingOver) {
+                    console.log("dragging over")
                     setIsDraggingOver(true)
                 }
             }}

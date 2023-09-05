@@ -10,11 +10,11 @@ import DataSets from "@/public/components/product/DataSets";
 import DataEditor from "@/public/components/product/DataEditor";
 import DisabledWrapper from "@/public/components/Wrappers/DisabledWrapper";
 
-function Product() {
+function Product(props) {
     const productAccess = useSelector(selectProductAccess);
     if (productAccess) {
         return (
-            <ProductBox>
+            <ProductBox id={props.id}>
                 <HeightSpacer height={"5rem"}/>
                 <ProductInnerBox>
                     <DataSets/>

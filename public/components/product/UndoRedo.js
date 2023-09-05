@@ -1,7 +1,7 @@
 import {ArrowButton} from "@/public/components/common/Buttons";
 import Image from "next/image";
 import {WidthSpacer} from "@/public/components/common/Spacers";
-import {UndoRedoBox} from "@/public/components/common/Boxes";
+import {JustifyRightBox} from "@/public/components/common/Boxes";
 import {useDispatch, useSelector} from "react-redux";
 import {
     nextHistoryIndex,
@@ -15,7 +15,7 @@ export default function UndoRedo() {
     const disabledNext = useSelector(selectDisabledNext);
     const dispatch = useDispatch();
     return (
-        <UndoRedoBox>
+        <JustifyRightBox>
             <ArrowButton onClick={() => dispatch(prevHistoryIndex())} disabled={disabledPrev}>
                 {
                     disabledPrev ?
@@ -33,6 +33,6 @@ export default function UndoRedo() {
                         <Image src={"./images/RightArrow.svg"} alt={"LeftArrow"} width={17} height={21}/>
                 }
             </ArrowButton>
-        </UndoRedoBox>
+        </JustifyRightBox>
     )
 }

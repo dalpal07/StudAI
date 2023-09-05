@@ -43,9 +43,11 @@ export const InnerBox4 = styled(InnerBox2) ({
 });
 export const OverlayContainer = styled(BasicBox) ({
     position: "fixed",
-    top: "30%",
+    top: 0,
+    height: "100vh",
     width: "100%",
     justifyContent: "center",
+    alignItems: "center",
 });
 export const OverlayBox = styled(StackColumnBox) ({
     background: "#F2F2F2",
@@ -276,7 +278,7 @@ export const RequestUtilitiesBox = styled(StackRowBox) ({
     width: "100%",
     boxSizing: "border-box",
 });
-export const UndoRedoBox = styled(StackRowBox) ({
+export const JustifyRightBox = styled(StackRowBox) ({
     width: "100%",
     boxSizing: "border-box",
     justifyContent: "flex-end",
@@ -376,3 +378,24 @@ export const InsideHelpBox = styled(StackColumnBox) ({
     position: "sticky",
     top: 68,
 });
+
+export const DataUploadBox = styled(StackColumnBox) ({
+    padding: "1.75rem",
+    width: "43rem",
+    maxWidth: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "0.3125rem",
+    background: "var(--ui-white, #F9F9F9)",
+    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.35), 0px 0px 4px 0px rgba(0, 0, 0, 0.25), 0px 0px 10px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.10)",
+});
+
+export const DragDropBox = styled(StackColumnBox) (({isdraggingover}) => ({
+    width: "100%",
+    height: "15rem",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "0.3125rem",
+    border: "1px dashed var(--25-black, rgba(28, 26, 26, 0.25))",
+    backgroundColor: isdraggingover === true.toString() ? '#E0E0E0' : '#F0F0F0'
+}));

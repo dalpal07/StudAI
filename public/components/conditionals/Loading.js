@@ -5,7 +5,7 @@ import {BoldText} from "@/public/components/common/Typographies";
 import {useDispatch, useSelector} from "react-redux";
 import {selectDataProcessing, setCancelled} from "@/slices/dataSlice";
 
-export default function Loading(props) {
+export default function Loading() {
     const dataProcessing = useSelector(selectDataProcessing);
     const dispatch = useDispatch();
 

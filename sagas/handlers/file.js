@@ -2,7 +2,7 @@ import {call, put, select} from 'redux-saga/effects';
 import {requestDeleteFile, requestGetFile, requestGetSaved, requestSave} from "@/sagas/requests/file";
 import {
     addFileToHistories,
-    addSaved, removeFile, setHistoriesIndex,
+    addSaved, addToPendingFiles, removeFile, setHistoriesIndex,
     setSaved,
     updateCurrentHistoryIndexNext,
     updateEdited,
@@ -16,6 +16,7 @@ import {
     readXlsxFile
 } from "@/public/functions/ExtractFileData";
 import {downloadFile} from "@/public/functions/DownloadFile";
+import {setCancelled} from "@/slices/dataSlice";
 
 export function* handleGetSaved(action) {
     try {
@@ -160,6 +161,32 @@ export function* handleDeleteFile(action) {
         if (response.status === 200) {
             yield put(removeFile({fileName: action.payload.fileName}));
         }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export function* handleUploadFile(action) {
+    try {
+        const file = action.payload.file;
+        const fileExtension = getFileExtension(file.name);
+        let headers;
+        let entries;
+        if (fileExtension === "csv") {
+            const content = yield readCsvFile(file)
+            headers = getFileHeaders(content)
+            entries = getFileEntries(content)
+        }
+        else if (fileExtension === "xlsx") {
+            const content = yield readXlsxFile(file)
+            headers = getFileHeaders(content)
+            entries = getFileEntries(content)
+        }
+        if (!headers || !entries) {
+            alert("Invalid file type. Please upload a .csv or .xlsx file.")
+            return
+        }
+        yield put(addToPendingFiles({headers: headers, entries: entries, fileName: file.name}));
     } catch (error) {
         console.log(error);
     }

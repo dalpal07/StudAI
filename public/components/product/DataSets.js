@@ -4,14 +4,17 @@ import {HeightSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 import DataSetsList from "@/public/components/product/DataSetsList";
 import {UploadDataSetButton} from "@/public/components/common/Buttons";
 import Image from "next/image";
+import {useDispatch} from "react-redux";
+import {setDataUpload} from "@/slices/dataSlice";
 export default function DataSets() {
+    const dispatch = useDispatch();
     return (
         <DataSetsBox>
             <BoldText size={"1.5rem"}>My Data Sets</BoldText>
             <HeightSpacer height={"1.12rem"}/>
             <DataSetsList/>
             <HeightSpacer height={"1.12rem"}/>
-            <UploadDataSetButton>
+            <UploadDataSetButton onClick={() => dispatch(setDataUpload({dataUpload: true}))}>
                 <WhiteBoldText size={"1.125rem"}>Upload data set</WhiteBoldText>
                 <WidthSpacer width={"0.5rem"}/>
                 <Image src={"./images/Upload.svg"} alt={"Upload"} width={12} height={10}/>
