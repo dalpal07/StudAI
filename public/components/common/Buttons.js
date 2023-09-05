@@ -63,12 +63,14 @@ export const IconButton = styled(Button)({
     padding: "0",
     display: "flex",
 });
-export const HiddenButton = styled(Button)({
+export const HiddenButton = styled("button")({
     border: "none",
     width: "fit-content",
     height: "fit-content",
     padding: "0",
     display: "flex",
+    background: "transparent",
+    cursor: "pointer",
     "&:hover": {
         background: "transparent",
     }

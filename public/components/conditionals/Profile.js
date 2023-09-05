@@ -1,14 +1,15 @@
 import {BoldText, GreenBoldText} from "@/public/components/common/Typographies";
 import {RightNavBox} from "@/public/components/common/Boxes";
 import {WidthSpacer} from "@/public/components/common/Spacers";
-import {Button, useMediaQuery} from "@mui/material";
+import {useMediaQuery} from "@mui/material";
 import Menu from "./Menu";
-import {DefaultButton} from "@/public/components/common/Buttons";
+import {DefaultButton, HiddenButton} from "@/public/components/common/Buttons";
 import React, {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 import {useSelector} from "react-redux";
 import {selectName} from "@/slices/userSlice";
 import {HiddenHref} from "@/public/components/common/Miscellaneous";
+import Image from "next/image";
 
 export default function Profile() {
     const isMobile = useMediaQuery('(max-width:600px)');
@@ -41,7 +42,9 @@ export default function Profile() {
         <RightNavBox ismobile={isMobile.toString()}>
             <BoldText size={"0.875rem"}>{name}</BoldText>
             <WidthSpacer width={"0.5rem"}/>
-            <Button className={"profile-button"} disableRipple onClick={handleProfileClick} ref={profileRef}/>
+            <HiddenButton onClick={handleProfileClick} ref={profileRef}>
+                <Image src={"./images/Profile.svg"} alt={"profile"} height={33} width={33}/>
+            </HiddenButton>
             <Menu forwardRef={signOutRef} clicked={clicked}/>
         </RightNavBox>
     )

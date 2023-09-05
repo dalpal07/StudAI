@@ -29,6 +29,7 @@ export const fileSlice = createSlice({
     initialState,
     reducers: {
         openFile(state, action) {},
+        downloadFile(state, action) {},
         setHistoriesIndex(state, action) {
             let index = -1;
             for (let i = 0; i < state.histories.length; i++) {
@@ -273,6 +274,7 @@ export const fileSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
     openFile,
+    downloadFile,
     setHistoriesIndex,
     nextHistoryIndex,
     updateCurrentHistoryIndexNext,
@@ -339,5 +341,15 @@ export const selectFileEdited = (fileName) => (state) => {
     }
     return false;
 };
+export const selectFileHistoriesIndex = (fileName) => (state) => {
+    let historiesIndex = -1;
+    for (let i = 0; i < state.file.histories.length; i++) {
+        if (state.file.histories[i].name === fileName) {
+            historiesIndex = i;
+            break;
+        }
+    }
+    return historiesIndex;
+}
 
 export default fileSlice.reducer

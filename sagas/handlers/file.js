@@ -15,6 +15,7 @@ import {
     readCsvFile,
     readXlsxFile
 } from "@/public/functions/ExtractFileData";
+import {downloadFile} from "@/public/functions/DownloadFile";
 
 export function* handleGetSaved(action) {
     try {
@@ -44,6 +45,26 @@ export function* handleAddHistory(action) {
     } catch (error) {
         console.log(error);
     }
+}
+
+function* getFileHeadersAndEntries(fileName, id) {
+    const response = yield call(requestGetFile, fileName, id);
+    const { data } = response;
+    let headers = data.headers;
+    let entries = data.entries;
+    for (let i = 0; i < headers.length; i++) {
+        if (headers[i].includes(",") && headers[i][0] !== "\"") {
+            headers[i] = "\"" + headers[i] + "\"";
+        }
+    }
+    for (let i = 0; i < entries.length; i++) {
+        for (let j = 0; j < entries[i].length; j++) {
+            if (entries[i][j].includes(",") && entries[i][j][0] !== "\"") {
+                entries[i][j] = "\"" + entries[i][j] + "\"";
+            }
+        }
+    }
+    return {headers: headers, entries: entries};
 }
 
 function* getFile(fileName, id) {
@@ -108,5 +129,27 @@ export function* handleOpenFile(action) {
         yield put(setHistoriesIndex({name: action.payload.fileName}));
     } catch (error) {
         console.log(error);
+    }
+}
+
+export function* handleDownload(action) {
+    try {
+        const histories = yield select((state) => state.file.histories);
+        const historiesIndex = action.payload.historiesIndex;
+        let headers;
+        let entries;
+        if (historiesIndex === -1) {
+            const data = yield call(getFileHeadersAndEntries, action.payload.fileName, action.payload.id);
+            headers = data.headers;
+            entries = data.entries;
+        }
+        else {
+            headers = histories[historiesIndex].history[histories[historiesIndex].historyIndex].headers;
+            entries = histories[historiesIndex].history[histories[historiesIndex].historyIndex].entries;
+        }
+        const content = headers.join(",") + "\n" + entries.map((entry) => entry.join(",")).join("\n");
+        downloadFile(content, action.payload.fileName);
+    } catch (e) {
+        console.log(e)
     }
 }
