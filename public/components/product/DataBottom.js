@@ -3,7 +3,7 @@ import Image from "next/image";
 import {WidthSpacer} from "@/public/components/common/Spacers";
 import {WhiteBoldText} from "@/public/components/common/Typographies";
 import {useDispatch, useSelector} from "react-redux";
-import {downloadFile, selectFileEdited, selectFileHistoriesIndex} from "@/slices/fileSlice";
+import {deleteFile, downloadFile, selectFileEdited, selectFileHistoriesIndex} from "@/slices/fileSlice";
 import {HiddenButton} from "@/public/components/common/Buttons";
 import {selectSub} from "@/slices/userSlice";
 
@@ -31,7 +31,9 @@ export default function DataBottom(props) {
                     <Image src={"./images/Download.svg"} alt={"Download"} width={15} height={15}/>
                 </HiddenButton>
                 <WidthSpacer width={"0.5rem"}/>
-                <Image src={"./images/Delete.svg"} alt={"Delete"} width={15} height={15}/>
+                <HiddenButton onClick={() => dispatch(deleteFile({fileName: props.name, id: sub}))}>
+                    <Image src={"./images/Delete.svg"} alt={"Delete"} width={15} height={15}/>
+                </HiddenButton>
             </DataBoxBottomRight>
         </DataBottomBox>
     )

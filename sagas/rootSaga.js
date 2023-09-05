@@ -3,8 +3,8 @@ import {getUser} from "@/slices/userSlice";
 import {getSubscription} from "@/slices/subscriptionSlice";
 import {handleGetUser} from "@/sagas/handlers/user";
 import {handleGetSubscription} from "@/sagas/handlers/subscription";
-import {handleDownload, handleGetSaved, handleOpenFile, handleSave} from "@/sagas/handlers/file";
-import {downloadFile, getSaved, openFile, save} from "@/slices/fileSlice";
+import {handleDeleteFile, handleDownload, handleGetSaved, handleOpenFile, handleSave} from "@/sagas/handlers/file";
+import {deleteFile, downloadFile, getSaved, openFile, save} from "@/slices/fileSlice";
 import {sendRequest} from "@/slices/dataSlice";
 import {handleSendRequest} from "@/sagas/handlers/data";
 
@@ -18,6 +18,7 @@ export function* watcherSaga() {
     yield takeLatest(save.toString(), handleSave);
     yield takeLatest(openFile.toString(), handleOpenFile);
     yield takeLatest(downloadFile.toString(), handleDownload);
+    yield takeLatest(deleteFile.toString(), handleDeleteFile);
     // data
     yield takeLatest(sendRequest.toString(), handleSendRequest);
 }

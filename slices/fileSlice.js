@@ -30,6 +30,39 @@ export const fileSlice = createSlice({
     reducers: {
         openFile(state, action) {},
         downloadFile(state, action) {},
+        deleteFile(state, action) {},
+        removeFile(state, action) {
+            const fileName = action.payload.fileName;
+            const updatedHistories = [];
+            let newHistoriesIndex = state.historiesIndex;
+            for (let i = 0; i < state.histories.length; i++) {
+                if (state.histories[i].name === fileName) {
+                    if (state.historiesIndex === i) {
+                        if (i === 0 && state.histories.length === 1) {
+                            newHistoriesIndex = -1;
+                        }
+                        else {
+                            newHistoriesIndex--;
+                        }
+                    }
+                    continue;
+                }
+                updatedHistories.push(state.histories[i]);
+            }
+            const updatedSaved = [];
+            for (let i = 0; i < state.saved.length; i++) {
+                if (state.saved[i].name === fileName) {
+                    continue;
+                }
+                updatedSaved.push(state.saved[i]);
+            }
+            return {
+                ...state,
+                histories: updatedHistories,
+                saved: updatedSaved,
+                historiesIndex: newHistoriesIndex,
+            }
+        },
         setHistoriesIndex(state, action) {
             let index = -1;
             for (let i = 0; i < state.histories.length; i++) {
@@ -275,6 +308,8 @@ export const fileSlice = createSlice({
 export const {
     openFile,
     downloadFile,
+    deleteFile,
+    removeFile,
     setHistoriesIndex,
     nextHistoryIndex,
     updateCurrentHistoryIndexNext,

@@ -1,8 +1,8 @@
 import {call, put, select} from 'redux-saga/effects';
-import {requestGetFile, requestGetSaved, requestSave} from "@/sagas/requests/file";
+import {requestDeleteFile, requestGetFile, requestGetSaved, requestSave} from "@/sagas/requests/file";
 import {
     addFileToHistories,
-    addSaved, setHistoriesIndex,
+    addSaved, removeFile, setHistoriesIndex,
     setSaved,
     updateCurrentHistoryIndexNext,
     updateEdited,
@@ -151,5 +151,16 @@ export function* handleDownload(action) {
         downloadFile(content, action.payload.fileName);
     } catch (e) {
         console.log(e)
+    }
+}
+
+export function* handleDeleteFile(action) {
+    try {
+        const response = yield call(requestDeleteFile, action.payload.fileName, action.payload.id);
+        if (response.status === 200) {
+            yield put(removeFile({fileName: action.payload.fileName}));
+        }
+    } catch (error) {
+        console.log(error);
     }
 }

@@ -11,3 +11,7 @@ export function* requestSave(payload) {
 export function* requestGetFile(fileName, id) {
     return yield axios.post(`/api/user/files/get-file-content`, {fileName: fileName, id: id});
 }
+
+export function* requestDeleteFile(fileName, id) {
+    return yield axios.post(`/api/user/files/delete-file`, {fileName: fileName, id: id});
+}
