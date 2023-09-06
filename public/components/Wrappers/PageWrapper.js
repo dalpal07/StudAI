@@ -1,16 +1,15 @@
 import {useUser} from "@auth0/nextjs-auth0/client";
 import {useDispatch, useSelector} from "react-redux";
 import {getUser, selectSub} from "@/slices/userSlice";
-import {getSubscription, selectProductAccess} from "@/slices/subscriptionSlice";
+import {getSubscription} from "@/slices/subscriptionSlice";
 import {getSaved} from "@/slices/fileSlice";
 import {useEffect} from "react";
 import NavBar from "@/public/components/NavBar";
 
-export default function PageWrapper(WrappedPage, RequireAuth = false, RequireProductAccess = false) {
+export default function PageWrapper(WrappedPage, RequireAuth = false) {
     return function Page(props) {
         const {user, error, isLoading} = useUser();
         const sub = useSelector(selectSub);
-        const productAccess = useSelector(selectProductAccess);
         const dispatch = useDispatch();
         useEffect(() => {
             if (!isLoading && !error) {
@@ -24,15 +23,12 @@ export default function PageWrapper(WrappedPage, RequireAuth = false, RequirePro
                     dispatch(getSubscription({id: null}));
                 }
                 if (RequireAuth && !user) {
-                    window.location.href = "/api/auth/login";
+                    window.location.href = `/api/auth/login?returnTo=${encodeURIComponent(
+                        window.location.pathname
+                    )}`;
                 }
             }
         }, [user, error, isLoading])
-        useEffect(() => {
-            if (RequireProductAccess && productAccess === false) {
-                window.location.href = "/payment";
-            }
-        }, [productAccess])
         return (
             <>
                 <NavBar/>

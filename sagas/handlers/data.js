@@ -2,8 +2,14 @@ import {put, select, call} from "redux-saga/effects";
 import {selectCancelled, setCancelled, setDataProcessing} from "@/slices/dataSlice";
 import {requestGetScript, requestRunScript, requestSetUUID} from "@/sagas/requests/data";
 import {updateCurrentHistoryIndexNext, updateHistory} from "@/slices/fileSlice";
+import {selectProductAccess} from "@/slices/subscriptionSlice";
 
 export function* handleSendRequest(action) {
+    const access = yield select(selectProductAccess);
+    if (!access) {
+        alert("Please subscribe to a plan to use this feature.")
+        return;
+    }
     yield put(setDataProcessing({dataProcessing: true}));
     if (yield checkCancelled()) return;
     try {

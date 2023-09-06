@@ -53,7 +53,6 @@ export default function DataSetsList() {
     }
     function handleClickOutside(event) {
         const contextMenu = contextMenuRef.current;
-        const renameInput = renameRef.current;
         if (contextMenu && !contextMenu.contains(event.target)) {
             contextMenu.style.display = 'none';
             document.removeEventListener("click", handleClickOutside);

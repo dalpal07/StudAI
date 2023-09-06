@@ -8,7 +8,7 @@ export default function HomeMiddle() {
         <HomeMiddleBox>
             <BoldText size={"0.875rem"}>Welcome to</BoldText>
             <HeightSpacer height={"1.12rem"}/>
-            <Image src={"/images/FullLogo.svg"} alt={"logo"} width={362} height={77}/>
+            <Image priority={true} src={"/images/FullLogo.svg"} alt={"logo"} width={362} height={77}/>
             <HeightSpacer height={"1.12rem"}/>
             <BoldText size={"1.125rem"}>Your Personal Data Maid</BoldText>
         </HomeMiddleBox>
