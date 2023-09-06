@@ -36,4 +36,5 @@ export const {
 export const selectDataProcessing = state => state.data.dataProcessing
 export const selectDataUpload = state => state.data.dataUpload
 export const selectCancelled = state => state.data.cancelled
+export const selectDisabled = state => state.data.dataProcessing || state.data.dataUpload
 export default dataSlice.reducer

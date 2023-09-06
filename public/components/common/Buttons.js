@@ -31,13 +31,14 @@ export const GreenButton = styled(DefaultButton)({
     "&:hover": {
         background: "var(--main-green-hover, #4AAE4A)",
     },
+    "&:disabled": {
+        opacity: 0.5,
+    }
 });
-export const UploadDataSetButton = styled(Button)({
-    display: "flex",
+export const UploadDataSetButton = styled(GreenButton)({
     width: "100%",
     padding: "1.125rem 1.75rem",
     borderRadius: "0.625rem",
-    background: "var(--main-green, #53B753)"
 });
 export const ArrowButton = styled("button")({
     display: "flex",
