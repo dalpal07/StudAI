@@ -34,7 +34,9 @@ export default function Menu({clicked, forwardRef}) {
                             <BoldText size={"1.125rem"}>Home</BoldText>
                         </HiddenHref>
                         <HeightSpacer height={"0.5rem"}/>
-                        <BoldText size={"1.125rem"}>Support</BoldText>
+                        <HiddenHref href={'/support'}>
+                            <BoldText size={"1.125rem"}>Support</BoldText>
+                        </HiddenHref>
                         <HeightSpacer height={"1rem"}/>
                         <Box style={{
                             width: "3.75rem",
