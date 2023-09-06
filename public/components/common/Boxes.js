@@ -297,6 +297,9 @@ export const ViewDataContainer = styled(StackColumnBox) ({
 });
 export const ViewDataBox = styled(StackColumnBox) ({
     width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
 });
 export const ViewDataUtilitiesBox = styled(StackRowBox) ({
     width: "100%",
