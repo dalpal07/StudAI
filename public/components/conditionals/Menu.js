@@ -13,19 +13,6 @@ import {HiddenHref} from "@/public/components/common/Miscellaneous";
 
 export default function Menu({clicked, forwardRef}) {
         const name = useSelector(selectName);
-        const router = useRouter();
-        const handleSignOut = () => {
-                router.push("/api/auth/logout");
-        }
-        const handleHelp = () => {
-                router.push("/help");
-        }
-        const handleStud = () => {
-                router.push("/product");
-        }
-        const handlePricing = () => {
-                router.push("/payment");
-        }
         if (clicked) {
             return (
                 <MenuBox ref={forwardRef}>
@@ -43,7 +30,9 @@ export default function Menu({clicked, forwardRef}) {
                             <BoldText size={"1.125rem"}>My Data</BoldText>
                         </HiddenHref>
                         <HeightSpacer height={"0.5rem"}/>
-                        <BoldText size={"1.125rem"}>Home</BoldText>
+                        <HiddenHref href={'/'}>
+                            <BoldText size={"1.125rem"}>Home</BoldText>
+                        </HiddenHref>
                         <HeightSpacer height={"0.5rem"}/>
                         <BoldText size={"1.125rem"}>Support</BoldText>
                         <HeightSpacer height={"1rem"}/>
