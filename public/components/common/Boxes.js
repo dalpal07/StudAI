@@ -198,14 +198,16 @@ export const HomeBottomBox = styled(HomeTopBox) ({
 });
 
 export const ProductBox = styled(StackColumnBox) ({
-    width: "100%",
+    width: "100wh",
+    maxWidth: "100wh",
     height: "100vh",
     borderRadius: "0.3125rem",
     background: "var(--ui-white, #F9F9F9)",
 });
 export const ProductInnerBox = styled(StackRowBox) ({
-    width: "100%",
-    height: "100%",
+    width: "inherit",
+    maxWidth: "inherit",
+    height: "inherit",
 });
 export const DataSetsBox = styled(StackColumnBox) ({
     width: "18rem",
@@ -268,12 +270,10 @@ export const DataSetEditedBox = styled(StackRowBox) ({
 });
 export const DataEditorBox = styled(StackColumnBox) ({
     padding: "0rem 1.125rem",
-    width: "100%",
-    height: "100%",
+    width: "calc(100% - 18rem - 1.12rem)",
     boxSizing: "border-box",
     alignItems: "center",
-    flex: "1 0 0",
-    alignSelf: "stretch",
+    flexGrow: 1,
 });
 export const RequestUtilitiesBox = styled(StackRowBox) ({
     width: "100%",
@@ -284,17 +284,19 @@ export const JustifyRightBox = styled(StackRowBox) ({
     boxSizing: "border-box",
     justifyContent: "flex-end",
 });
-export const ViewDataBox = styled(StackColumnBox) ({
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "100%",
-    boxSizing: "border-box",
-    flex: "1 0 0",
-    alignSelf: "stretch",
+export const ViewDataContainer = styled(StackColumnBox) ({
     borderRadius: "0.3125rem",
     border: "1px solid var(--25-black, rgba(28, 26, 26, 0.25))",
     background: "#F0F0F0",
+    boxSizing: "border-box",
+    justifyContent: "flex-start",
+    alignItems: "start",
+    alignSelf: "stretch",
+    flex: "1 0 0",
+    overflow: "scroll",
+});
+export const ViewDataBox = styled(StackColumnBox) ({
+    width: "100%",
 });
 export const ViewDataUtilitiesBox = styled(StackRowBox) ({
     width: "100%",
