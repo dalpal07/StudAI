@@ -24,6 +24,7 @@ import {
     readXlsxFile
 } from "@/public/functions/ExtractFileData";
 import {save, selectSaved} from "@/slices/fileSlice";
+import {HiddenInput} from "@/public/components/common/Inputs";
 
 function formatBytes(bytes) {
     if (bytes < 1024) {
@@ -98,6 +99,17 @@ export default function DataUpload() {
         setPendingFiles(newPendingFiles);
     }
 
+    const handleUpload = (event) => {
+        event.preventDefault();
+        const files = event.target.files;
+        const newPendingFiles = [...pendingFiles];
+        for (let i = 0; i < files.length; i++) {
+            files[i].key = generateRandomUUID().toString();
+            newPendingFiles.push(files[i]);
+        }
+        setPendingFiles(newPendingFiles);
+    };
+
     const handleDrop = (event) => {
         event.preventDefault();
         setIsDraggingOver(false);
@@ -114,6 +126,11 @@ export default function DataUpload() {
         dispatch(setCancelled({cancelled: true}));
         setPendingFiles([]);
     }
+
+    const handleUploadClick = () => {
+        // Trigger the click event on the hidden file input
+        document.getElementById("fileInput").click();
+    };
 
     if (dataUpload) {
         return (
@@ -134,7 +151,13 @@ export default function DataUpload() {
                         <HeightSpacer height={"0.5rem"}/>
                         <Text size={"0.875rem"}>Or upload from your computer</Text>
                         <HeightSpacer height={"0.5rem"}/>
-                        <WhiteButton>
+                        <WhiteButton onClick={handleUploadClick}>
+                            <HiddenInput
+                                id="fileInput"
+                                type={"file"}
+                                onChange={handleUpload}
+                                multiple
+                            />
                             <BoldText size={"0.875rem"}>Upload</BoldText>
                         </WhiteButton>
                     </DragDropBox>
