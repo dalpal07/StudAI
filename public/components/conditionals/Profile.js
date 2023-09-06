@@ -40,7 +40,7 @@ export default function Profile() {
     }
     if (name) return (
         <RightNavBox ismobile={isMobile.toString()}>
-            <BoldText size={"0.875rem"}>{name}</BoldText>
+            <BoldText>{name}</BoldText>
             <WidthSpacer width={"0.5rem"}/>
             <HiddenButton onClick={handleProfileClick} ref={profileRef}>
                 <Image src={"./images/Profile.svg"} alt={"profile"} height={33} width={33}/>
