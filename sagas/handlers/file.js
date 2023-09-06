@@ -1,11 +1,17 @@
 import {call, put, select} from 'redux-saga/effects';
-import {requestDeleteFile, requestGetFile, requestGetSaved, requestSave} from "@/sagas/requests/file";
+import {
+    requestDeleteFile,
+    requestGetFile,
+    requestGetSaved,
+    requestRenameFile,
+    requestSave
+} from "@/sagas/requests/file";
 import {
     addFileToHistories,
     addSaved, addToPendingFiles, removeFile, setHistoriesIndex,
     setSaved,
     updateCurrentHistoryIndexNext,
-    updateEdited,
+    updateEdited, updateFileName,
     updateHistory
 } from "@/slices/fileSlice";
 import {
@@ -162,6 +168,18 @@ export function* handleDeleteFile(action) {
         const response = yield call(requestDeleteFile, action.payload.fileName, action.payload.id);
         if (response.status === 200) {
             yield put(removeFile({fileName: action.payload.fileName}));
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export function* handleRenameFile(action) {
+    try {
+        const response = yield call(requestRenameFile, action.payload);
+        if (response.status === 200) {
+            yield put(updateFileName({oldFileName: action.payload.oldFileName, newFileName: action.payload.newFileName}));
+            yield put(addSaved({fileName: action.payload.newFileName}));
         }
     } catch (error) {
         console.log(error);

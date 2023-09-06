@@ -8,10 +8,11 @@ import {BoldTextNoWrap, ItalicText, Text} from "@/public/components/common/Typog
 import {HeightSpacer} from "@/public/components/common/Spacers";
 import DataBottom from "@/public/components/product/DataBottom";
 import {useDispatch, useSelector} from "react-redux";
-import {openFile, selectCurrentFileName, selectFileEdited, selectSaved} from "@/slices/fileSlice";
+import {openFile, renameFile, selectCurrentFileName, selectFileEdited, selectSaved} from "@/slices/fileSlice";
 import {HiddenButton} from "@/public/components/common/Buttons";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {selectSub} from "@/slices/userSlice";
+import {Box, Input} from "@mui/material";
 
 export default function DataSetsList() {
     const currentFileName = useSelector(selectCurrentFileName);
@@ -20,6 +21,8 @@ export default function DataSetsList() {
     const dispatch = useDispatch();
     const contextMenuRef = useRef(null);
     const [contextMenuFileIndex, setContextMenuFileIndex] = useState(-1);
+    const [rename, setRename] = useState("");
+    const [newName, setNewName] = useState("");
 
     function showContextMenu(event, index) {
         setContextMenuFileIndex(index);
@@ -42,10 +45,15 @@ export default function DataSetsList() {
             const fileName = saved[contextMenuFileIndex].name;
             dispatch(openFile({fileName: fileName, id: sub}));
         }
+        if (action === "rename") {
+            console.log("renaming...");
+            setRename(saved[contextMenuFileIndex].name);
+        }
         hideContextMenu();
     }
     function handleClickOutside(event) {
         const contextMenu = contextMenuRef.current;
+        const renameInput = renameRef.current;
         if (contextMenu && !contextMenu.contains(event.target)) {
             contextMenu.style.display = 'none';
             document.removeEventListener("click", handleClickOutside);
@@ -63,7 +71,36 @@ export default function DataSetsList() {
                                 greenborder={(dataSet.name === currentFileName).toString()}
                                 onClick={() => dispatch(openFile({fileName: dataSet.name, id: sub}))}
                             >
-                                <BoldTextNoWrap>{dataSet.name}</BoldTextNoWrap>
+                                {
+                                    rename === dataSet.name ?
+                                        <Input style={{
+                                            width: "100%",
+                                            fontSize: "1rem",
+                                            fontWeight: "bold",
+                                            border: "1px solid #C5C5C5",
+                                        }}
+                                            type={"text"}
+                                            disableUnderline={true}
+                                            autoFocus={true}
+                                            defaultValue={rename}
+                                            onChange={(e) => setNewName(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    if (newName === "" || newName === rename) {
+                                                        setRename("");
+                                                        setNewName("");
+                                                        return;
+                                                    }
+                                                    console.log("enter");
+                                                    dispatch(renameFile({id: sub, oldFileName: rename, newFileName: newName}));
+                                                    setRename("");
+                                                    setNewName("");
+                                                }
+                                            }}
+                                        />
+                                        :
+                                        <BoldTextNoWrap>{dataSet.name}</BoldTextNoWrap>
+                                }
                                 <HeightSpacer height={"0.25rem"}/>
                                 <ItalicText size={"0.75rem"}>Last updated: {dataSet.lastUpdated}</ItalicText>
                                 <HeightSpacer height={"0.25rem"}/>
@@ -77,6 +114,16 @@ export default function DataSetsList() {
             <ContextMenuBox id={`context-menu`} ref={contextMenuRef}>
                 <HiddenButton onClick={() => handleAction("open")}>
                     <Text size={"0.875rem"}>Open in viewer</Text>
+                </HiddenButton>
+                <HeightSpacer height={"0.25rem"}/>
+                <Box style={{
+                    width: "100%",
+                    height: "1px",
+                    backgroundColor: "#C5C5C5",
+                }}/>
+                <HeightSpacer height={"0.25rem"}/>
+                <HiddenButton onClick={() => handleAction("rename")}>
+                    <Text size={"0.875rem"}>Rename</Text>
                 </HiddenButton>
             </ContextMenuBox>
         </>

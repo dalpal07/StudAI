@@ -28,6 +28,38 @@ export const fileSlice = createSlice({
     name: 'file',
     initialState,
     reducers: {
+        renameFile(state, action) {},
+        updateFileName(state, action) {
+            const oldFileName = action.payload.oldFileName;
+            const newFileName = action.payload.newFileName;
+            const updatedHistories = [];
+            for (let i = 0; i < state.histories.length; i++) {
+                if (state.histories[i].name === oldFileName) {
+                    updatedHistories.push({
+                        ...state.histories[i],
+                        name: newFileName,
+                    });
+                    continue;
+                }
+                updatedHistories.push(state.histories[i]);
+            }
+            const updatedSaved = [];
+            for (let i = 0; i < state.saved.length; i++) {
+                if (state.saved[i].name === oldFileName) {
+                    updatedSaved.push({
+                        ...state.saved[i],
+                        name: newFileName,
+                    });
+                    continue;
+                }
+                updatedSaved.push(state.saved[i]);
+            }
+            return {
+                ...state,
+                histories: updatedHistories,
+                saved: updatedSaved,
+            }
+        },
         openFile(state, action) {},
         downloadFile(state, action) {},
         deleteFile(state, action) {},
@@ -313,6 +345,8 @@ export const fileSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
+    renameFile,
+    updateFileName,
     openFile,
     downloadFile,
     deleteFile,

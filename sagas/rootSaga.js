@@ -7,10 +7,10 @@ import {
     handleDeleteFile,
     handleDownload,
     handleGetSaved,
-    handleOpenFile,
+    handleOpenFile, handleRenameFile,
     handleSave,
 } from "@/sagas/handlers/file";
-import {deleteFile, downloadFile, getSaved, openFile, save, uploadFile} from "@/slices/fileSlice";
+import {deleteFile, downloadFile, getSaved, openFile, renameFile, save, uploadFile} from "@/slices/fileSlice";
 import {sendRequest} from "@/slices/dataSlice";
 import {handleSendRequest} from "@/sagas/handlers/data";
 
@@ -25,6 +25,7 @@ export function* watcherSaga() {
     yield takeLatest(openFile.toString(), handleOpenFile);
     yield takeLatest(downloadFile.toString(), handleDownload);
     yield takeLatest(deleteFile.toString(), handleDeleteFile);
+    yield takeLatest(renameFile.toString(), handleRenameFile);
     // data
     yield takeLatest(sendRequest.toString(), handleSendRequest);
 }

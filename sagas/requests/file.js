@@ -15,3 +15,7 @@ export function* requestGetFile(fileName, id) {
 export function* requestDeleteFile(fileName, id) {
     return yield axios.post(`/api/user/files/delete-file`, {fileName: fileName, id: id});
 }
+
+export function* requestRenameFile(payload) {
+    return yield axios.post(`/api/user/files/rename-file`, payload);
+}
