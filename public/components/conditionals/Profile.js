@@ -35,9 +35,6 @@ export default function Profile() {
     const handleProfileClick = () => {
         setClicked(!clicked);
     }
-    const handleLoginClick = () => {
-        router.push("/api/auth/login");
-    }
     if (name) return (
         <RightNavBox ismobile={isMobile.toString()}>
             <BoldText>{name}</BoldText>

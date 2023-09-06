@@ -174,10 +174,15 @@ export const RightNavBox = styled(StackRowBox) (({ismobile}) => ({
     width: ismobile === true.toString() ? "67%" : "50%",
 }));
 export const HomeBox = styled(StackColumnBox) ({
-    alignItems: "center",
     borderRadius: "0.3125rem",
     background: "linear-gradient(180deg, #F9F9F9 0%, rgba(242, 242, 242, 0.00) 57.81%, rgba(83, 183, 83, 0.16) 100%)",
     flexShrink: 0,
+    height: "300vh",
+});
+
+export const HomePage = styled(StackColumnBox) ({
+    alignItems: "center",
+    justifyContent: "center",
     alignSelf: "stretch",
     height: "100vh",
 });
@@ -196,6 +201,16 @@ export const HomeBottomBox = styled(HomeTopBox) ({
     alignItems: "center",
     justifyContent: "flex-end",
 });
+
+export const DemoBox = styled(StackColumnBox) (({ismobile}) => ({
+    flex: 1,
+    margin: ismobile === true.toString() ? "12rem 1rem 12rem 1rem" : "6rem 6rem 0rem 6rem",
+    alignSelf: "stretch",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "1.25rem",
+    background: "#DCDCDC",
+}));
 
 export const ProductBox = styled(StackColumnBox) ({
     width: "100wh",
