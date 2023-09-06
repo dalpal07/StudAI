@@ -8,12 +8,13 @@ import {BoldTextNoWrap, ItalicText, Text} from "@/public/components/common/Typog
 import {HeightSpacer} from "@/public/components/common/Spacers";
 import DataBottom from "@/public/components/product/DataBottom";
 import {useDispatch, useSelector} from "react-redux";
-import {openFile, selectFileEdited, selectSaved} from "@/slices/fileSlice";
+import {openFile, selectCurrentFileName, selectFileEdited, selectSaved} from "@/slices/fileSlice";
 import {HiddenButton} from "@/public/components/common/Buttons";
 import {useRef, useState} from "react";
 import {selectSub} from "@/slices/userSlice";
 
 export default function DataSetsList() {
+    const currentFileName = useSelector(selectCurrentFileName);
     const saved = useSelector(selectSaved);
     const sub = useSelector(selectSub);
     const dispatch = useDispatch();
@@ -57,7 +58,11 @@ export default function DataSetsList() {
                 {saved.map((dataSet, index) => {
                     return (
                         <StackColumnBox key={index}>
-                            <DataBox onContextMenu={(e) => showContextMenu(e, index)}>
+                            <DataBox
+                                onContextMenu={(e) => showContextMenu(e, index)}
+                                greenborder={(dataSet.name === currentFileName).toString()}
+                                onClick={() => dispatch(openFile({fileName: dataSet.name, id: sub}))}
+                            >
                                 <BoldTextNoWrap>{dataSet.name}</BoldTextNoWrap>
                                 <HeightSpacer height={"0.25rem"}/>
                                 <ItalicText size={"0.75rem"}>Last updated: {dataSet.lastUpdated}</ItalicText>

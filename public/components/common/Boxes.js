@@ -237,14 +237,15 @@ export const ContextMenuBox = styled(StackColumnBox) ({
     background: "var(--UI-white, #F9F9F9)",
     boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.35), 0px 0px 4px 0px rgba(0, 0, 0, 0.25), 0px 0px 10px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.10)",
 });
-export const DataBox = styled(StackColumnBox) ({
+export const DataBox = styled(StackColumnBox) (({greenborder}) => ({
+    cursor: "pointer",
     width: "100%",
     height: "fit-content",
     boxSizing: "border-box",
     padding: "0.75rem 1.125rem",
     borderRadius: "0.3125rem",
-    border: "1px solid var(--25-black, rgba(28, 26, 26, 0.25))",
-});
+    border: greenborder === true.toString() ? "3px solid var(--main-green, #53B753)" : "1px solid var(--25-black, rgba(28, 26, 26, 0.25))",
+}));
 export const DataBottomBox = styled(StackRowBox) ({
     width: "100%",
     alignItems: "center",
