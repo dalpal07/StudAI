@@ -244,7 +244,7 @@ export const DataBox = styled(StackColumnBox) (({greenborder}) => ({
     boxSizing: "border-box",
     padding: "0.75rem 1.125rem",
     borderRadius: "0.3125rem",
-    border: greenborder === true.toString() ? "3px solid var(--main-green, #53B753)" : "1px solid var(--25-black, rgba(28, 26, 26, 0.25))",
+    border: greenborder === true.toString() ? "2px solid var(--main-green, #53B753)" : "1px solid var(--25-black, rgba(28, 26, 26, 0.25))",
 }));
 export const DataBottomBox = styled(StackRowBox) ({
     width: "100%",
