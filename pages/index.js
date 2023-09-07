@@ -2,16 +2,21 @@ import {DemoBox, HomeBox, HomePage, HomeTopBox, StackColumnBox, StackRowBox,} fr
 import PageWrapper from "@/public/components/Wrappers/PageWrapper";
 import HomeMiddle from "@/public/components/home/HomeMiddle";
 import HomeBottom from "@/public/components/home/HomeBottom";
-import {BoldText, GreenBoldText, Text} from "@/public/components/common/Typographies";
+import {BoldText, GreenBoldText, Text, WhiteBoldText} from "@/public/components/common/Typographies";
 import {HeightSpacer, WidthSpacer} from "@/public/components/common/Spacers";
 import Image from "next/image";
 import {Box, useMediaQuery} from "@mui/material";
-import {HiddenButton} from "@/public/components/common/Buttons";
+import {DefaultButton, GreenButton, HiddenButton} from "@/public/components/common/Buttons";
 import {HiddenHref} from "@/public/components/common/Miscellaneous";
 import Plan from "@/public/components/home/Plan";
+import {useSelector} from "react-redux";
+import {selectSub} from "@/slices/userSlice";
+import {useRouter} from "next/router";
 
 function Home() {
     const isMobile = useMediaQuery('(max-width:600px)');
+    const sub = useSelector(selectSub);
+    const router = useRouter();
     function scrollPage(targetPage) {
         const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
         const currentPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
@@ -94,25 +99,42 @@ function Home() {
                     justifyContent: "center",
                     alignItems: "center",
                 }}>
-                    <BoldText size={"1.5rem"}>Select a Plan</BoldText>
-                    <HeightSpacer height={"1.5rem"}/>
-                    <StackRowBox style={{
-
-                    }}>
-                        <Plan plan={"Early Access"} price={"0.00"} description={"Enjoy 25 free chat requests for signing up early! All we ask for in return is your feedback."} action={"Continue"}/>
-                        <WidthSpacer width={"1.12rem"}/>
-                        <Plan plan={"Standard"} price={"4.99"} description={"Use up to 150 requests per month."} action={"Sign up now"}/>
-                        <WidthSpacer width={"1.12rem"}/>
-                        <Plan plan={"Unlimited"} price={"9.99"} description={"Get unlimited requests each month!"} action={"Sign up now"}/>
-                    </StackRowBox>
-                    <HeightSpacer height={"1.5rem"}/>
-                    <StackRowBox>
-                        <Text size={"0.875rem"}>Already have a plan?</Text>
-                        <WidthSpacer width={"0.75rem"}/>
-                        <HiddenHref href={"/api/auth/login"}>
-                            <GreenBoldText size={"0.875rem"}>Login</GreenBoldText>
-                        </HiddenHref>
-                    </StackRowBox>
+                    {
+                        sub ?
+                            <>
+                                <BoldText size={"1.5rem"}>Welcome back!</BoldText>
+                                <HeightSpacer height={"1rem"}/>
+                                <Text size={"1.125rem"}>View your plan to see your current pricing options</Text>
+                                <HeightSpacer height={"1.5rem"}/>
+                                <GreenButton onClick={() => router.push("/subscription")}>
+                                    <WhiteBoldText size={"1.25rem"}>View my plan</WhiteBoldText>
+                                </GreenButton>
+                            </>
+                            :
+                            <>
+                                <BoldText size={"1.5rem"}>Select a Plan</BoldText>
+                                <HeightSpacer height={"1.5rem"}/>
+                                <StackRowBox style={{}}>
+                                    <Plan plan={"Early Access"} price={"0.00"}
+                                          description={"Enjoy 25 free chat requests for signing up early! All we ask for in return is your feedback."}
+                                          action={"Continue"}/>
+                                    <WidthSpacer width={"1.12rem"}/>
+                                    <Plan plan={"Standard"} price={"4.99"} description={"Use up to 150 requests per month."}
+                                          action={"Sign up now"}/>
+                                    <WidthSpacer width={"1.12rem"}/>
+                                    <Plan plan={"Unlimited"} price={"9.99"} description={"Get unlimited requests each month!"}
+                                          action={"Sign up now"}/>
+                                </StackRowBox>
+                                <HeightSpacer height={"1.5rem"}/>
+                                <StackRowBox>
+                                    <Text size={"0.875rem"}>Already have a plan?</Text>
+                                    <WidthSpacer width={"0.75rem"}/>
+                                    <HiddenHref href={"/api/auth/login"}>
+                                        <GreenBoldText size={"0.875rem"}>Login</GreenBoldText>
+                                    </HiddenHref>
+                                </StackRowBox>
+                            </>
+                    }
                 </StackColumnBox>
                 <StackColumnBox style={{
                     minHeight: "fit-content",
