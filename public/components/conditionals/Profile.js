@@ -47,13 +47,13 @@ export default function Profile() {
     )
     return (
         <RightNavBox ismobile={isMobile.toString()}>
-            <HiddenHref href={'/api/auth/login'}>
+            <HiddenHref href={'/api/auth/login?returnTo=/product'}>
                 <GreenBoldText size={"0.875rem"}>
                     Login
                 </GreenBoldText>
             </HiddenHref>
             <WidthSpacer width={"1.75rem"}/>
-            <DefaultButton onClick={() => router.push("/api/auth/signup")}>
+            <DefaultButton onClick={() => router.push("/api/auth/signup?returnTo=/product")}>
                 <BoldText size={"0.875rem"}>
                     Sign Up
                 </BoldText>

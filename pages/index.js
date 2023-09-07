@@ -129,7 +129,7 @@ function Home() {
                                 <StackRowBox>
                                     <Text size={"0.875rem"}>Already have a plan?</Text>
                                     <WidthSpacer width={"0.75rem"}/>
-                                    <HiddenHref href={"/api/auth/login"}>
+                                    <HiddenHref href={"/api/auth/login?returnTo=/product"}>
                                         <GreenBoldText size={"0.875rem"}>Login</GreenBoldText>
                                     </HiddenHref>
                                 </StackRowBox>
