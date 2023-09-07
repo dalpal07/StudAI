@@ -99,11 +99,11 @@ function Home() {
                     <StackRowBox style={{
 
                     }}>
-                        <Plan title={"Early Access"} price={"0.00"} description={"Enjoy 25 free chat requests for signing up early! All we ask for in return is your feedback."} action={"Continue"} href={"/api/auth/signup"}/>
+                        <Plan plan={"Early Access"} price={"0.00"} description={"Enjoy 25 free chat requests for signing up early! All we ask for in return is your feedback."} action={"Continue"}/>
                         <WidthSpacer width={"1.12rem"}/>
-                        <Plan title={"Standard"} price={"4.99"} description={"Use up to 150 requests per month."} action={"Sign up now"} href={"/api/auth/signup"}/>
+                        <Plan plan={"Standard"} price={"4.99"} description={"Use up to 150 requests per month."} action={"Sign up now"}/>
                         <WidthSpacer width={"1.12rem"}/>
-                        <Plan title={"Unlimited"} price={"9.99"} description={"Get unlimited requests each month!"} action={"Sign up now"} href={"/api/auth/signup"}/>
+                        <Plan plan={"Unlimited"} price={"9.99"} description={"Get unlimited requests each month!"} action={"Sign up now"}/>
                     </StackRowBox>
                     <HeightSpacer height={"1.5rem"}/>
                     <StackRowBox>

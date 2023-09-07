@@ -1,8 +1,8 @@
 import {put, select, call} from "redux-saga/effects";
 import {selectCancelled, setCancelled, setDataProcessing} from "@/slices/dataSlice";
-import {requestGetScript, requestRunScript, requestSetUUID} from "@/sagas/requests/data";
+import {requestAddRequest, requestGetScript, requestRunScript, requestSetUUID} from "@/sagas/requests/data";
 import {updateCurrentHistoryIndexNext, updateHistory} from "@/slices/fileSlice";
-import {selectProductAccess} from "@/slices/subscriptionSlice";
+import {addRequest, selectProductAccess} from "@/slices/subscriptionSlice";
 
 export function* handleSendRequest(action) {
     const access = yield select(selectProductAccess);
@@ -52,6 +52,9 @@ export function* handleSendRequest(action) {
         yield put(updateCurrentHistoryIndexNext());
         yield put(updateHistory({headers: headers, entries: entries, name: action.payload.fileName}))
         yield put(setDataProcessing({dataProcessing: false}));
+        const addRequestResponse = yield call(requestAddRequest, action.payload.id);
+        const {requests} = addRequestResponse.data;
+        yield put(addRequest({requests: requests}));
     }
     catch (error) {
         console.log(error);

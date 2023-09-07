@@ -1,8 +1,17 @@
 import {takeLatest, takeEvery} from 'redux-saga/effects';
 import {getUser} from "@/slices/userSlice";
-import {getSubscription} from "@/slices/subscriptionSlice";
+import {
+    cancelSubscription,
+    getStripeSubscription,
+    getSubscription,
+    resumeSubscription
+} from "@/slices/subscriptionSlice";
 import {handleGetUser} from "@/sagas/handlers/user";
-import {handleGetSubscription} from "@/sagas/handlers/subscription";
+import {
+    handleCancelSubscription,
+    handleGetStripeSubscription,
+    handleGetSubscription,
+} from "@/sagas/handlers/subscription";
 import {
     handleDeleteFile,
     handleDownload,
@@ -19,6 +28,8 @@ export function* watcherSaga() {
     yield takeLatest(getUser.toString(), handleGetUser);
     // subscription
     yield takeLatest(getSubscription.toString(), handleGetSubscription);
+    yield takeLatest(getStripeSubscription.toString(), handleGetStripeSubscription);
+    yield takeLatest(cancelSubscription.toString(), handleCancelSubscription);
     // file
     yield takeLatest(getSaved.toString(), handleGetSaved);
     yield takeEvery(save.toString(), handleSave);

@@ -10,8 +10,9 @@ export default function DataEditor() {
 
     return (
         <DataEditorBox>
+            <HeightSpacer height={"1rem"}/>
             <BoldText size={"1.5rem"}>Data Editor</BoldText>
-            <HeightSpacer height={"1.75rem"}/>
+            <HeightSpacer height={"1.5rem"}/>
             <RequestArea/>
             <HeightSpacer height={"2rem"}/>
             <ViewDataArea/>

@@ -21,7 +21,7 @@ function Product(props) {
                     <WidthSpacer width={"1.12rem"}/>
                     <DataEditor/>
                 </ProductInnerBox>
-                <HeightSpacer height={"1.12rem"}/>
+                <HeightSpacer height={"1.5rem"}/>
             </ProductBox>
         )
     }
