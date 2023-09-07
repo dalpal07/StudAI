@@ -2,34 +2,20 @@ import {StackColumnBox} from "@/public/components/common/Boxes";
 import {BoldText, GreenBoldText, Text} from "@/public/components/common/Typographies";
 import {HeightSpacer} from "@/public/components/common/Spacers";
 import {HiddenButton} from "@/public/components/common/Buttons";
-import {useSelector} from "react-redux";
-import {selectSub} from "@/slices/userSlice";
-
-async function checkout(type, id) {
-    console.log("type", type);
-    const response = await fetch("/api/stripe/create-checkout-session", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({type: type, id: id}),
-    })
-    if (response.status === 200) {
-        const {link} = await response.json();
-        window.location.href = link;
-    }
-}
+import {useRouter} from "next/router";
 
 export default function Plan(props) {
-    const sub = useSelector(selectSub);
+    const router = useRouter();
     const handleClick = (plan) => {
         console.log("plan", plan);
         const action = plan.toLowerCase();
         if (action === "standard") {
-            checkout("standard", sub);
+            const returnTo = encodeURIComponent("/?plan=standard")
+            router.push(`/api/auth/signup?returnTo=${returnTo}`)
         }
         if (action === "unlimited") {
-            checkout("unlimited", sub);
+            const returnTo = encodeURIComponent("/?plan=unlimited")
+            router.push(`/api/auth/signup?returnTo=${returnTo}`)
         }
         else {
             // handle free plan
