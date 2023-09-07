@@ -3,6 +3,7 @@ import {BoldText, GreenBoldText, Text} from "@/public/components/common/Typograp
 import {HeightSpacer} from "@/public/components/common/Spacers";
 import {HiddenButton} from "@/public/components/common/Buttons";
 import {useRouter} from "next/router";
+import Image from "next/image";
 
 export default function Plan(props) {
     const router = useRouter();
@@ -30,7 +31,16 @@ export default function Plan(props) {
             border: "1px solid var(--Main-green, #53B753)",
             background: "var(--UI-white, #F9F9F9)",
             width: "10rem",
+            position: "relative",
         }}>
+            {
+                props.plan === "Early Access" &&
+                <Image style={{
+                    position: "absolute",
+                    top: "-3px",
+                    left: "-3px",
+                }} src={"./images/free.svg"} alt={"free"} width={120} height={120}/>
+            }
             <BoldText size={"1.5rem"}>{props.plan}</BoldText>
             <HeightSpacer height={"1.12rem"}/>
             <Text size={"1.125rem"}>${props.price}/mo</Text>
