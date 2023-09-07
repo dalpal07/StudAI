@@ -29,7 +29,7 @@ export default async function handler(req, res) {
                 console.log(`✅ Success: ${event.type}; ${studId}`);
                 let user = await kv.get(studId);
                 if (!user) {
-                    throw new Error("User not found");
+                    user = {};
                 }
                 console.log("user", user);
                 user.stripeId = stripeId;
