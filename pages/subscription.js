@@ -24,7 +24,7 @@ function Subscription() {
     const options = { year: 'numeric', month: 'short', day: '2-digit' };
     const formattedDate = date ? date.toLocaleDateString('en-US', options) : "";
     const dispatch = useDispatch();
-    const red = (type === "free" && requests === 25) || (type === "standard" && requests === 150)
+    const red = (type === "standard" && requests === 100)
     if (!productAccess) return (
         <StackColumnBox style={{
             width: "100wh",
@@ -52,28 +52,6 @@ function Subscription() {
                     justifyContent: "flex-start",
                     border: "1px solid black",
                     padding: "0.5rem",
-                }}>
-                    <StackRowBox style={{
-                        width: "67%",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                    }}>
-                        <BoldText size={"1.125rem"}>Early Access</BoldText>
-                    </StackRowBox>
-                    <StackRowBox style={{
-                        width: "33%",
-                        justifyContent: "flex-end",
-                        alignItems: "center",
-                    }}>
-                        <Text size={"1.125rem"}>$0.00</Text>
-                    </StackRowBox>
-                </Button>
-                <HeightSpacer height={"0.25rem"}/>
-                <Button style={{
-                    width: "100%",
-                    justifyContent: "flex-start",
-                    border: "1px solid black",
-                    padding: "0.5rem",
                 }} onClick={() => checkout("standard", sub)}>
                     <StackRowBox style={{
                         width: "50%",
@@ -87,7 +65,7 @@ function Subscription() {
                         justifyContent: "flex-end",
                         alignItems: "center",
                     }}>
-                        <Text size={"1.125rem"}>$4.99</Text>
+                        <Text size={"1.125rem"}>$1.99</Text>
                     </StackRowBox>
                 </Button>
                 <HeightSpacer height={"0.25rem"}/>
@@ -109,7 +87,7 @@ function Subscription() {
                         justifyContent: "flex-end",
                         alignItems: "center",
                     }}>
-                        <Text size={"1.125rem"}>$9.99</Text>
+                        <Text size={"1.125rem"}>$4.99</Text>
                     </StackRowBox>
                 </Button>
             </StackColumnBox>

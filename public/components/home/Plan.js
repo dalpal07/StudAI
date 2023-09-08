@@ -34,7 +34,7 @@ export default function Plan(props) {
             position: "relative",
         }}>
             {
-                props.plan === "Early Access" &&
+                props.plan === "Unlimited" &&
                 <Image style={{
                     position: "absolute",
                     top: "-3px",
