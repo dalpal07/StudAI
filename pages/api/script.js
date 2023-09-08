@@ -36,7 +36,7 @@ export default async function handler(req) {
         }
         const systemContent = getSystemContent(headers);
         const payload = {
-            model: "gpt-3.5-turbo",
+            model: "gpt-3.5-turbo-16k-0613",
             messages: [
                 {
                     role: "system",
@@ -48,7 +48,7 @@ export default async function handler(req) {
                 },
             ],
             temperature: 0,
-            max_tokens: 1000,
+            max_tokens: 500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
