@@ -1,4 +1,5 @@
 import {
+    MobileProductInnerBox,
     ProductBox,
     ProductInnerBox,
 } from "@/public/components/common/Boxes";
@@ -9,10 +10,25 @@ import DataEditor from "@/public/components/product/DataEditor";
 import DisabledWrapper from "@/public/components/Wrappers/DisabledWrapper";
 import {useSelector} from "react-redux";
 import {selectSub} from "@/slices/userSlice";
+import {useMediaQuery} from "@mui/material";
 
 function Product(props) {
     const sub = useSelector(selectSub);
+    const isMobile = useMediaQuery('(max-width:600px)');
     if (sub) {
+        if (isMobile) {
+            return (
+                <ProductBox id={props.id}>
+                    <HeightSpacer height={"5rem"}/>
+                    <MobileProductInnerBox>
+                        <DataSets/>
+                        <HeightSpacer height={"1rem"}/>
+                        <DataEditor/>
+                    </MobileProductInnerBox>
+                    <HeightSpacer height={"1.5rem"}/>
+                </ProductBox>
+            )
+        }
         return (
             <ProductBox id={props.id}>
                 <HeightSpacer height={"5rem"}/>

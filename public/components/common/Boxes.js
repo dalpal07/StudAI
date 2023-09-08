@@ -223,6 +223,11 @@ export const ProductInnerBox = styled(StackRowBox) ({
     maxWidth: "inherit",
     height: "inherit",
 });
+export const MobileProductInnerBox = styled(StackColumnBox) ({
+    width: "inherit",
+    maxWidth: "inherit",
+    height: "inherit",
+});
 export const DataSetsBox = styled(StackColumnBox) ({
     width: "18rem",
     height: "100%",
@@ -234,6 +239,11 @@ export const DataSetsBox = styled(StackColumnBox) ({
     background: "var(--ui-white, #F9F9F9)",
     boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.20), 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 12px 0px rgba(0, 0, 0, 0.05)",
 });
+export const MobileDataSetsBox = styled(DataSetsBox) ({
+    width: "100vw",
+    height: "fit-content",
+    padding: "1rem",
+});
 export const DataSetsListBox = styled(StackColumnBox) ({
     width: "100%",
     height: "100%",
@@ -241,6 +251,11 @@ export const DataSetsListBox = styled(StackColumnBox) ({
     overflowY: "auto",
     paddingRight: "1rem",
     flex: "1 0 0",
+});
+export const MobileDataSetsListBox = styled(StackRowBox) ({
+    width: "100vw",
+    height: "5rem%",
+    overflowX: "auto",
 });
 export const ContextMenuBox = styled(StackColumnBox) ({
     position: "absolute",
@@ -261,6 +276,9 @@ export const DataBox = styled(StackColumnBox) (({greenborder}) => ({
     padding: "0.75rem 1.125rem",
     borderRadius: "0.3125rem",
     border: greenborder === true.toString() ? "2px solid var(--main-green, #53B753)" : "1px solid var(--25-black, rgba(28, 26, 26, 0.25))",
+}));
+export const MobileDataBox = styled(DataBox) (({greenborder}) => ({
+    width: "15rem",
 }));
 export const DataBottomBox = styled(StackRowBox) ({
     width: "100%",
@@ -288,6 +306,9 @@ export const DataEditorBox = styled(StackColumnBox) ({
     boxSizing: "border-box",
     alignItems: "center",
     flexGrow: 1,
+});
+export const MobileDataEditorBox = styled(DataEditorBox) ({
+    width: "100vw",
 });
 export const RequestUtilitiesBox = styled(StackRowBox) ({
     width: "100%",
