@@ -124,16 +124,26 @@ function Home() {
                             <>
                                 <BoldText size={"1.5rem"}>Select a Plan</BoldText>
                                 <HeightSpacer height={"1.5rem"}/>
-                                <StackRowBox style={{}}>
-                                    <Plan plan={"Early Access"} price={"0.00"}
-                                          description={"Enjoy 25 free chat requests for signing up early! All we ask for in return is your feedback."}
-                                          action={"Continue"}/>
-                                    <WidthSpacer width={"1.12rem"}/>
-                                    <Plan plan={"Standard"} price={"4.99"} description={"Use up to 150 requests per month."}
-                                          action={"Sign up now"}/>
-                                    <WidthSpacer width={"1.12rem"}/>
-                                    <Plan plan={"Unlimited"} price={"9.99"} description={"Get unlimited requests each month!"}
-                                          action={"Sign up now"}/>
+                                <StackRowBox style={{
+                                    overflowX: "scroll",
+                                    width: "100vw",
+                                    justifyContent: isMobile ? "flex-start" : "center",
+                                }}>
+                                    <StackRowBox style={{
+                                        alignSelf: "stretch",
+                                    }}>
+                                        <WidthSpacer width={"3rem"}/>
+                                        <Plan plan={"Early Access"} price={"0.00"}
+                                              description={"Enjoy 25 free chat requests for signing up early! All we ask for in return is your feedback."}
+                                              action={"Continue"}/>
+                                        <WidthSpacer width={"1.12rem"}/>
+                                        <Plan plan={"Standard"} price={"4.99"} description={"Use up to 150 requests per month."}
+                                              action={"Sign up now"}/>
+                                        <WidthSpacer width={"1.12rem"}/>
+                                        <Plan plan={"Unlimited"} price={"9.99"} description={"Get unlimited requests each month!"}
+                                              action={"Sign up now"}/>
+                                        <WidthSpacer width={"3rem"}/>
+                                    </StackRowBox>
                                 </StackRowBox>
                                 <HeightSpacer height={"1.5rem"}/>
                                 <StackRowBox>

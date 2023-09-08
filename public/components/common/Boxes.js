@@ -150,28 +150,27 @@ export const TableContainer = styled(Box)({
     overflow: "scroll",
 });
 // NavBar.js
-export const NavBox = styled(StackRowBox) ({
+export const NavBox = styled(StackRowBox) (({ismobile}) => ({
     position: "fixed",
     top: 0,
     zIndex: 1,
-    width: "100%",
+    width: "100vw",
     boxSizing: "border-box",
-    padding: "0.75rem 1.75rem",
+    padding: ismobile === true.toString() ? "0.75rem" : "0.75rem 1.75rem",
     alignItems: "center",
-    alignSelf: "stretch",
     background: "var(--ui-white, #F9F9F9)",
     boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.20), 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 12px 0px rgba(0, 0, 0, 0.05)",
-});
+}));
 export const LeftNavBox = styled(StackRowBox) (({ismobile}) => ({
     alignItems: "center",
     justifyContent: "left",
-    width: ismobile === true.toString() ? "33%" : "50%",
+    width: ismobile === true.toString() ? "fit-content" : "50%",
 }));
 
 export const RightNavBox = styled(StackRowBox) (({ismobile}) => ({
     alignItems: "center",
     justifyContent: "right",
-    width: ismobile === true.toString() ? "67%" : "50%",
+    flexGrow: 1,
 }));
 export const HomeBox = styled(StackColumnBox) ({
     borderRadius: "0.3125rem",
