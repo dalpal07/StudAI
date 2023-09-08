@@ -1,7 +1,7 @@
 import {useUser} from "@auth0/nextjs-auth0/client";
 import {useDispatch, useSelector} from "react-redux";
 import {getUser, selectSub} from "@/slices/userSlice";
-import {getStripeSubscription, getSubscription} from "@/slices/subscriptionSlice";
+import {getStripeSubscription} from "@/slices/subscriptionSlice";
 import {getSaved} from "@/slices/fileSlice";
 import {useEffect} from "react";
 import NavBar from "@/public/components/NavBar";

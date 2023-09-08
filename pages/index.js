@@ -81,8 +81,9 @@ function Home() {
             </HomePage>
             <HomePage>
                 <DemoBox ismobile={isMobile.toString()}>
-                    <BoldText size={"1.5rem"}>DEMO VIDEO</BoldText>
-                    <Text size={"1.125rem"}>coming soon...</Text>
+                    {/*<BoldText size={"1.5rem"}>DEMO VIDEO</BoldText>*/}
+                    {/*<Text size={"1.125rem"}>coming soon...</Text>*/}
+                    <iframe width="100%" height="100%" src="/videos/demo.mp4"/>
                 </DemoBox>
                 <StackColumnBox style={{
                     alignItems: "center",
