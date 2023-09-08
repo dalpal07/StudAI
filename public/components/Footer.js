@@ -1,7 +1,7 @@
-import {Line, StackColumnBox, StackRowBox} from "../components/common/Boxes";
-import {HeightSpacer, WidthFlexSpacer, WidthSpacer} from "../components/common/Spacers";
-import {FooterHref} from "../../public/components/common/Miscellaneous";
-import {Text} from "../../public/components/common/Typographies";
+import {Line, StackColumnBox, StackRowBox} from "@/public/components/common/Boxes";
+import {HeightSpacer, WidthFlexSpacer, WidthSpacer} from "@/public/components/common/Spacers";
+import {FooterHref} from "@/public/components/common/Miscellaneous";
+import {Text} from "@/public/components/common/Typographies";
 
 export default function Footer(props) {
     return (

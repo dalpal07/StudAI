@@ -1,16 +1,19 @@
-import {BoldText} from "../../../public/components/common/Typographies";
-import {ProfileBox} from "../../../public/components/common/Boxes";
-import {WidthSpacer} from "../../../public/components/common/Spacers";
-import {Button} from "@mui/material";
+import {BoldText, GreenBoldText} from "@/public/components/common/Typographies";
+import {RightNavBox} from "@/public/components/common/Boxes";
+import {WidthSpacer} from "@/public/components/common/Spacers";
+import {useMediaQuery} from "@mui/material";
 import Menu from "./Menu";
-import {DefaultButton} from "../../../public/components/common/Buttons";
-import Image from "next/image";
+import {DefaultButton, HiddenButton} from "@/public/components/common/Buttons";
 import React, {useEffect, useRef, useState} from "react";
-import {useUser} from "@auth0/nextjs-auth0/client";
 import {useRouter} from "next/router";
+import {useSelector} from "react-redux";
+import {selectName} from "@/slices/userSlice";
+import {HiddenHref} from "@/public/components/common/Miscellaneous";
+import Image from "next/image";
 
-export default function Profile(props) {
-    const { user, error, isLoading } = useUser();
+export default function Profile() {
+    const isMobile = useMediaQuery('(max-width:600px)');
+    const name = useSelector(selectName);
     const [clicked, setClicked] = useState(false);
     const profileRef = useRef(null);
     const signOutRef = useRef(null);
@@ -32,24 +35,29 @@ export default function Profile(props) {
     const handleProfileClick = () => {
         setClicked(!clicked);
     }
-    const handleLoginClick = () => {
-        router.push("/api/auth/login");
-    }
-    if (isLoading) return <BoldText size={"1.125rem"}>Loading...</BoldText>
-    if (error) return <BoldText size={"1.125rem"}>{error.message}</BoldText>
-    if (user) return (
-        <ProfileBox>
-            <BoldText size={"1.125rem"}>{user.name}</BoldText>
-            <WidthSpacer width={"1.75rem"}/>
-            <Button class={"profile-button svg-button"} onClick={handleProfileClick} ref={profileRef} disableTouchRipple></Button>
+    if (name) return (
+        <RightNavBox ismobile={isMobile.toString()}>
+            <BoldText>{name}</BoldText>
+            <WidthSpacer width={"0.5rem"}/>
+            <HiddenButton onClick={handleProfileClick} ref={profileRef}>
+                <Image src={"./images/Profile.svg"} alt={"profile"} height={33} width={33}/>
+            </HiddenButton>
             <Menu forwardRef={signOutRef} clicked={clicked}/>
-        </ProfileBox>
+        </RightNavBox>
     )
     return (
-        <ProfileBox>
-            <DefaultButton size={"1rem"} padding={"0.25rem 1.25rem"} onClick={handleLoginClick}>Sign In</DefaultButton>
+        <RightNavBox ismobile={isMobile.toString()}>
+            <HiddenHref href={'/api/auth/login?returnTo=/product'}>
+                <GreenBoldText size={"0.875rem"}>
+                    Login
+                </GreenBoldText>
+            </HiddenHref>
             <WidthSpacer width={"1.75rem"}/>
-            <Image src={"./images/Profile.svg"} alt={"Profile"} width={35.5} height={35.5}/>
-        </ProfileBox>
+            <DefaultButton onClick={() => router.push("/api/auth/signup?returnTo=/product")}>
+                <BoldText size={"0.875rem"}>
+                    Sign Up
+                </BoldText>
+            </DefaultButton>
+        </RightNavBox>
     )
 }

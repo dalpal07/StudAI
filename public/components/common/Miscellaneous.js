@@ -1,14 +1,13 @@
 import {styled, TableCell} from "@mui/material";
 import Image from "next/image";
-import exp from "constants";
 
-export const Cell = styled(TableCell)(({rowIndex}) => ({
+export const Cell = styled(TableCell)(({rowindex}) => ({
     padding: "0.5rem",
     textAlign: "left",
     fontFamily: "Inter",
     fontSize: "0.875rem",
     fontStyle: "normal",
-    fontWeight: rowIndex === 0 ? "bold" : "normal",
+    fontWeight: rowindex === 0 ? "bold" : "normal",
     lineHeight: "normal",
     textTransform: "none",
 }));

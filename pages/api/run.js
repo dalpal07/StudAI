@@ -1,3 +1,4 @@
+import {kv} from "@vercel/kv";
 const maxFileSizeBytes = 200 * 1024 * 1.25;
 
 function getStringSimilarityScore(str1, str2) {
@@ -65,11 +66,34 @@ function verifyNotExceedingMaxFileSize(object) {
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
-            const body = JSON.parse(req.body);
+            const body = req.body;
+            const {id, uuid} = body;
+            const user = await kv.get(id);
+            if (!user || user.uuid !== uuid) {
+                res.status(400).json({ message: "Unauthorized Request" });
+                return;
+            }
             const generatedFunction = refineFunctionString(body.generatedFunction);
             console.log("Script:\n" + generatedFunction)
             const headers = body.headers;
             const entries = body.entries;
+            const extraFiles = body.extraFiles;
+            function getFileHeaders(fileName) {
+                for (let i = 0; i < extraFiles.length; i++) {
+                    if (extraFiles[i].fileName === fileName) {
+                        return extraFiles[i].headers;
+                    }
+                }
+                return [];
+            }
+            function getFileEntries(fileName) {
+                for (let i = 0; i < extraFiles.length; i++) {
+                    if (extraFiles[i].fileName === fileName) {
+                        return extraFiles[i].entries;
+                    }
+                }
+                return [];
+            }
             const performRequest = await eval(`(${generatedFunction})`)
             const response = await performRequest(headers, entries)
             verifyReturnHeadersIsArray(response.headers)

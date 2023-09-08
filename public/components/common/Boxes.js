@@ -43,9 +43,11 @@ export const InnerBox4 = styled(InnerBox2) ({
 });
 export const OverlayContainer = styled(BasicBox) ({
     position: "fixed",
-    top: "30%",
+    top: 0,
+    height: "100vh",
     width: "100%",
     justifyContent: "center",
+    alignItems: "center",
 });
 export const OverlayBox = styled(StackColumnBox) ({
     background: "#F2F2F2",
@@ -148,20 +150,197 @@ export const TableContainer = styled(Box)({
     overflow: "scroll",
 });
 // NavBar.js
-export const NavBox = styled(BasicBox) ({
+export const NavBox = styled(StackRowBox) (({ismobile}) => ({
     position: "fixed",
-    boxSizing: "border-box",
-    width: "100%",
     top: 0,
     zIndex: 1,
-    padding: "1rem 1.5rem",
+    width: "100vw",
+    boxSizing: "border-box",
+    padding: ismobile === true.toString() ? "0.75rem" : "0.75rem 1.75rem",
     alignItems: "center",
-    gap: "1.75rem",
-    alignSelf: "stretch",
-    backgroundColor: "#F2F2F2",
-    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.30), 0px 0px 8px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.05)"
+    background: "var(--ui-white, #F9F9F9)",
+    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.20), 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 12px 0px rgba(0, 0, 0, 0.05)",
+}));
+export const LeftNavBox = styled(StackRowBox) (({ismobile}) => ({
+    alignItems: "center",
+    justifyContent: "left",
+    width: ismobile === true.toString() ? "fit-content" : "50%",
+}));
+
+export const RightNavBox = styled(StackRowBox) (({ismobile}) => ({
+    alignItems: "center",
+    justifyContent: "right",
+    flexGrow: 1,
+}));
+export const HomeBox = styled(StackColumnBox) ({
+    borderRadius: "0.3125rem",
+    background: "linear-gradient(180deg, #F9F9F9 0%, rgba(242, 242, 242, 0.00) 57.81%, rgba(83, 183, 83, 0.16) 100%)",
+    flexShrink: 0,
+    height: "300vh",
 });
 
+export const HomePage = styled(StackColumnBox) ({
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "stretch",
+    height: "100vh",
+});
+
+export const HomeTopBox = styled(StackColumnBox) ({
+    height: "33%",
+});
+
+export const HomeMiddleBox = styled(StackColumnBox) ({
+    alignItems: "center",
+    justifyContent: "center",
+    height: "34%",
+});
+
+export const HomeBottomBox = styled(HomeTopBox) ({
+    alignItems: "center",
+    justifyContent: "flex-end",
+});
+
+export const DemoBox = styled(StackColumnBox) (({ismobile}) => ({
+    flex: 1,
+    margin: ismobile === true.toString() ? "12rem 1rem 12rem 1rem" : "6rem 6rem 0rem 6rem",
+    alignSelf: "stretch",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "1.25rem",
+    background: "#DCDCDC",
+}));
+
+export const ProductBox = styled(StackColumnBox) ({
+    width: "100wh",
+    maxWidth: "100wh",
+    height: "100vh",
+    borderRadius: "0.3125rem",
+    background: "var(--ui-white, #F9F9F9)",
+});
+export const ProductInnerBox = styled(StackRowBox) ({
+    width: "inherit",
+    maxWidth: "inherit",
+    height: "inherit",
+});
+export const MobileProductInnerBox = styled(StackColumnBox) ({
+    width: "inherit",
+    maxWidth: "inherit",
+    height: "inherit",
+});
+export const DataSetsBox = styled(StackColumnBox) ({
+    width: "18rem",
+    height: "100%",
+    boxSizing: "border-box",
+    padding: "1.75rem",
+    alignItems: "center",
+    alignSelf: "stretch",
+    borderRadius: "0rem 0.3125rem 0.3125rem 0rem",
+    background: "var(--ui-white, #F9F9F9)",
+    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.20), 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 12px 0px rgba(0, 0, 0, 0.05)",
+});
+export const MobileDataSetsBox = styled(DataSetsBox) ({
+    width: "100vw",
+    height: "fit-content",
+    padding: "1rem",
+});
+export const DataSetsListBox = styled(StackColumnBox) ({
+    width: "100%",
+    height: "100%",
+    boxSizing: "border-box",
+    overflowY: "auto",
+    paddingRight: "1rem",
+    flex: "1 0 0",
+});
+export const MobileDataSetsListBox = styled(StackRowBox) ({
+    width: "100vw",
+    height: "5rem%",
+    overflowX: "auto",
+});
+export const ContextMenuBox = styled(StackColumnBox) ({
+    position: "absolute",
+    zIndex: "1",
+    padding: "0.75rem",
+    justifyContent: "left",
+    alignItems: "center",
+    display: "none",
+    borderRadius: "0.3125rem",
+    background: "var(--UI-white, #F9F9F9)",
+    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.35), 0px 0px 4px 0px rgba(0, 0, 0, 0.25), 0px 0px 10px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.10)",
+});
+export const DataBox = styled(StackColumnBox) (({greenborder}) => ({
+    cursor: "pointer",
+    width: "100%",
+    height: "fit-content",
+    boxSizing: "border-box",
+    padding: "0.75rem 1.125rem",
+    borderRadius: "0.3125rem",
+    border: greenborder === true.toString() ? "2px solid var(--main-green, #53B753)" : "1px solid var(--25-black, rgba(28, 26, 26, 0.25))",
+}));
+export const MobileDataBox = styled(DataBox) (({greenborder}) => ({
+    width: "15rem",
+}));
+export const DataBottomBox = styled(StackRowBox) ({
+    width: "100%",
+    alignItems: "center",
+});
+export const DataBoxBottomLeft = styled(StackRowBox) ({
+    width: "50%",
+    height: "1.5rem",
+    justifyContent: "flex-start",
+});
+export const DataBoxBottomRight = styled(StackRowBox) ({
+    width: "50%",
+    justifyContent: "flex-end",
+});
+export const DataSetEditedBox = styled(StackRowBox) ({
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "0.25rem 0.5rem",
+    borderRadius: "0.3125rem",
+    background: "var(--Main-green, #53B753)"
+});
+export const DataEditorBox = styled(StackColumnBox) ({
+    padding: "0rem 1.125rem",
+    width: "calc(100% - 18rem - 1.12rem)",
+    boxSizing: "border-box",
+    alignItems: "center",
+    flexGrow: 1,
+});
+export const MobileDataEditorBox = styled(DataEditorBox) ({
+    width: "100vw",
+});
+export const RequestUtilitiesBox = styled(StackRowBox) ({
+    width: "100%",
+    boxSizing: "border-box",
+});
+export const JustifyRightBox = styled(StackRowBox) ({
+    width: "100%",
+    boxSizing: "border-box",
+    justifyContent: "flex-end",
+});
+export const ViewDataContainer = styled(StackColumnBox) ({
+    borderRadius: "0.3125rem",
+    border: "1px solid var(--25-black, rgba(28, 26, 26, 0.25))",
+    background: "#F0F0F0",
+    boxSizing: "border-box",
+    justifyContent: "flex-start",
+    alignItems: "start",
+    alignSelf: "stretch",
+    flex: "1 0 0",
+    overflow: "scroll",
+});
+export const ViewDataBox = styled(StackColumnBox) ({
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+});
+export const ViewDataUtilitiesBox = styled(StackRowBox) ({
+    width: "100%",
+    boxSizing: "border-box",
+    justifyContent: "flex-end",
+});
 export const ProfileBox = styled(BasicBox)({
     alignItems: "center",
 });
@@ -218,13 +397,15 @@ export const Line = styled(Box) (({width, height}) => ({
 }));
 
 export const MenuBox = styled(StackColumnBox) ({
+    padding: "1.75rem",
+    justifyContent: "center",
+    alignItems: "center",
     position: "absolute",
-    top: 67.75,
-    right: 0,
-    width: "fit-content",
-    background: "#EDEDED",
-    borderLeft: "2px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
-    borderBottom: "2px solid var(--low-opacity-black, rgba(63, 54, 54, 0.25))",
+    right: "1.75rem",
+    top: "4.5rem",
+    borderRadius: "0.3125rem",
+    background: "var(--ui-white, #F9F9F9)",
+    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.20), 0px 0px 4px 0px rgba(0, 0, 0, 0.12), 0px 0px 12px 0px rgba(0, 0, 0, 0.05)",
 });
 export const HelpBox = styled(StackColumnBox) ({
     width: "25rem",
@@ -238,3 +419,24 @@ export const InsideHelpBox = styled(StackColumnBox) ({
     position: "sticky",
     top: 68,
 });
+
+export const DataUploadBox = styled(StackColumnBox) ({
+    padding: "1.75rem",
+    width: "43rem",
+    maxWidth: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "0.3125rem",
+    background: "var(--ui-white, #F9F9F9)",
+    boxShadow: "0px 0px 1px 0px rgba(0, 0, 0, 0.35), 0px 0px 4px 0px rgba(0, 0, 0, 0.25), 0px 0px 10px 0px rgba(0, 0, 0, 0.15), 0px 0px 20px 0px rgba(0, 0, 0, 0.10)",
+});
+
+export const DragDropBox = styled(StackColumnBox) (({isdraggingover}) => ({
+    width: "100%",
+    height: "15rem",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "0.3125rem",
+    border: "1px dashed var(--25-black, rgba(28, 26, 26, 0.25))",
+    backgroundColor: isdraggingover === true.toString() ? '#E0E0E0' : '#F0F0F0'
+}));

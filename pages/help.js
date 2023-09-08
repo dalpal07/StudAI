@@ -5,12 +5,13 @@ import {
     OuterBox,
     StackColumnBox,
     StackRowBox
-} from "/public/components/common/Boxes";
-import NavBar from "/public/components/NavBar";
-import Footer from "/public/components/Footer";
-import {BoldText, Text} from "/public/components/common/Typographies";
-import {HeightSpacer, WidthSpacer} from "/public/components/common/Spacers";
-import {HelpMenuButton} from "/public/components/common/Buttons";
+} from "@/public/components/common/Boxes";
+import NavBar from "@/public/components/NavBar";
+import Footer from "@/public/components/Footer";
+import {BoldText, Text} from "@/public/components/common/Typographies";
+import {HeightSpacer, WidthSpacer} from "@/public/components/common/Spacers";
+import {HelpMenuButton} from "@/public/components/common/Buttons";
+import PageWrapper from "@/public/components/Wrappers/PageWrapper";
 
 const info = [
     {
@@ -192,26 +193,10 @@ const info = [
                 sample: "sample6.csv"
             }
         ]
-    },
-    {
-        title: "Headers",
-        subs: [
-            {
-                title: "Leniency",
-                description: "The only info Stud receives are your header fields. Because of this, you can actually be less specific when referring to header fields. For example, instead of Hey Stud, please swap the \'First Name\' and \'Last Name\' headers and columns, you can just say Hey Stud, please swap the first and last name headers and columns",
-                wrong: [
-                    "Hey Stud, please swap the \'First Name\' and \'Last Name\' headers and columns"
-                ],
-                right: [
-                    "Hey Stud, please swap the first and last name headers and columns"
-                ],
-                sample: "sample4.csv"
-            }
-        ]
     }
 ]
 
-export default function Help() {
+function Help() {
     const handleScrollClick = (id) => {
         const scrollable = document.documentElement;
         const element = document.getElementById(id);
@@ -247,7 +232,6 @@ export default function Help() {
 
     return (
         <OuterBox>
-            <NavBar/>
             <InnerBox4>
                 <StackRowBox>
                     <HelpBox>
@@ -288,3 +272,5 @@ export default function Help() {
         </OuterBox>
     )
 }
+
+export default PageWrapper(Help);

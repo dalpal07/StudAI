@@ -7,8 +7,8 @@ export const DefaultButton = styled(Button)(({size, padding}) => ({
     alignItems: "center",
     borderRadius: "1.25rem",
     textTransform: "none",
-    background: "#E3E3E3",
-    color: "var(--main-black, #3F3636)",
+    background: "#E9E9E9",
+    color: "var(--main-black, #1C1A1A)",
     fontFamily: "Inter",
     fontSize: size ? size : "0.875rem",
     fontWeight: "bold",
@@ -16,17 +16,46 @@ export const DefaultButton = styled(Button)(({size, padding}) => ({
         background: "#D6D6D6",
     },
     "&:disabled": {
-        backgroundColor: "#D6D6D6",
-        color: "#3F3636",
-        opacity: 0.5,
+        // backgroundColor: "#D6D6D6",
+        // color: "#3F3636",
+        // opacity: 0.5,
     },
 }));
+
+export const WhiteButton = styled(DefaultButton)({
+    background: "var(--ui-white, #F9F9F9)",
+});
 export const GreenButton = styled(DefaultButton)({
     background: "var(--main-green, #53B753)",
     color: "var(--main-white, #F2F2F2)",
     "&:hover": {
         background: "var(--main-green-hover, #4AAE4A)",
     },
+    "&:disabled": {
+        opacity: 0.5,
+    }
+});
+export const UploadDataSetButton = styled(GreenButton)({
+    width: "100%",
+    padding: "1.125rem 1.75rem",
+    borderRadius: "0.625rem",
+});
+export const ArrowButton = styled("button")({
+    display: "flex",
+    width: 44,
+    height: 33,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "0.625rem",
+    alignSelf: "stretch",
+    padding: "0.5rem 0.75rem",
+    borderRadius: "0.3125rem",
+    background: "#E9E9E9",
+    border: "none",
+    cursor: "pointer",
+    "&:disabled": {
+        cursor: "default",
+    }
 });
 export const IconButton = styled(Button)({
     border: "none",
@@ -34,6 +63,18 @@ export const IconButton = styled(Button)({
     height: "fit-content",
     padding: "0",
     display: "flex",
+});
+export const HiddenButton = styled("button")({
+    border: "none",
+    width: "fit-content",
+    height: "fit-content",
+    padding: "0",
+    display: "flex",
+    background: "transparent",
+    cursor: "pointer",
+    "&:hover": {
+        background: "transparent",
+    }
 });
 export const UploadBoxButton = styled(Button) (({isDraggingOver}) => ({
     width: "100%",
