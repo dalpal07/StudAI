@@ -9,6 +9,10 @@ export default async function handler(req, res) {
             if (!id) {
                 throw new Error("User id not found");
             }
+            if (process.env.OWNERS.split(",").includes(id)) {
+                res.status(200).json({subscription: {type: "Owner", date: null, cancel_at_end: false, requests: 0}});
+                return
+            }
             const user = await kv.get(id);
             if (!user) {
                 throw new Error("User not found");
