@@ -29,6 +29,14 @@ export function* handleGetStripeSubscription(action) {
         }
         const response = yield call(requestGetStripeSubscription, action.payload.id);
         const {data} = response;
+        if (data.subscription === null) {
+            yield put(setSubscription({subscription: null}));
+            return;
+        }
+        else if (data.subscription.type === "Owner") {
+            yield put(setSubscription(data.subscription));
+            return;
+        }
         const requests = data.requests;
         const proudctResponse = yield call(requestGetProductDetails, data.subscription.plan.product);
         const {data: productData} = proudctResponse;
